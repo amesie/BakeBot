@@ -10,14 +10,20 @@ Every decision that changes or fills a gap in the IFS 317 Part 1 SRS is logged h
 | D-004 | 2026-10-14 | Front-end follows the Figma Make design "KD Pops ordering website" (cream/chocolate palette, retro display headings, Poppins body, pill buttons). Extra steps the SRS requires (POPIA consent, under-18 gate, language toggle, status link) are added in the same style. | The Figma design predates the SRS flow and has no consent step. | REQ-01, REQ-21, Usability NFR |
 | D-005 | 2026-10-14 | Collection is a week plus a time slot: 2nd break (11:45-12:00) or after school (14:30-15:00). | Figma design specifies slots; SRS only says "collection week". | REQ-04 |
 | D-006 | 2026-10-14 | Build order: dashboard and notifications before the AI chat (M5, M6 before M4). | A working order -> approve -> pay loop is the owner's main need; chat plugs into it. | Milestones |
+| D-007 | 2026-10-14 | Keep the restored Supabase project in **eu-west-1 (Ireland)** rather than recreating it closer to South Africa. Personal data is therefore stored outside South Africa. | Recreating loses the existing Vercel integration; the EU has data protection at least equal to POPIA, which POPIA s72 accepts for cross-border transfers. The consent notice must say data is stored by Supabase in the EU. | POPIA, Security NFR |
+| D-008 | 2026-10-14 | Added `waitlisted` to `order_status`, with `waitlisted -> pending | cancelled`. New orders may only start as `pending` or `waitlisted`. | SRS gap 1: REQ-06 needs a waitlist state. | REQ-06 |
+| D-009 | 2026-10-14 | **Access model (SRS gap 8): API-only for customers.** The anon/publishable key has no privileges on any table and cannot call any function except `health_check()` and `get_menu()`. Customers place and view orders through Next.js API routes, which will use server-side `SECURITY DEFINER` functions checking the order access token. The SRS 3.4 wording ("customers insert via the anon key") should be updated to match. | Simpler and safer than writing anon insert policies; still meets the "anon cannot read another customer's order" test. | Security NFR, REQ-01 to REQ-09 |
+| D-010 | 2026-10-14 | Allowed `ready -> cancelled`, but only when `released_at` is set (the order was released to general sale). | REQ-20 releases unpaid or uncollected orders; without this they would stay `ready` for ever. All other spec transitions are unchanged. | REQ-20 |
+| D-011 | 2026-10-14 | Allowed `pending_review -> unpaid` (proof of payment rejected). | If uploaded proof does not match, Kaydee needs a way back without marking it paid. | REQ-15, REQ-17 |
+| D-012 | 2026-10-14 | SRS gaps 2 to 7 resolved as the spec suggests: `orders.released_at`, `orders.revised_collection_date`, `orders.access_token_hash`, tables `notifications`, `job_runs`, `error_log`, `staff_roles`. Last school day is `app_settings.last_school_day_isodow` (default Friday) with per-week `school_day_overrides` for public holidays. | Spec section 8. | REQ-19, REQ-20, Security NFR |
+| D-013 | 2026-10-14 | Orders store `collection_date` (a weekday) and `collection_slot`; `collection_week` (Monday) is generated from the date. `total_units` is stored on the order for fast weekly-cap checks. | REQ-04 needs a week, confirmations (REQ-12) need a day, the Figma design needs a slot. | REQ-04, REQ-06, REQ-12 |
+| D-014 | 2026-10-14 | Weekly cap defaults to `app_settings.default_weekly_cap` (200). A `weekly_capacity` row is only needed for weeks that differ (e.g. 300 for market week). | Avoids someone having to create a row every week. | REQ-06 |
+| D-015 | 2026-10-14 | Feedback has an overall rating plus optional taste, size and price ratings; one feedback per order. | REQ-26 asks about taste, size and price. | REQ-26 |
+| D-016 | 2026-10-14 | Helpers can also read customer names and phone numbers (not only orders). | To find and mark the right payment at handover they need to see who the order belongs to. | Security NFR |
+| D-017 | 2026-10-14 | Order numbers are unique but may have gaps (a failed or duplicate submission still uses a number). | Postgres sequences are not rolled back; gapless numbering would need locking and slow down order capture. | REQ-08, Latency NFR |
+| D-018 | 2026-10-14 | Database tests (`supabase/tests/*.sql`, run with `npm run test:db`) run against the linked project inside a transaction that is rolled back, and restore the order-number sequence afterwards. A separate staging project should be created before go-live (M8) so tests never touch live data. | No Docker on the development machine, so no local Supabase. | Testing, M8 |
+| D-019 | 2026-10-14 | `app_settings.collection_place` defaults to "To be confirmed" until Kaydee sets it in the dashboard. | The SRS does not name the classroom. | REQ-12 |
 
-## Open gaps from spec section 8 (to resolve in M1)
+## Open gaps
 
-1. `waitlisted` order status
-2. `orders.released_at`
-3. `orders.revised_collection_date`
-4. `orders.access_token_hash`
-5. `notifications`, `job_runs`, `error_log` tables
-6. `staff_roles`
-7. Configurable last school day
-8. Anon role access model (API-only vs direct insert)
+None from spec section 8. All eight are resolved above (gap 1: D-008, gaps 2 to 7: D-012, gap 8: D-009).
