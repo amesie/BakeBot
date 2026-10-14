@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "language": "isiXhosa",
+    "status": "NEEDS_REVIEW"
+  },
+  "nav": {
+    "menu": "Imenyu",
+    "order": "Odola",
+    "contact": "Qhagamshelana",
+    "orderNow": "Odola Ngoku",
+    "openMenu": "Vula imenyu",
+    "closeMenu": "Vala imenyu",
+    "language": "Ulwimi",
+    "skipToContent": "Tsibela kumxholo",
+    "home": "Ikhaya le-KD Pops"
+  },
+  "hero": {
+    "badge": "Ubuyileeeeee!",
+    "eyebrow": "Uvuyo olwenziwe ngesandla entongeni",
+    "tagline": "Amaxabiso aphantsi, incasa esemgangathweni efanayo!",
+    "fresh": "Zenziwa zintsha xa uodola!",
+    "orderNow": "Odola Ngoku",
+    "seeMenu": "Jonga iMenyu",
+    "artLabel": "Iqela lee-cake pops ezihonjisiweyo"
+  },
+  "ticker": {
+    "handmade": "ZENZIWE NGESANDLA",
+    "fromPrice": "UKUSUKELA KU-R{price}",
+    "pickup": "ZILANDWA ESIKOLWENI"
+  },
+  "menu": {
+    "eyebrow": "Khetha oyithandayo",
+    "title": "IMenyu",
+    "intro": "Iincasa ezine ezikhumbuzayo. Ukhetho olulula kakhulu: zama zonke.",
+    "perPop": "nganye",
+    "addToOrder": "Yongeza kwi-odolo",
+    "addFlavour": "Yongeza i-{flavour} kwi-odolo yakho",
+    "belgianBadge": "Yenziwe ngetshokolethi yokwenene yaseBelgium!",
+    "soldOut": "Iphelile kule veki",
+    "empty": "Imenyu iyahlaziywa. Nceda ubuye kungekudala.",
+    "illustration": "I-cake pop ye-{flavour}"
+  },
+  "order": {
+    "eyebrow": "Akukho ngxaki, zii-pops nje",
+    "title": "Faka i-Odolo Yakho",
+    "comingSoon": "Ukuodola kwi-intanethi kuza kuvulwa kungekudala. Okwangoku, thumela uKaydee umyalezo we-WhatsApp ukuze uodole.",
+    "whatsapp": "WhatsApp uKaydee"
+  },
+  "footer": {
+    "tagline": "Zenziwa zintsha xa uodola!",
+    "contactLabel": "Yithi molo okanye usibuze nantoni na",
+    "whatsapp": "WhatsApp",
+    "rights": "© {year} KD Pops. Zenziwe ngesandla ngononophelo.",
+    "smallBatch": "Iqela elincinci · Uvuyo olukhulu"
+  }
+}

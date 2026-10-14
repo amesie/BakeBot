@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "language": "English",
+    "status": "FINAL"
+  },
+  "nav": {
+    "menu": "Menu",
+    "order": "Order",
+    "contact": "Contact",
+    "orderNow": "Order Now",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Language",
+    "skipToContent": "Skip to content",
+    "home": "KD Pops home"
+  },
+  "hero": {
+    "badge": "She's baaaaaaaaack!",
+    "eyebrow": "Handmade happiness on a stick",
+    "tagline": "Lower prices with the same quality taste!",
+    "fresh": "Freshly made to order!",
+    "orderNow": "Order Now",
+    "seeMenu": "See the Menu",
+    "artLabel": "A cluster of decorated cake pops"
+  },
+  "ticker": {
+    "handmade": "HANDMADE",
+    "fromPrice": "FROM R{price}",
+    "pickup": "SCHOOL PICKUP"
+  },
+  "menu": {
+    "eyebrow": "Pick your favourite",
+    "title": "The Menu",
+    "intro": "Four nostalgic flavours. One very easy choice: try them all.",
+    "perPop": "per pop",
+    "addToOrder": "Add to order",
+    "addFlavour": "Add {flavour} to your order",
+    "belgianBadge": "Made with real Belgian chocolate!",
+    "soldOut": "Sold out this week",
+    "empty": "The menu is being updated. Please check back soon.",
+    "illustration": "{flavour} cake pop"
+  },
+  "order": {
+    "eyebrow": "No fuss, just pops",
+    "title": "Place Your Order",
+    "comingSoon": "Online ordering opens soon. Until then, send Kaydee a WhatsApp to order.",
+    "whatsapp": "WhatsApp Kaydee"
+  },
+  "footer": {
+    "tagline": "Freshly made to order!",
+    "contactLabel": "Say hello or ask us anything",
+    "whatsapp": "WhatsApp",
+    "rights": "© {year} KD Pops. Handmade with care.",
+    "smallBatch": "Small batch · Big joy"
+  }
+}

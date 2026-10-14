@@ -2,7 +2,6 @@ import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
-  darkMode: ["class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -45,13 +44,20 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        chart: {
-          "1": "hsl(var(--chart-1))",
-          "2": "hsl(var(--chart-2))",
-          "3": "hsl(var(--chart-3))",
-          "4": "hsl(var(--chart-4))",
-          "5": "hsl(var(--chart-5))",
+        // KD Pops brand palette (app/globals.css)
+        kd: {
+          cream: "var(--cream)",
+          brown: "var(--brown)",
+          milk: "var(--milk)",
+          ivory: "var(--ivory)",
+          tan: "var(--tan)",
+          orange: "var(--orange)",
+          yellow: "var(--yellow)",
         },
+      },
+      fontFamily: {
+        display: ["var(--font-display)", "Chango", "sans-serif"],
+        body: ["var(--font-body)", "Poppins", "system-ui", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",

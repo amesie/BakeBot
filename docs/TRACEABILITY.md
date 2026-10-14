@@ -40,12 +40,20 @@ One row per requirement. Status: `todo`, `in progress`, `done`, `verified` (test
 |---|---|---|---|---|---|
 | Availability | 99.5% monthly, `/api/health` + UptimeRobot | M1, M9 | `app/api/health/route.ts`, `public.health_check()` | `tests/rls-anon.test.ts` (health_check responds) | in progress (UptimeRobot in M9) |
 | Latency | Order API p95 <= 2,000 ms; Gemini <= 5,000 ms | M3, M4 | | | todo |
-| Page weight | <= 500 KB per order journey | M2 | | | todo |
+| Page weight | <= 500 KB per order journey | M2 | `app/layout.tsx` (self-hosted fonts), inline SVG art | measured 266 KB uncompressed home page (2026-10-14); full journey re-measured in M2/M7 | in progress |
 | Concurrency | 20 conversations, 60 msg/min | M7 | | | todo |
 | Offline | Draft syncs once, no duplicate | M2 | | | todo |
 | Security | RLS, HSTS, private buckets, masking | M0, M1 | `next.config.ts` (HSTS), `proxy.ts`, `supabase/migrations/*_rls.sql`, `*_public_api.sql` | `tests/security-headers.test.ts`, `supabase/tests/02_rls.sql`, `tests/rls-anon.test.ts` | in progress (buckets, masking later) |
-| Accessibility | Lighthouse >= 90, 44 px targets | M2 | | | todo |
+| Accessibility | Lighthouse >= 90, 44 px targets | M2 | `app/globals.css` (D-021) | `e2e/home.spec.ts` (44 px check, mobile + desktop) | in progress (Lighthouse in M7) |
 | AI transparency | 100% disclosure; no invented answers | M4 | | | todo |
+
+## Design system and language (Phase 2)
+
+| Item | Files | Tests | Status |
+|---|---|---|---|
+| Figma design ported (D-004, D-021) | `app/globals.css`, `components/kd/*`, `components/site/*` | `e2e/home.spec.ts` | done |
+| Live menu from products table (REQ-04, D-022) | `lib/menu.ts`, `components/site/menu-grid.tsx` | `e2e/home.spec.ts` (4 cards, prices) | done |
+| EN / XH / AF dictionaries + toggle (spec 7.9) | `messages/*.json`, `lib/i18n`, `components/i18n-provider.tsx` | `tests/i18n.test.ts`, `e2e/home.spec.ts` | done (XH/AF need review) |
 
 ## Engineering (M0 / D1)
 
@@ -67,3 +75,4 @@ One row per requirement. Status: `todo`, `in progress`, `done`, `verified` (test
 - `npm test`: unit tests (CI runs these).
 - `npm run test:db`: database tests against the linked Supabase project (rolled back).
 - `npm run test:integration`: HTTP check with the real publishable key (needs `.env.local`).
+- `npm run build && npm run test:e2e`: browser tests (Playwright) on mobile and desktop.
