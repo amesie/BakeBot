@@ -23,6 +23,7 @@ Every decision that changes or fills a gap in the IFS 317 Part 1 SRS is logged h
 | D-017 | 2026-10-14 | Order numbers are unique but may have gaps (a failed or duplicate submission still uses a number). | Postgres sequences are not rolled back; gapless numbering would need locking and slow down order capture. | REQ-08, Latency NFR |
 | D-018 | 2026-10-14 | Database tests (`supabase/tests/*.sql`, run with `npm run test:db`) run against the linked project inside a transaction that is rolled back, and restore the order-number sequence afterwards. A separate staging project should be created before go-live (M8) so tests never touch live data. | No Docker on the development machine, so no local Supabase. | Testing, M8 |
 | D-019 | 2026-10-14 | `app_settings.collection_place` defaults to "To be confirmed" until Kaydee sets it in the dashboard. | The SRS does not name the classroom. | REQ-12 |
+| D-020 | 2026-10-14 | Accepted Supabase advisor warnings after M1: (a) `get_menu()` and `health_check()` are SECURITY DEFINER and callable by anon (intended, D-009; they return only menu data and "ok"); (b) "multiple permissive policies" on tables with both owner and helper policies. | (a) Needed so anon has no table access at all. (b) Separate policies per role are easier to audit; with two staff accounts the cost is negligible. | Security NFR |
 
 ## Open gaps
 

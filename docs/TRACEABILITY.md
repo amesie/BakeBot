@@ -60,7 +60,7 @@ One row per requirement. Status: `todo`, `in progress`, `done`, `verified` (test
 | Rule | Files | Tests | Status |
 |---|---|---|---|
 | Order status transitions enforced in DB | `supabase/migrations/*_order_rules.sql` | `supabase/tests/01_state_machine_and_constraints.sql` (all 42 pairs + release case) | done |
-| Payment status transitions enforced in DB | `supabase/migrations/*_order_rules.sql` | same file (all 6 pairs) | done |
+| Payment status transitions enforced in DB | `supabase/migrations/*_order_rules.sql` | same file (all 6 pairs) | verified 2026-10-14 |
 
 ## How to run the tests
 
