@@ -21,3 +21,16 @@ describe("visualFor", () => {
     expect(visualFor("Red Velvet", 1).variant).toBeDefined();
   });
 });
+
+import { formatDay, sastDate } from "@/lib/dates";
+import { dictionaries } from "@/lib/i18n";
+
+describe("dates", () => {
+  it("formats a collection day in each language", () => {
+    expect(formatDay("2026-10-19", dictionaries.en)).toBe("Monday 19 October");
+    expect(formatDay("2026-10-19", dictionaries.af)).toBe("Maandag 19 Oktober");
+  });
+  it("uses the SAST calendar date for timestamps", () => {
+    expect(sastDate("2026-10-18T22:30:00Z")).toBe("2026-10-19"); // 00:30 SAST
+  });
+});

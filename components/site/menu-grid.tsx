@@ -2,6 +2,7 @@
 
 import { useI18n } from "@/components/i18n-provider";
 import { CakePop } from "@/components/kd/cake-pop";
+import { requestAddFlavour } from "@/components/order/events";
 import { visualFor } from "@/lib/catalogue-visuals";
 import { formatRand } from "@/lib/format";
 import { format } from "@/lib/i18n";
@@ -44,11 +45,10 @@ export function MenuSection({ items }: { items: MenuItem[] }) {
                       <strong>
                         {price} <small>{m.menu.perPop}</small>
                       </strong>
-                      {/* Phase 3: preselects this flavour in the order form. */}
                       <a
                         className="text-button"
-                        href={`#order`}
-                        data-product-id={item.product_id}
+                        href="#order"
+                        onClick={() => requestAddFlavour(item.product_id)}
                         aria-label={format(m.menu.addFlavour, { flavour: item.flavour })}
                       >
                         {m.menu.addToOrder} <span className="icon-circle" aria-hidden="true">＋</span>

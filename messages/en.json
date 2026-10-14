@@ -42,9 +42,7 @@
   },
   "order": {
     "eyebrow": "No fuss, just pops",
-    "title": "Place Your Order",
-    "comingSoon": "Online ordering opens soon. Until then, send Kaydee a WhatsApp to order.",
-    "whatsapp": "WhatsApp Kaydee"
+    "title": "Place Your Order"
   },
   "footer": {
     "tagline": "Freshly made to order!",
@@ -52,5 +50,192 @@
     "whatsapp": "WhatsApp",
     "rights": "© {year} KD Pops. Handmade with care.",
     "smallBatch": "Small batch · Big joy"
+  },
+  "consent": {
+    "step": "Before you order",
+    "intro": "A few quick checks first.",
+    "bakebot": "Order updates come from BakeBot, KD Pops' automated assistant. Kaydee reads and confirms every order herself.",
+    "popiaTitle": "Your details",
+    "popia": "To process your order we keep your name, cell number and language. Only Kaydee and her helper can see them. They are stored securely by Supabase in the EU, never used for marketing, and deleted 90 days after your last order.",
+    "agree": "I agree to KD Pops using my details for my order",
+    "under18": "Are you under 18?",
+    "yes": "Yes",
+    "no": "No",
+    "guardian": "My parent or guardian says it's OK for me to order",
+    "continue": "Continue",
+    "dontAgree": "I don't agree",
+    "declined": "No problem. Nothing has been saved. You can still order by sending Kaydee a WhatsApp.",
+    "guardianNeeded": "Please ask a parent or guardian first. Nothing has been saved. You can also order through Kaydee on WhatsApp.",
+    "back": "Back"
+  },
+  "form": {
+    "step": "Build your box",
+    "hint": "Choose your flavours and how many you'd like.",
+    "flavour": "Flavour",
+    "quantity": "Quantity",
+    "remove": "Remove {flavour}",
+    "addRow": "Add another flavour",
+    "day": "Collection day",
+    "chooseDay": "Choose a day",
+    "slot": "Collection time",
+    "payment": "Payment method",
+    "name": "Full name",
+    "namePlaceholder": "Your name",
+    "phone": "Cell number",
+    "phonePlaceholder": "e.g. 082 123 4567",
+    "notes": "Notes or allergies",
+    "optional": "Optional",
+    "notesPlaceholder": "Anything we should know?",
+    "review": "Review order",
+    "largeNote": "More than {threshold} pops? Kaydee will send you a personal quote.",
+    "cutoff": "Pre-orders for next week close on Thursday at 20:00.",
+    "errorSummary": "Please fix the following:"
+  },
+  "summary": {
+    "eyebrow": "Your picks",
+    "pops": "{count} pops",
+    "title": "Order Summary",
+    "empty": "Add a flavour to get started.",
+    "total": "Total",
+    "note": "No account needed.",
+    "payNote": "Pay cash when you collect, or by EFT once Kaydee confirms."
+  },
+  "review": {
+    "step": "Check your order",
+    "hint": "Make sure everything looks right.",
+    "collection": "Collection",
+    "payment": "Payment",
+    "contact": "Your details",
+    "edit": "Edit",
+    "place": "Place Order",
+    "placing": "Placing your order..."
+  },
+  "done": {
+    "eyebrow": "Order received",
+    "title": "Thank you! Your order is in.",
+    "pending": "Kaydee will confirm after school. We'll keep you posted, {name}.",
+    "waitlisted": "This week is full, so you're on the waitlist, {name}. Kaydee will let you know if a spot opens up.",
+    "quote": "Big order! Kaydee will send you a quote after school, {name}.",
+    "number": "Order number",
+    "statusLink": "View order status",
+    "copy": "Copy link",
+    "copied": "Link copied",
+    "saveLink": "Save this link to check your order later.",
+    "another": "Place another order"
+  },
+  "queued": {
+    "title": "Saved on your phone",
+    "body": "You're offline. Your order is saved and will be sent automatically when you're back online. Please keep this page open.",
+    "retrying": "Trying to send your order...",
+    "failed": "We couldn't send your order yet. We'll try again when you're back online, or you can WhatsApp Kaydee."
+  },
+  "errors": {
+    "required": "Required",
+    "invalid": "Please check this",
+    "too_long": "Too long",
+    "too_many": "That's more than we can make of one flavour",
+    "unavailable": "One of these flavours is no longer available",
+    "closed": "That day is no longer open for orders. Please choose another.",
+    "conflict": "Something went wrong. Please start a new order.",
+    "phoneInvalid": "Enter a South African cell number, e.g. 082 123 4567",
+    "generic": "Something went wrong. Please try again.",
+    "fields": {
+      "full_name": "Full name",
+      "phone": "Cell number",
+      "items": "Flavours and quantities",
+      "collection_date": "Collection day",
+      "collection_slot": "Collection time",
+      "payment_method": "Payment method",
+      "special_notes": "Notes",
+      "consent_given": "Consent",
+      "guardian_consent": "Guardian consent",
+      "is_minor": "Age question",
+      "order_id": "Order",
+      "access_token": "Order",
+      "form": "Order"
+    }
+  },
+  "slots": {
+    "second_break": "2nd break · 11:45–12:00",
+    "after_school": "After school · 14:30–15:00"
+  },
+  "payment": {
+    "cash": "Cash on collection",
+    "eft": "EFT"
+  },
+  "days": {
+    "1": "Monday",
+    "2": "Tuesday",
+    "3": "Wednesday",
+    "4": "Thursday",
+    "5": "Friday",
+    "6": "Saturday",
+    "7": "Sunday"
+  },
+  "months": {
+    "1": "January",
+    "2": "February",
+    "3": "March",
+    "4": "April",
+    "5": "May",
+    "6": "June",
+    "7": "July",
+    "8": "August",
+    "9": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December"
+  },
+  "status": {
+    "title": "Your order",
+    "loading": "Loading your order...",
+    "notFound": "We couldn't find that order. Check that you opened the full link.",
+    "unavailable": "We can't load your order right now. Please try again in a minute.",
+    "hello": "Hi {name}",
+    "items": "Your pops",
+    "total": "Total",
+    "quoteWaiting": "Kaydee will send you a quote.",
+    "collection": "Collection",
+    "revised": "New collection date",
+    "place": "Where",
+    "payment": "Payment",
+    "reference": "Payment reference",
+    "useReference": "Use this reference when you pay by EFT.",
+    "bank": "Bank details",
+    "updates": "Updates",
+    "talk": "Talk to Kaydee",
+    "phone": "Cell",
+    "backHome": "Back to KD Pops",
+    "progress": "Order progress",
+    "steps": {
+      "pending": "Received",
+      "confirmed": "Confirmed",
+      "baking": "Baking",
+      "ready": "Ready",
+      "collected": "Collected"
+    },
+    "label": {
+      "waitlisted": "On the waitlist",
+      "pending": "Waiting for Kaydee",
+      "confirmed": "Confirmed",
+      "baking": "Baking",
+      "ready": "Ready to collect",
+      "collected": "Collected",
+      "cancelled": "Cancelled"
+    },
+    "paymentLabel": {
+      "unpaid": "Not paid yet",
+      "pending_review": "Proof received, being checked",
+      "paid": "Paid"
+    }
+  },
+  "templates": {
+    "acknowledgement": "Order {order_number} received – Kaydee will confirm after school.",
+    "waitlisted": "Order {order_number} is on the waitlist because this week is full. Kaydee will let you know if a spot opens.",
+    "quote_pending": "Order {order_number} received. It's a big one, so Kaydee will send you a quote after school."
+  },
+  "myOrders": {
+    "title": "Your recent orders",
+    "open": "Open"
   }
 }

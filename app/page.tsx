@@ -1,12 +1,13 @@
 import { Hero, Ticker } from "@/components/site/hero";
 import { MenuSection } from "@/components/site/menu-grid";
-import { OrderComingSoon } from "@/components/site/order-coming-soon";
+import { OrderSection } from "@/components/order/order-section";
 import { SiteNav } from "@/components/site/site-nav";
 import { MobileOrderBar, SiteFooter } from "@/components/site/site-footer";
 import { getMenu } from "@/lib/menu";
+import { getOrderOptions } from "@/lib/order-options";
 
 export default async function Home() {
-  const menu = await getMenu();
+  const [menu, options] = await Promise.all([getMenu(), getOrderOptions()]);
   const fromPrice = menu.length ? Math.min(...menu.map((item) => item.unit_price)) : null;
 
   return (
@@ -16,7 +17,7 @@ export default async function Home() {
         <Hero />
         <Ticker fromPrice={fromPrice} />
         <MenuSection items={menu} />
-        <OrderComingSoon />
+        <OrderSection menu={menu} options={options} />
       </main>
       <SiteFooter />
       <MobileOrderBar />

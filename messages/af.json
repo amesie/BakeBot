@@ -42,9 +42,7 @@
   },
   "order": {
     "eyebrow": "Geen gesukkel nie, net pops",
-    "title": "Plaas Jou Bestelling",
-    "comingSoon": "Aanlyn bestellings open binnekort. Stuur intussen vir Kaydee 'n WhatsApp om te bestel.",
-    "whatsapp": "WhatsApp Kaydee"
+    "title": "Plaas Jou Bestelling"
   },
   "footer": {
     "tagline": "Vars gemaak op bestelling!",
@@ -52,5 +50,192 @@
     "whatsapp": "WhatsApp",
     "rights": "© {year} KD Pops. Met liefde handgemaak.",
     "smallBatch": "Klein hoeveelhede · Groot vreugde"
+  },
+  "consent": {
+    "step": "Voor jy bestel",
+    "intro": "Eers 'n paar vinnige vrae.",
+    "bakebot": "Bestellingsopdaterings kom van BakeBot, KD Pops se outomatiese assistent. Kaydee lees en bevestig self elke bestelling.",
+    "popiaTitle": "Jou besonderhede",
+    "popia": "Om jou bestelling te verwerk, hou ons jou naam, selnommer en taal. Net Kaydee en haar helper kan dit sien. Dit word veilig deur Supabase in die EU gestoor, nooit vir bemarking gebruik nie, en 90 dae na jou laaste bestelling uitgevee.",
+    "agree": "Ek stem in dat KD Pops my besonderhede vir my bestelling gebruik",
+    "under18": "Is jy jonger as 18?",
+    "yes": "Ja",
+    "no": "Nee",
+    "guardian": "My ouer of voog sê ek mag bestel",
+    "continue": "Gaan voort",
+    "dontAgree": "Ek stem nie in nie",
+    "declined": "Geen probleem nie. Niks is gestoor nie. Jy kan steeds bestel deur vir Kaydee 'n WhatsApp te stuur.",
+    "guardianNeeded": "Vra asseblief eers 'n ouer of voog. Niks is gestoor nie. Jy kan ook deur Kaydee op WhatsApp bestel.",
+    "back": "Terug"
+  },
+  "form": {
+    "step": "Bou jou boks",
+    "hint": "Kies jou geure en hoeveel jy wil hê.",
+    "flavour": "Geur",
+    "quantity": "Hoeveelheid",
+    "remove": "Verwyder {flavour}",
+    "addRow": "Voeg nog 'n geur by",
+    "day": "Afhaaldag",
+    "chooseDay": "Kies 'n dag",
+    "slot": "Afhaaltyd",
+    "payment": "Betaalmetode",
+    "name": "Volle naam",
+    "namePlaceholder": "Jou naam",
+    "phone": "Selnommer",
+    "phonePlaceholder": "bv. 082 123 4567",
+    "notes": "Notas of allergieë",
+    "optional": "Opsioneel",
+    "notesPlaceholder": "Enigiets wat ons moet weet?",
+    "review": "Hersien bestelling",
+    "largeNote": "Meer as {threshold} pops? Kaydee sal vir jou 'n persoonlike kwotasie stuur.",
+    "cutoff": "Voorafbestellings vir volgende week sluit Donderdag om 20:00.",
+    "errorSummary": "Maak asseblief die volgende reg:"
+  },
+  "summary": {
+    "eyebrow": "Jou keuses",
+    "pops": "{count} pops",
+    "title": "Bestellingsopsomming",
+    "empty": "Voeg 'n geur by om te begin.",
+    "total": "Totaal",
+    "note": "Geen rekening nodig nie.",
+    "payNote": "Betaal kontant wanneer jy afhaal, of per EFT sodra Kaydee bevestig."
+  },
+  "review": {
+    "step": "Kontroleer jou bestelling",
+    "hint": "Maak seker alles lyk reg.",
+    "collection": "Afhaal",
+    "payment": "Betaling",
+    "contact": "Jou besonderhede",
+    "edit": "Wysig",
+    "place": "Plaas Bestelling",
+    "placing": "Jou bestelling word geplaas..."
+  },
+  "done": {
+    "eyebrow": "Bestelling ontvang",
+    "title": "Dankie! Jou bestelling is in.",
+    "pending": "Kaydee sal na skool bevestig. Ons hou jou op hoogte, {name}.",
+    "waitlisted": "Hierdie week is vol, so jy is op die waglys, {name}. Kaydee sal jou laat weet as daar plek oopkom.",
+    "quote": "Groot bestelling! Kaydee sal na skool vir jou 'n kwotasie stuur, {name}.",
+    "number": "Bestellingnommer",
+    "statusLink": "Sien bestellingstatus",
+    "copy": "Kopieer skakel",
+    "copied": "Skakel gekopieer",
+    "saveLink": "Stoor hierdie skakel om later jou bestelling na te gaan.",
+    "another": "Plaas nog 'n bestelling"
+  },
+  "queued": {
+    "title": "Op jou foon gestoor",
+    "body": "Jy is vanlyn. Jou bestelling is gestoor en sal outomaties gestuur word sodra jy weer aanlyn is. Hou asseblief hierdie bladsy oop.",
+    "retrying": "Probeer jou bestelling stuur...",
+    "failed": "Ons kon nog nie jou bestelling stuur nie. Ons probeer weer wanneer jy weer aanlyn is, of jy kan vir Kaydee WhatsApp."
+  },
+  "errors": {
+    "required": "Verpligtend",
+    "invalid": "Kontroleer asseblief",
+    "too_long": "Te lank",
+    "too_many": "Dis meer as wat ons van een geur kan maak",
+    "unavailable": "Een van hierdie geure is nie meer beskikbaar nie",
+    "closed": "Daardie dag is nie meer oop vir bestellings nie. Kies asseblief 'n ander dag.",
+    "conflict": "Iets het skeefgeloop. Begin asseblief 'n nuwe bestelling.",
+    "phoneInvalid": "Tik 'n Suid-Afrikaanse selnommer in, bv. 082 123 4567",
+    "generic": "Iets het skeefgeloop. Probeer asseblief weer.",
+    "fields": {
+      "full_name": "Volle naam",
+      "phone": "Selnommer",
+      "items": "Geure en hoeveelhede",
+      "collection_date": "Afhaaldag",
+      "collection_slot": "Afhaaltyd",
+      "payment_method": "Betaalmetode",
+      "special_notes": "Notas",
+      "consent_given": "Toestemming",
+      "guardian_consent": "Toestemming van ouer of voog",
+      "is_minor": "Ouderdomsvraag",
+      "order_id": "Bestelling",
+      "access_token": "Bestelling",
+      "form": "Bestelling"
+    }
+  },
+  "slots": {
+    "second_break": "2de pouse · 11:45–12:00",
+    "after_school": "Na skool · 14:30–15:00"
+  },
+  "payment": {
+    "cash": "Kontant by afhaal",
+    "eft": "EFT"
+  },
+  "days": {
+    "1": "Maandag",
+    "2": "Dinsdag",
+    "3": "Woensdag",
+    "4": "Donderdag",
+    "5": "Vrydag",
+    "6": "Saterdag",
+    "7": "Sondag"
+  },
+  "months": {
+    "1": "Januarie",
+    "2": "Februarie",
+    "3": "Maart",
+    "4": "April",
+    "5": "Mei",
+    "6": "Junie",
+    "7": "Julie",
+    "8": "Augustus",
+    "9": "September",
+    "10": "Oktober",
+    "11": "November",
+    "12": "Desember"
+  },
+  "status": {
+    "title": "Jou bestelling",
+    "loading": "Jou bestelling word gelaai...",
+    "notFound": "Ons kon nie daardie bestelling vind nie. Maak seker jy het die volledige skakel oopgemaak.",
+    "unavailable": "Ons kan nie nou jou bestelling laai nie. Probeer asseblief oor 'n minuut weer.",
+    "hello": "Hallo {name}",
+    "items": "Jou pops",
+    "total": "Totaal",
+    "quoteWaiting": "Kaydee sal vir jou 'n kwotasie stuur.",
+    "collection": "Afhaal",
+    "revised": "Nuwe afhaaldatum",
+    "place": "Waar",
+    "payment": "Betaling",
+    "reference": "Betalingsverwysing",
+    "useReference": "Gebruik hierdie verwysing wanneer jy per EFT betaal.",
+    "bank": "Bankbesonderhede",
+    "updates": "Opdaterings",
+    "talk": "Praat met Kaydee",
+    "phone": "Sel",
+    "backHome": "Terug na KD Pops",
+    "progress": "Bestellingsvordering",
+    "steps": {
+      "pending": "Ontvang",
+      "confirmed": "Bevestig",
+      "baking": "Word gebak",
+      "ready": "Gereed",
+      "collected": "Afgehaal"
+    },
+    "label": {
+      "waitlisted": "Op die waglys",
+      "pending": "Wag vir Kaydee",
+      "confirmed": "Bevestig",
+      "baking": "Word gebak",
+      "ready": "Gereed om af te haal",
+      "collected": "Afgehaal",
+      "cancelled": "Gekanselleer"
+    },
+    "paymentLabel": {
+      "unpaid": "Nog nie betaal nie",
+      "pending_review": "Bewys ontvang, word nagegaan",
+      "paid": "Betaal"
+    }
+  },
+  "templates": {
+    "acknowledgement": "Bestelling {order_number} ontvang – Kaydee sal na skool bevestig.",
+    "waitlisted": "Bestelling {order_number} is op die waglys omdat hierdie week vol is. Kaydee sal jou laat weet as daar plek oopkom.",
+    "quote_pending": "Bestelling {order_number} ontvang. Dis 'n groot een, so Kaydee sal na skool vir jou 'n kwotasie stuur."
+  },
+  "myOrders": {
+    "title": "Jou onlangse bestellings",
+    "open": "Maak oop"
   }
 }

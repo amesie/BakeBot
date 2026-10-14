@@ -42,9 +42,7 @@
   },
   "order": {
     "eyebrow": "Akukho ngxaki, zii-pops nje",
-    "title": "Faka i-Odolo Yakho",
-    "comingSoon": "Ukuodola kwi-intanethi kuza kuvulwa kungekudala. Okwangoku, thumela uKaydee umyalezo we-WhatsApp ukuze uodole.",
-    "whatsapp": "WhatsApp uKaydee"
+    "title": "Faka i-Odolo Yakho"
   },
   "footer": {
     "tagline": "Zenziwa zintsha xa uodola!",
@@ -52,5 +50,192 @@
     "whatsapp": "WhatsApp",
     "rights": "© {year} KD Pops. Zenziwe ngesandla ngononophelo.",
     "smallBatch": "Iqela elincinci · Uvuyo olukhulu"
+  },
+  "consent": {
+    "step": "Phambi kokuba uodole",
+    "intro": "Imibuzo embalwa ekhawulezayo kuqala.",
+    "bakebot": "Uhlaziyo lwee-odolo luvela ku-BakeBot, umncedisi ozenzekelayo we-KD Pops. UKaydee ufunda aze aqinisekise yonke i-odolo ngokwakhe.",
+    "popiaTitle": "Iinkcukacha zakho",
+    "popia": "Ukuze silungiselele i-odolo yakho sigcina igama lakho, inombolo yeselfowuni nolwimi. NguKaydee nomncedisi wakhe kuphela abanokuzibona. Zigcinwa ngokukhuselekileyo nguSupabase e-EU, azisetyenziselwa ntengiso, kwaye zicinywa kwiintsuku ezingama-90 emva kwe-odolo yakho yokugqibela.",
+    "agree": "Ndiyavuma ukuba i-KD Pops isebenzise iinkcukacha zam kwi-odolo yam",
+    "under18": "Ingaba ungaphantsi kweminyaka eli-18?",
+    "yes": "Ewe",
+    "no": "Hayi",
+    "guardian": "Umzali okanye umgcini wam uthi ndingaodola",
+    "continue": "Qhubeka",
+    "dontAgree": "Andivumi",
+    "declined": "Akukho ngxaki. Akukho nto igciniweyo. Usenako ukuodola ngokuthumela uKaydee umyalezo we-WhatsApp.",
+    "guardianNeeded": "Nceda ubuze umzali okanye umgcini kuqala. Akukho nto igciniweyo. Ungaodola nangoKaydee kwi-WhatsApp.",
+    "back": "Buyela umva"
+  },
+  "form": {
+    "step": "Yakha ibhokisi yakho",
+    "hint": "Khetha iincasa zakho kunye nobungakanani obufunayo.",
+    "flavour": "Incasa",
+    "quantity": "Ubungakanani",
+    "remove": "Susa i-{flavour}",
+    "addRow": "Yongeza enye incasa",
+    "day": "Usuku lokulanda",
+    "chooseDay": "Khetha usuku",
+    "slot": "Ixesha lokulanda",
+    "payment": "Indlela yokuhlawula",
+    "name": "Igama elipheleleyo",
+    "namePlaceholder": "Igama lakho",
+    "phone": "Inombolo yeselfowuni",
+    "phonePlaceholder": "umz. 082 123 4567",
+    "notes": "Amanqaku okanye ii-aleji",
+    "optional": "Ukuzikhethela",
+    "notesPlaceholder": "Ikhona into ekufuneka siyazi?",
+    "review": "Jonga i-odolo",
+    "largeNote": "Ngaphezulu kwee-pops ezi-{threshold}? UKaydee uza kukuthumelela ikowuteshini yakho.",
+    "cutoff": "Ii-odolo zeveki ezayo zivalwa ngoLwesine ngo-20:00.",
+    "errorSummary": "Nceda ulungise oku kulandelayo:"
+  },
+  "summary": {
+    "eyebrow": "Okukhethileyo",
+    "pops": "ii-pops ezi-{count}",
+    "title": "Isishwankathelo se-Odolo",
+    "empty": "Yongeza incasa ukuze uqalise.",
+    "total": "Iyonke",
+    "note": "Akufuneki akhawunti.",
+    "payNote": "Hlawula ngemali xa ulanda, okanye nge-EFT xa uKaydee eqinisekisile."
+  },
+  "review": {
+    "step": "Jonga i-odolo yakho",
+    "hint": "Qinisekisa ukuba yonke into ichanekile.",
+    "collection": "Ukulanda",
+    "payment": "Intlawulo",
+    "contact": "Iinkcukacha zakho",
+    "edit": "Hlela",
+    "place": "Faka i-Odolo",
+    "placing": "I-odolo yakho iyafakwa..."
+  },
+  "done": {
+    "eyebrow": "I-odolo ifunyenwe",
+    "title": "Enkosi! I-odolo yakho ingenile.",
+    "pending": "UKaydee uza kuqinisekisa emva kwesikolo. Siza kukwazisa, {name}.",
+    "waitlisted": "Le veki igcwele, ngoko ukuluhlu lokulinda, {name}. UKaydee uza kukwazisa ukuba kukho indawo evulekileyo.",
+    "quote": "I-odolo enkulu! UKaydee uza kukuthumelela ikowuteshini emva kwesikolo, {name}.",
+    "number": "Inombolo ye-odolo",
+    "statusLink": "Jonga imeko ye-odolo",
+    "copy": "Kopa ikhonkco",
+    "copied": "Ikhonkco likopiwe",
+    "saveLink": "Gcina eli khonkco ukuze ujonge i-odolo yakho kamva.",
+    "another": "Faka enye i-odolo"
+  },
+  "queued": {
+    "title": "Igcinwe kwifowuni yakho",
+    "body": "Awukho kwi-intanethi. I-odolo yakho igciniwe kwaye iza kuthunyelwa ngokuzenzekelayo xa ubuyela kwi-intanethi. Nceda ushiye eli phepha livuliwe.",
+    "retrying": "Sizama ukuthumela i-odolo yakho...",
+    "failed": "Asikakwazi ukuthumela i-odolo yakho. Siza kuzama kwakhona xa ubuyela kwi-intanethi, okanye ungathumela uKaydee kwi-WhatsApp."
+  },
+  "errors": {
+    "required": "Iyafuneka",
+    "invalid": "Nceda ujonge oku",
+    "too_long": "Inde kakhulu",
+    "too_many": "Zininzi kakhulu kunezo sinokuzenza zencasa enye",
+    "unavailable": "Enye yezi ncasa ayisafumaneki",
+    "closed": "Olo suku alusavulekanga kwii-odolo. Nceda ukhethe olunye.",
+    "conflict": "Kukho into engahambanga kakuhle. Nceda uqalise i-odolo entsha.",
+    "phoneInvalid": "Faka inombolo yeselfowuni yaseMzantsi Afrika, umz. 082 123 4567",
+    "generic": "Kukho into engahambanga kakuhle. Nceda uzame kwakhona.",
+    "fields": {
+      "full_name": "Igama elipheleleyo",
+      "phone": "Inombolo yeselfowuni",
+      "items": "Iincasa nobungakanani",
+      "collection_date": "Usuku lokulanda",
+      "collection_slot": "Ixesha lokulanda",
+      "payment_method": "Indlela yokuhlawula",
+      "special_notes": "Amanqaku",
+      "consent_given": "Imvume",
+      "guardian_consent": "Imvume yomzali okanye yomgcini",
+      "is_minor": "Umbuzo weminyaka",
+      "order_id": "I-odolo",
+      "access_token": "I-odolo",
+      "form": "I-odolo"
+    }
+  },
+  "slots": {
+    "second_break": "Ikhefu lesi-2 · 11:45–12:00",
+    "after_school": "Emva kwesikolo · 14:30–15:00"
+  },
+  "payment": {
+    "cash": "Imali xa ulanda",
+    "eft": "EFT"
+  },
+  "days": {
+    "1": "uMvulo",
+    "2": "uLwesibini",
+    "3": "uLwesithathu",
+    "4": "uLwesine",
+    "5": "uLwesihlanu",
+    "6": "uMgqibelo",
+    "7": "iCawa"
+  },
+  "months": {
+    "1": "kaJanuwari",
+    "2": "kaFebruwari",
+    "3": "kaMatshi",
+    "4": "ka-Epreli",
+    "5": "kaMeyi",
+    "6": "kaJuni",
+    "7": "kaJulayi",
+    "8": "ka-Agasti",
+    "9": "kaSeptemba",
+    "10": "ka-Okthobha",
+    "11": "kaNovemba",
+    "12": "kaDisemba"
+  },
+  "status": {
+    "title": "I-odolo yakho",
+    "loading": "I-odolo yakho iyalayishwa...",
+    "notFound": "Asikwazanga ukuyifumana loo odolo. Qinisekisa ukuba uvule ikhonkco elipheleleyo.",
+    "unavailable": "Asikwazi ukulayisha i-odolo yakho ngoku. Nceda uzame kwakhona emva komzuzu.",
+    "hello": "Molo {name}",
+    "items": "Ii-pops zakho",
+    "total": "Iyonke",
+    "quoteWaiting": "UKaydee uza kukuthumelela ikowuteshini.",
+    "collection": "Ukulanda",
+    "revised": "Umhla omtsha wokulanda",
+    "place": "Phi",
+    "payment": "Intlawulo",
+    "reference": "Isalathiso sentlawulo",
+    "useReference": "Sebenzisa esi salathiso xa uhlawula nge-EFT.",
+    "bank": "Iinkcukacha zebhanki",
+    "updates": "Uhlaziyo",
+    "talk": "Thetha noKaydee",
+    "phone": "Iselfowuni",
+    "backHome": "Buyela kwi-KD Pops",
+    "progress": "Inkqubela ye-odolo",
+    "steps": {
+      "pending": "Ifunyenwe",
+      "confirmed": "Iqinisekisiwe",
+      "baking": "Iyabhakwa",
+      "ready": "Ilungile",
+      "collected": "Ilandiwe"
+    },
+    "label": {
+      "waitlisted": "Kuluhlu lokulinda",
+      "pending": "Ilinde uKaydee",
+      "confirmed": "Iqinisekisiwe",
+      "baking": "Iyabhakwa",
+      "ready": "Ilungele ukulandwa",
+      "collected": "Ilandiwe",
+      "cancelled": "Irhoxisiwe"
+    },
+    "paymentLabel": {
+      "unpaid": "Ayikahlawulwa",
+      "pending_review": "Ubungqina bufunyenwe, buyajongwa",
+      "paid": "Ihlawulwe"
+    }
+  },
+  "templates": {
+    "acknowledgement": "I-odolo {order_number} ifunyenwe – uKaydee uza kuqinisekisa emva kwesikolo.",
+    "waitlisted": "I-odolo {order_number} ikuluhlu lokulinda kuba le veki igcwele. UKaydee uza kukwazisa ukuba kukho indawo evulekileyo.",
+    "quote_pending": "I-odolo {order_number} ifunyenwe. Inkulu, ngoko uKaydee uza kukuthumelela ikowuteshini emva kwesikolo."
+  },
+  "myOrders": {
+    "title": "Ii-odolo zakho zakutsha nje",
+    "open": "Vula"
   }
 }
