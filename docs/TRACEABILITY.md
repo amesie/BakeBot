@@ -1,0 +1,56 @@
+# Traceability matrix
+
+One row per requirement. Status: `todo`, `in progress`, `done`, `verified` (tested with evidence in `docs/TEST_REPORT.md`).
+
+## Functional requirements
+
+| ID | Requirement (short) | Milestone | Files | Tests | Status |
+|---|---|---|---|---|---|
+| REQ-01 | Store POPIA consent + wording version | M1, M2 | | | todo |
+| REQ-02 | Look up customer by phone | M1, M3 | | | todo |
+| REQ-03 | Create customer if no match | M1, M3 | | | todo |
+| REQ-04 | Capture order details | M2, M3 | | | todo |
+| REQ-05 | Reject incomplete submissions | M2, M3 | | | todo |
+| REQ-06 | Waitlist above weekly cap | M3 | | | todo |
+| REQ-07 | >30 units to owner for quote | M3, M5 | | | todo |
+| REQ-08 | Unique order number | M1, M3 | | | todo |
+| REQ-09 | Discard duplicate order ID | M1, M3 | | | todo |
+| REQ-10 | Order acknowledgement | M6 | | | todo |
+| REQ-11 | 15:00 owner summary | M6 | | | todo |
+| REQ-12 | Confirmation on approval | M5 | | | todo |
+| REQ-13 | Decline message | M5 | | | todo |
+| REQ-14 | Payment reference + invoice | M5 | | | todo |
+| REQ-15 | Proof of payment to private bucket | M5 | | | todo |
+| REQ-16 | EFT payment reminder | M6 | | | todo |
+| REQ-17 | Mark paid | M5 | | | todo |
+| REQ-18 | Thursday batch summary | M6 | | | todo |
+| REQ-19 | Revised date on delayed batch | M5 | | | todo |
+| REQ-20 | Release unpaid/uncollected | M6 | | | todo |
+| REQ-21 | AI disclosure | M2, M4 | | | todo |
+| REQ-22 | Owner-approved FAQ answers | M4 | | | todo |
+| REQ-23 | Human handover | M4, M5 | | | todo |
+| REQ-24 | Gemini 5 s fallback | M4 | | | todo |
+| REQ-25 | Offline draft resubmit x3 | M2 | | | todo |
+| REQ-26 | Feedback request | M6 | | | todo |
+| REQ-27 | Anonymise after 90 days | M1, M6 | | | todo |
+
+## Non-functional requirements
+
+| NFR | Target | Milestone | Files | Tests | Status |
+|---|---|---|---|---|---|
+| Availability | 99.5% monthly, `/api/health` + UptimeRobot | M1, M9 | | | todo |
+| Latency | Order API p95 <= 2,000 ms; Gemini <= 5,000 ms | M3, M4 | | | todo |
+| Page weight | <= 500 KB per order journey | M2 | | | todo |
+| Concurrency | 20 conversations, 60 msg/min | M7 | | | todo |
+| Offline | Draft syncs once, no duplicate | M2 | | | todo |
+| Security | RLS, HSTS, private buckets, masking | M0, M1 | `next.config.ts` (HSTS), `proxy.ts` (dashboard only), `supabase/config.toml` (sign-up off) | | in progress |
+| Accessibility | Lighthouse >= 90, 44 px targets | M2 | | | todo |
+| AI transparency | 100% disclosure; no invented answers | M4 | | | todo |
+
+## Engineering (M0 / D1)
+
+| Item | Files | Status |
+|---|---|---|
+| CI: lint, typecheck, tests | `.github/workflows/ci.yml` | done |
+| Supabase CLI + migrations folder | `supabase/config.toml`, `supabase/migrations/` | done (remote link pending) |
+| Env template | `.env.example` | done |
