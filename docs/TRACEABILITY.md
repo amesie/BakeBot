@@ -30,7 +30,7 @@ One row per requirement. Status: `todo`, `in progress`, `done`, `verified` (test
 | REQ-22 | Owner-approved FAQ answers | M4 | | | todo |
 | REQ-23 | Human handover | M4, M5 | | | todo |
 | REQ-24 | Gemini 5 s fallback | M4 | | | todo |
-| REQ-25 | Offline draft resubmit x3 | M2 | `lib/orders/client.ts`, `lib/orders/retry.ts`, `components/order/order-section.tsx` | `tests/orders.test.ts` (3 tries, 2/4/8 s), `e2e/order.spec.ts` (offline, exactly one order) | done (service worker in Phase 3b) |
+| REQ-25 | Offline draft resubmit x3 | M2 | `lib/orders/client.ts`, `lib/orders/retry.ts`, `components/order/order-section.tsx` | `tests/orders.test.ts` (3 tries, 2/4/8 s), `e2e/order.spec.ts` (offline, exactly one order) | done |
 | REQ-26 | Feedback request | M6 | | | todo |
 | REQ-27 | Anonymise after 90 days | M1, M6 | `customers.anonymised_at`, `last_order_at` |  | schema done |
 
@@ -40,9 +40,9 @@ One row per requirement. Status: `todo`, `in progress`, `done`, `verified` (test
 |---|---|---|---|---|---|
 | Availability | 99.5% monthly, `/api/health` + UptimeRobot | M1, M9 | `app/api/health/route.ts`, `public.health_check()` | `tests/rls-anon.test.ts` (health_check responds) | in progress (UptimeRobot in M9) |
 | Latency | Order API p95 <= 2,000 ms; Gemini <= 5,000 ms | M3, M4 | `app/api/orders/route.ts` (Server-Timing header) | 50-submission script in M7 | in progress |
-| Page weight | <= 500 KB per order journey | M2 | `app/layout.tsx` (self-hosted fonts), inline SVG art | measured 266 KB uncompressed home page (2026-10-14); full journey re-measured in M2/M7 | in progress |
+| Page weight | <= 500 KB per order journey | M2 | self-hosted fonts, inline SVG art | 300 KB transferred for home page to review step (2026-10-15, local build); re-measure on Vercel with Lighthouse in M7 | in progress |
 | Concurrency | 20 conversations, 60 msg/min | M7 | | | todo |
-| Offline | Draft syncs once, no duplicate | M2 | `lib/orders/client.ts` | `e2e/order.spec.ts` (offline test) | in progress (service worker for app shell pending) |
+| Offline | Draft syncs once, no duplicate; app opens offline | M2 | `public/sw.js`, `components/service-worker.tsx`, `lib/orders/client.ts` | `e2e/offline.spec.ts` (opens offline), `e2e/order.spec.ts` (offline order, exactly one) | done |
 | Security | RLS, HSTS, private buckets, masking | M0, M1 | `next.config.ts` (HSTS), `proxy.ts`, `supabase/migrations/*_rls.sql`, `*_public_api.sql` | `tests/security-headers.test.ts`, `supabase/tests/02_rls.sql`, `tests/rls-anon.test.ts` | in progress (buckets, masking later) |
 | Accessibility | Lighthouse >= 90, 44 px targets | M2 | `app/globals.css` (D-021) | `e2e/home.spec.ts` (44 px check, mobile + desktop) | in progress (Lighthouse in M7) |
 | AI transparency | 100% disclosure; no invented answers | M4 | | | todo |

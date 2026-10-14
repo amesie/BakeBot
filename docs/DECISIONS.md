@@ -40,6 +40,8 @@ Every decision that changes or fills a gap in the IFS 317 Part 1 SRS is logged h
 | D-034 | 2026-10-15 | Browser (E2E) tests of the order flow use a fake `/api/orders` inside the browser, so they never create real orders in the live database. Database behaviour is tested in `supabase/tests/03_place_order.sql`. Once a staging project exists (D-018) a full end-to-end run against it should be added. | No staging database yet. | REQ-25, Testing |
 | D-035 | 2026-10-15 | Up to 30 per flavour row in the form (the database allows 100 per flavour) so large orders over 30 (REQ-07) can be placed online and routed for a quote. | Figma's 1 to 12 would make REQ-07 unreachable online. | REQ-07 |
 | D-036 | 2026-10-15 | KD Pops has no Instagram account, so none is shown (updates D-025). | Owner confirmed. | — |
+| D-037 | 2026-10-15 | Hand-written service worker (`public/sw.js`) instead of Serwist: caches the home page (which includes the menu) and its static files at install; pages are network-first with offline fallback; `/api`, `/auth` and `/dashboard` are never cached. Registered in production only. | Small, no build-plugin compatibility risk with Next 16; meets spec 7.7. | Offline NFR, REQ-25 |
+| D-038 | 2026-10-15 | The floating mobile "Order Now" bar hides while the order form is on screen. | It covered form fields on small phones (found in screenshot review). | Accessibility NFR |
 
 ## Open gaps
 

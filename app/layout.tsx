@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Chango, Poppins } from "next/font/google";
 import { I18nProvider } from "@/components/i18n-provider";
+import { ServiceWorker } from "@/components/service-worker";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -31,6 +32,7 @@ export default function RootLayout({
     <html lang="en-ZA" className={`${display.variable} ${body.variable}`}>
       <body className="antialiased">
         <I18nProvider>{children}</I18nProvider>
+        <ServiceWorker />
       </body>
     </html>
   );

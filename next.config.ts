@@ -18,7 +18,11 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   cacheComponents: true,
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      // Phones must always check for a new service worker (spec 7.7).
+      { source: "/sw.js", headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }] },
+    ];
   },
 };
 
