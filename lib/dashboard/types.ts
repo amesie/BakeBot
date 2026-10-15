@@ -34,3 +34,15 @@ export function orderTotal(order: DashboardOrder) {
   if (order.payments) return Number(order.payments.amount);
   return order.order_items.reduce((sum, item) => sum + item.quantity * Number(item.unit_price_snapshot), 0);
 }
+
+/** Lower-case and strip accents so "zoe" finds "Zoë". */
+function fold(text: string) {
+  return text.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase().trim();
+}
+
+/** Dashboard search: matches customer name (any part) or order number. */
+export function matchesSearch(name: string | null | undefined, orderNumber: string | null | undefined, query: string) {
+  const q = fold(query);
+  if (!q) return true;
+  return fold(name ?? "").includes(q) || fold(orderNumber ?? "").includes(q);
+}

@@ -34,3 +34,17 @@ describe("dates", () => {
     expect(sastDate("2026-10-18T22:30:00Z")).toBe("2026-10-19"); // 00:30 SAST
   });
 });
+
+import { matchesSearch } from "@/lib/dashboard/types";
+
+describe("dashboard search", () => {
+  it("matches any part of the name, ignoring case and accents", () => {
+    expect(matchesSearch("Zoë Mokoena", "KDP-0042", "zoe")).toBe(true);
+    expect(matchesSearch("Zoë Mokoena", "KDP-0042", "MOKO")).toBe(true);
+    expect(matchesSearch("Zoë Mokoena", "KDP-0042", "thandi")).toBe(false);
+  });
+  it("matches order numbers and treats blank as everything", () => {
+    expect(matchesSearch("Thandi", "KDP-0042", "0042")).toBe(true);
+    expect(matchesSearch("Thandi", "KDP-0042", "  ")).toBe(true);
+  });
+});

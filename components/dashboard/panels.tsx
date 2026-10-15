@@ -4,6 +4,7 @@
 // Phone-first: big buttons, one card per order, actions next to the order.
 
 import Link from "next/link";
+import { useState } from "react";
 import {
   advanceWeek,
   approveOrders,
@@ -20,8 +21,9 @@ import { formatDay } from "@/lib/dates";
 import { formatRand } from "@/lib/format";
 import { dictionaries } from "@/lib/i18n";
 import { maskPhone } from "@/lib/phone";
-import { orderTotal, type DashboardOrder, type PaidPayment, type StaffRole } from "@/lib/dashboard/types";
+import { matchesSearch, orderTotal, type DashboardOrder, type PaidPayment, type StaffRole } from "@/lib/dashboard/types";
 import { ActionForm } from "./action-form";
+import { SearchBox } from "./search-box";
 
 const en = dictionaries.en;
 const day = (iso: string) => formatDay(iso, en);
@@ -32,6 +34,13 @@ function Submit({ pending, children, outline = false }: { pending: boolean; chil
       {pending ? "Saving..." : children}
     </button>
   );
+}
+
+const byName = (orders: DashboardOrder[], query: string) =>
+  orders.filter((o) => matchesSearch(o.customers?.full_name, o.order_number, query));
+
+function NoMatches({ query }: { query: string }) {
+  return <p className="form-note">No customers match &ldquo;{query.trim()}&rdquo;.</p>;
 }
 
 function Empty({ children }: { children: React.ReactNode }) {
@@ -92,11 +101,15 @@ function OrderDetails({ order, role }: { order: DashboardOrder; role: StaffRole 
 
 // ---------------------------------------------------------------- approvals (owner)
 
-export function ApprovalQueue({ orders }: { orders: DashboardOrder[] }) {
-  if (orders.length === 0) return <Empty>No orders waiting. Nice!</Empty>;
+export function ApprovalQueue({ orders: all }: { orders: DashboardOrder[] }) {
+  const [query, setQuery] = useState("");
+  if (all.length === 0) return <Empty>No orders waiting. Nice!</Empty>;
+  const orders = byName(all, query);
   const simple = orders.filter((o) => !o.is_large_order);
   return (
     <div className="stack">
+      <SearchBox value={query} onChange={setQuery} count={orders.length} />
+      {orders.length === 0 && <NoMatches query={query} />}
       {simple.length > 1 && (
         <ActionForm action={approveOrders} id="batch-approve-form" className="kd-card" confirm="Approve all ticked orders?">
           {(pending) => (
@@ -156,9 +169,9 @@ export function ApprovalQueue({ orders }: { orders: DashboardOrder[] }) {
 // ---------------------------------------------------------------- payments + collection (owner and helper)
 
 export function PaymentsPanel({
-  unpaid,
-  ready,
-  paid,
+  unpaid: allUnpaid,
+  ready: allReady,
+  paid: allPaid,
   role,
 }: {
   unpaid: DashboardOrder[];
@@ -166,14 +179,20 @@ export function PaymentsPanel({
   paid: PaidPayment[];
   role: StaffRole;
 }) {
-  const owed = unpaid.reduce((sum, o) => sum + orderTotal(o), 0);
+  const [query, setQuery] = useState("");
+  const owed = allUnpaid.reduce((sum, o) => sum + orderTotal(o), 0); // always the full amount owed
+  const unpaid = byName(allUnpaid, query);
+  const ready = byName(allReady, query);
+  const paid = allPaid.filter((p) => matchesSearch(p.orders?.customers?.full_name, p.orders?.order_number, query));
+  const searching = query.trim() !== "";
   return (
     <div className="stack" style={{ gap: 28 }}>
+      <SearchBox value={query} onChange={setQuery} count={unpaid.length + ready.length + paid.length} />
       <section className="stack">
         <h2 className="font-display" style={{ fontSize: 22, margin: 0 }}>
           Waiting for payment · {formatRand(owed)}
         </h2>
-        {unpaid.length === 0 && <Empty>Everyone has paid.</Empty>}
+        {unpaid.length === 0 && (searching ? <NoMatches query={query} /> : <Empty>Everyone has paid.</Empty>)}
         {unpaid.map((order) => (
           <article key={order.order_id} className="kd-card stack" style={{ padding: 20 }}>
             <OrderDetails order={order} role={role} />
@@ -194,7 +213,7 @@ export function PaymentsPanel({
 
       <section className="stack">
         <h2 className="font-display" style={{ fontSize: 22, margin: 0 }}>Ready to collect</h2>
-        {ready.length === 0 && <Empty>Nothing waiting to be collected.</Empty>}
+        {ready.length === 0 && (searching ? <NoMatches query={query} /> : <Empty>Nothing waiting to be collected.</Empty>)}
         {ready.map((order) => (
           <article key={order.order_id} className="kd-card stack" style={{ padding: 20 }}>
             <OrderDetails order={order} role={role} />
@@ -227,7 +246,7 @@ export function PaymentsPanel({
       <section className="stack">
         <h2 className="font-display" style={{ fontSize: 22, margin: 0 }}>Paid recently</h2>
         {paid.length === 0 ? (
-          <Empty>No payments yet.</Empty>
+          searching ? <NoMatches query={query} /> : <Empty>No payments yet.</Empty>
         ) : (
           <ul className="kd-card m-0 stack" style={{ listStyle: "none", padding: 20, gap: 8 }}>
             {paid.map((p, i) => (
@@ -258,6 +277,7 @@ export function BatchPanel({
   week: string | null;
   role: StaffRole;
 }) {
+  const [query, setQuery] = useState("");
   if (!week) return <Empty>No confirmed orders yet. Approved orders show up here by week.</Empty>;
   const inWeek = orders.filter((o) => o.collection_week === week);
   const toBake = inWeek.filter((o) => ["confirmed", "baking", "ready"].includes(o.order_status));
@@ -296,6 +316,35 @@ export function BatchPanel({
           {count("confirmed")} confirmed · {count("baking")} baking · {count("ready")} ready · {count("collected")} collected
         </p>
       </div>
+
+      <section className="stack">
+        <h2 className="font-display" style={{ fontSize: 22, margin: 0 }}>Orders this week</h2>
+        <SearchBox value={query} onChange={setQuery} count={byName(inWeek, query).length} />
+        {byName(inWeek, query).length === 0 && <NoMatches query={query} />}
+        <ul
+          className="kd-card m-0 stack"
+          style={{ listStyle: "none", padding: 20, gap: 12 }}
+          hidden={byName(inWeek, query).length === 0}
+        >
+          {byName(inWeek, query).map((order) => (
+            <li key={order.order_id} style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+              <span>
+                <b>{order.customers?.full_name}</b> · {order.order_number}
+                <br />
+                <span className="form-note">
+                  {order.order_items.map((i) => `${i.quantity} ${i.products?.flavour}`).join(", ")} ·{" "}
+                  {day(order.revised_collection_date ?? order.collection_date)}, {en.slots[order.collection_slot]}
+                </span>
+              </span>
+              <span className="form-note" style={{ textAlign: "right" }}>
+                {en.status.label[order.order_status]}
+                <br />
+                {order.payments?.payment_status === "paid" ? "Paid" : "Not paid"}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       {role === "owner" && (
         <div className="kd-card stack">
