@@ -166,3 +166,31 @@ export async function getFaqs() {
     .order("question");
   return (data ?? []).map(({ embedding, ...faq }) => ({ ...faq, has_embedding: embedding !== null })) as Faq[];
 }
+
+export type JobHealth = {
+  job_name: string;
+  status: "running" | "succeeded" | "failed";
+  rows_affected: number | null;
+  detail: Record<string, unknown> | null;
+  started_at: string;
+  finished_at: string | null;
+};
+export type ErrorRow = { source: string; message: string; occurred_at: string };
+
+/** M9: database check, last run of every job, recent errors (owner). */
+export async function getSystemStatus() {
+  const supabase = await createClient();
+  const started = Date.now();
+  const [health, jobs, errors] = await Promise.all([
+    supabase.rpc("health_check"),
+    supabase.from("job_health").select("*").order("job_name"),
+    supabase.from("error_log").select("source, message, occurred_at").order("occurred_at", { ascending: false }).limit(20),
+  ]);
+  return {
+    dbOk: !health.error && health.data?.status === "ok",
+    dbMs: Date.now() - started,
+    checkedAt: Date.now(),
+    jobs: (jobs.data ?? []) as JobHealth[],
+    errors: (errors.data ?? []) as ErrorRow[],
+  };
+}

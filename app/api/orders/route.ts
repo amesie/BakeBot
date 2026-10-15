@@ -10,6 +10,7 @@
 import { NextResponse } from "next/server";
 import { validateOrder } from "@/lib/orders/schema";
 import { createAnonClient } from "@/lib/supabase/anon";
+import { logError } from "@/lib/log-error";
 
 const noStore = { "Cache-Control": "no-store" };
 const MAX_BODY_BYTES = 16_000;
@@ -39,7 +40,7 @@ export async function POST(request: Request) {
   const headers = { ...noStore, "Server-Timing": `order;dur=${elapsed}` };
 
   if (error || !data) {
-    console.error("place_order failed", error?.message);
+    await logError("orders", error?.message ?? "place_order returned nothing", { ms: elapsed });
     return NextResponse.json({ error: "unavailable" }, { status: 503, headers });
   }
 

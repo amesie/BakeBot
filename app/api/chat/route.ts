@@ -15,6 +15,7 @@ import { dictionaries, isLanguage } from "@/lib/i18n";
 import { getMenu } from "@/lib/menu";
 import { getOrderOptions } from "@/lib/order-options";
 import { createAnonClient } from "@/lib/supabase/anon";
+import { logError } from "@/lib/log-error";
 
 const noStore = { "Cache-Control": "no-store" };
 
@@ -130,7 +131,7 @@ export async function POST(request: Request) {
     const message = error instanceof Error ? error.message : "error";
     if (message === "too_long") return NextResponse.json({ reply: m.limit, fallback: true }, { headers: noStore });
     if (message === "not_found") return NextResponse.json({ error: "not_found" }, { status: 404, headers: noStore });
-    console.error("chat failed", message);
+    await logError("chat", message, { action });
     // Anything unexpected: send the customer to the order form (REQ-24).
     return NextResponse.json({ reply: m.fallback, fallback: true }, { headers: noStore });
   }

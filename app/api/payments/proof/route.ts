@@ -7,6 +7,7 @@
 // policy allows that path only; finish_proof_upload() links it (D-050).
 import { NextResponse } from "next/server";
 import { createAnonClient } from "@/lib/supabase/anon";
+import { logError } from "@/lib/log-error";
 
 const noStore = { "Cache-Control": "no-store" };
 const MAX_BYTES = 4 * 1024 * 1024;
@@ -44,6 +45,7 @@ export async function POST(request: Request) {
   if (start.error) {
     const known = ["not_found", "not_approved", "already_paid", "bad_type"];
     const code = known.includes(start.error.message) ? start.error.message : "unavailable";
+    if (code === "unavailable") await logError("payments/proof", `start: ${start.error.message}`);
     return reply(code, code === "not_found" ? 404 : code === "unavailable" ? 503 : 409);
   }
 
@@ -52,7 +54,7 @@ export async function POST(request: Request) {
     .from("payment-proofs")
     .upload(path, file, { contentType: file.type, upsert: false });
   if (upload.error) {
-    console.error("proof upload failed", upload.error.message);
+    await logError("payments/proof", `upload: ${upload.error.message}`);
     return reply("unavailable", 503);
   }
 
@@ -62,7 +64,7 @@ export async function POST(request: Request) {
     p_path: path,
   });
   if (finish.error) {
-    console.error("finish_proof_upload failed", finish.error.message);
+    await logError("payments/proof", `finish: ${finish.error.message}`);
     return reply("unavailable", 503);
   }
   return NextResponse.json(finish.data, { headers: noStore });

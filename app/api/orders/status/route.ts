@@ -5,6 +5,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createAnonClient } from "@/lib/supabase/anon";
+import { logError } from "@/lib/log-error";
 
 const noStore = { "Cache-Control": "no-store" };
 
@@ -25,7 +26,7 @@ export async function POST(request: Request) {
   });
 
   if (error) {
-    console.error("get_order_status failed", error.message);
+    await logError("orders/status", error.message);
     return NextResponse.json({ error: "unavailable" }, { status: 503, headers: noStore });
   }
   if (!data) {

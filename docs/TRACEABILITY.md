@@ -62,6 +62,12 @@ One row per requirement. Status: `todo`, `in progress`, `done`, `verified` (test
 | CI: lint, typecheck, tests | `.github/workflows/ci.yml` | done |
 | Supabase CLI + migrations folder | `supabase/config.toml`, `supabase/migrations/` | done (remote link pending) |
 | Env template | `.env.example` | done |
+| Deployment flow, rollback, secrets (M8) | `docs/DEPLOYMENT.md`, `vercel.json` | done |
+| User guide for Kaydee and helper (M8) | `docs/USER_GUIDE.md` | done |
+| Security and breach response (spec 7.8) | `docs/SECURITY.md` | done |
+| Error log + job health view (M9) | `supabase/migrations/20261016180000_monitoring.sql`, `lib/log-error.ts`, `components/dashboard/system.tsx` | done (`supabase/tests/10_monitoring.sql`) |
+| UptimeRobot on `/api/health` (M9) | `docs/MONITORING.md` | waiting for the team to create the monitor |
+| Weekly conversation review (M9) | Dashboard → Inbox → "This week's chats" | done |
 
 ## State machines (spec section 4)
 

@@ -6,6 +6,7 @@
 import { timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 import { createAnonClient } from "@/lib/supabase/anon";
+import { logError } from "@/lib/log-error";
 
 function sameSecret(given: string | null, expected: string | undefined) {
   if (!given || !expected) return false;
@@ -28,7 +29,7 @@ export async function POST(request: Request) {
   const deleted: string[] = [];
   for (let i = 0; i < paths.length; i += 100) {
     const { data, error } = await supabase.storage.from("payment-proofs").remove(paths.slice(i, i + 100));
-    if (error) console.error("proof deletion failed", error.message);
+    if (error) await logError("cron/delete-proofs", error.message);
     deleted.push(...(data ?? []).map((file) => file.name));
   }
 

@@ -17,17 +17,19 @@ import {
   getRecentlyPaid,
   getSettings,
   getStaff,
+  getSystemStatus,
   type StaffRole,
 } from "@/lib/dashboard/data";
 import { DeletionRequest, FeedbackPanel, OwnerUpdates, ReleasedOrders } from "@/components/dashboard/updates";
 import { FaqPanel, InboxPanel } from "@/components/dashboard/bakebot";
+import { SystemPanel } from "@/components/dashboard/system";
 
 export const metadata: Metadata = {
   title: "Dashboard · KD Pops",
   robots: { index: false, follow: false },
 };
 
-type Tab = "orders" | "payments" | "batch" | "inbox" | "faq" | "feedback" | "settings";
+type Tab = "orders" | "payments" | "batch" | "inbox" | "faq" | "feedback" | "settings" | "system";
 
 const TABS: { id: Tab; label: string; roles: StaffRole[] }[] = [
   { id: "orders", label: "Approve", roles: ["owner"] },
@@ -37,6 +39,7 @@ const TABS: { id: Tab; label: string; roles: StaffRole[] }[] = [
   { id: "faq", label: "BakeBot answers", roles: ["owner"] },
   { id: "feedback", label: "Feedback", roles: ["owner"] },
   { id: "settings", label: "Settings", roles: ["owner"] },
+  { id: "system", label: "System", roles: ["owner"] },
 ];
 
 export default function DashboardPage({
@@ -156,6 +159,10 @@ async function TabContent({ tab, role, week }: { tab: Tab; role: StaffRole; week
 
   if (tab === "faq") {
     return <FaqPanel faqs={await getFaqs()} />;
+  }
+
+  if (tab === "system") {
+    return <SystemPanel {...await getSystemStatus()} />;
   }
 
   if (tab === "feedback") {
