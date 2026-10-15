@@ -227,7 +227,19 @@
       "unpaid": "Ayikahlawulwa",
       "pending_review": "Ubungqina bufunyenwe, buyajongwa",
       "paid": "Ihlawulwe"
-    }
+    },
+    "proofTitle": "Uhlawule nge-EFT? Thumela ubungqina bentlawulo",
+    "proofHint": "Iskrini okanye i-PDF evela kwi-app yakho yebhanki. Iifoto zenziwa zincinci kuqala ukonga idatha.",
+    "proofFile": "Ubungqina bentlawulo",
+    "proofSend": "Thumela ubungqina",
+    "proofSending": "Iyathunyelwa...",
+    "proofDone": "Enkosi! UKaydee uza kubujonga aze aphawule i-odolo yakho njengehlawulweyo.",
+    "proofAgain": "Uthumele ifayile engeyiyo? Ungathumela enye.",
+    "proofTooLarge": "Loo fayile inkulu kakhulu. Nceda ukhethe engaphantsi kwe-4 MB.",
+    "proofBadType": "Nceda ukhethe ifoto, iskrini okanye i-PDF.",
+    "proofPaid": "Le odolo sele ihlawulwe. Enkosi!",
+    "proofFailed": "Asikwazanga ukuyithumela. Nceda uzame kwakhona.",
+    "invoice": "Khuphela i-invoyisi"
   },
   "templates": {
     "acknowledgement": "I-odolo {order_number} ifunyenwe – uKaydee uza kuqinisekisa emva kwesikolo.",
@@ -238,7 +250,9 @@
     "declined": "Uxolo, i-KD Pops ayinakuyithatha i-odolo {order_number} ngeli xesha. Akukho nto ityalwayo. Enkosi ngokuqonda.",
     "payment_received": "Intlawulo ye-odolo {order_number} ifunyenwe. Enkosi!",
     "ready": "I-odolo {order_number} ilungile! Yilande ngo-{date}, {slot}, e-{place}.",
-    "delayed": "Uxolo, i-odolo {order_number} ilibazisekile. Usuku lwakho olutsha lokulanda ngu-{date}."
+    "delayed": "Uxolo, i-odolo {order_number} ilibazisekile. Usuku lwakho olutsha lokulanda ngu-{date}.",
+    "proof_received": "Sibufumene ubungqina bakho bentlawulo be-odolo {order_number}. UKaydee uza kubujonga kungekudala.",
+    "proof_rejected": "Asikwazanga ukubudibanisa ubungqina bentlawulo be-odolo {order_number}. Nceda ujonge isixa nesalathiso, uze ubuthumele kwakhona."
   },
   "myOrders": {
     "title": "Ii-odolo zakho zakutsha nje",

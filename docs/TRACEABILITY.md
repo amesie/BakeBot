@@ -19,8 +19,8 @@ One row per requirement. Status: `todo`, `in progress`, `done`, `verified` (test
 | REQ-11 | 15:00 owner summary | M6 | | | todo |
 | REQ-12 | Confirmation on approval | M5 | `supabase/migrations/20261015120000_owner_actions.sql` (`approve_order`, confirmation_cash/eft), status page | `supabase/tests/04_owner_actions.sql` | done (WhatsApp in M6) |
 | REQ-13 | Decline message | M5 | `supabase/migrations/20261015120000_owner_actions.sql` (`decline_order`) | `supabase/tests/04_owner_actions.sql` | done |
-| REQ-14 | Payment reference + invoice | M5 | `supabase/migrations/20261015120000_owner_actions.sql` (reference, payment, invoice row) | `supabase/tests/04_owner_actions.sql` | in progress (invoice PDF in Phase 4b, D-043) |
-| REQ-15 | Proof of payment to private bucket | M5 | | | todo |
+| REQ-14 | Payment reference + invoice | M5 | reference + invoice row (`20261015120000_owner_actions.sql`), `lib/invoice-pdf.ts`, `app/api/orders/invoice`, `app/dashboard/invoice/[orderId]`, `get_invoice()` in `supabase/migrations/20261016090000_payment_proofs.sql` | `04_owner_actions.sql`, `supabase/tests/06_payment_proofs.sql`, `tests/invoice-pdf.test.ts`, `e2e/payments.spec.ts` | done |
+| REQ-15 | Proof of payment to private bucket | M5 | `supabase/migrations/20261016090000_payment_proofs.sql`, `app/api/payments/proof/route.ts`, status page upload, `app/dashboard/proof/[orderId]` | `supabase/tests/06_payment_proofs.sql`, `e2e/payments.spec.ts` | done (deletion after 30 days in M6) |
 | REQ-16 | EFT payment reminder | M6 | | | todo |
 | REQ-17 | Mark paid | M5 | `supabase/migrations/20261015120000_owner_actions.sql` (`mark_paid`), Payments tab | `supabase/tests/04_owner_actions.sql`, `02_rls.sql` | done |
 | REQ-18 | Thursday batch summary | M6 | | | todo |

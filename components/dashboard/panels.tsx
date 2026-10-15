@@ -13,6 +13,7 @@ import {
   markCollected,
   markPaid,
   markReady,
+  rejectProof,
   removeWeekCap,
   saveProduct,
   saveSettings,
@@ -220,16 +221,44 @@ export function PaymentsPanel({
           <article key={order.order_id} className="kd-card stack" style={{ padding: 20 }}>
             <OrderDetails order={order} role={role} />
             {order.payments?.payment_status === "pending_review" && (
-              <p className="form-note m-0">Proof of payment uploaded: check it, then mark paid.</p>
+              <p className="form-note m-0">
+                Proof of payment uploaded: check the amount ({formatRand(orderTotal(order))}) and reference
+                {order.payment_reference ? ` (${order.payment_reference})` : ""}, then mark paid.
+              </p>
             )}
-            <ActionForm action={markPaid} confirm={`Mark ${order.order_number} as paid (${formatRand(orderTotal(order))})?`}>
-              {(pending) => (
-                <>
-                  <input type="hidden" name="order_id" value={order.order_id} />
-                  <Submit pending={pending}>Mark paid</Submit>
-                </>
+            <div className="actions-row" style={{ marginTop: 0 }}>
+              {order.payments?.payment_status === "pending_review" && (
+                <a className="pill pill-small" href={`/dashboard/proof/${order.order_id}`} target="_blank" rel="noopener noreferrer">
+                  View proof
+                </a>
               )}
-            </ActionForm>
+              <ActionForm action={markPaid} confirm={`Mark ${order.order_number} as paid (${formatRand(orderTotal(order))})?`}>
+                {(pending) => (
+                  <>
+                    <input type="hidden" name="order_id" value={order.order_id} />
+                    <Submit pending={pending}>Mark paid</Submit>
+                  </>
+                )}
+              </ActionForm>
+              {order.payments?.payment_status === "pending_review" && (
+                <ActionForm
+                  action={rejectProof}
+                  confirm={`The proof for ${order.order_number} doesn't match? The customer will be asked to check and upload again.`}
+                >
+                  {(pending) => (
+                    <>
+                      <input type="hidden" name="order_id" value={order.order_id} />
+                      <Submit pending={pending} outline>
+                        Doesn&apos;t match
+                      </Submit>
+                    </>
+                  )}
+                </ActionForm>
+              )}
+              <a className="pill pill-small pill-outline" href={`/dashboard/invoice/${order.order_id}`} target="_blank" rel="noopener noreferrer">
+                Invoice
+              </a>
+            </div>
           </article>
         ))}
       </section>

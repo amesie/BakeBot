@@ -227,7 +227,19 @@
       "unpaid": "Not paid yet",
       "pending_review": "Proof received, being checked",
       "paid": "Paid"
-    }
+    },
+    "proofTitle": "Paid by EFT? Send your proof of payment",
+    "proofHint": "A screenshot or PDF from your banking app. Photos are made smaller first to save data.",
+    "proofFile": "Proof of payment",
+    "proofSend": "Send proof",
+    "proofSending": "Sending...",
+    "proofDone": "Thank you! Kaydee will check it and mark your order as paid.",
+    "proofAgain": "Sent the wrong file? You can send another one.",
+    "proofTooLarge": "That file is too big. Please choose one under 4 MB.",
+    "proofBadType": "Please choose a photo, screenshot or PDF.",
+    "proofPaid": "This order is already paid. Thank you!",
+    "proofFailed": "We couldn't send it. Please try again.",
+    "invoice": "Download invoice"
   },
   "templates": {
     "acknowledgement": "Order {order_number} received – Kaydee will confirm after school.",
@@ -238,7 +250,9 @@
     "declined": "Sorry, KD Pops can't take order {order_number} this time. Nothing is owed. Thank you for understanding.",
     "payment_received": "Payment for order {order_number} received. Thank you!",
     "ready": "Order {order_number} is ready! Collect it on {date}, {slot}, at {place}.",
-    "delayed": "Sorry, order {order_number} is delayed. Your new collection day is {date}."
+    "delayed": "Sorry, order {order_number} is delayed. Your new collection day is {date}.",
+    "proof_received": "We received your proof of payment for order {order_number}. Kaydee will check it soon.",
+    "proof_rejected": "We couldn't match the proof of payment for order {order_number}. Please check the amount and reference, then send it again."
   },
   "myOrders": {
     "title": "Your recent orders",

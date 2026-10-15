@@ -227,7 +227,19 @@
       "unpaid": "Nog nie betaal nie",
       "pending_review": "Bewys ontvang, word nagegaan",
       "paid": "Betaal"
-    }
+    },
+    "proofTitle": "Per EFT betaal? Stuur jou bewys van betaling",
+    "proofHint": "'n Skermskoot of PDF van jou bankprogram. Foto's word eers kleiner gemaak om data te spaar.",
+    "proofFile": "Bewys van betaling",
+    "proofSend": "Stuur bewys",
+    "proofSending": "Word gestuur...",
+    "proofDone": "Dankie! Kaydee sal dit nagaan en jou bestelling as betaal merk.",
+    "proofAgain": "Verkeerde lêer gestuur? Jy kan nog een stuur.",
+    "proofTooLarge": "Daardie lêer is te groot. Kies asseblief een kleiner as 4 MB.",
+    "proofBadType": "Kies asseblief 'n foto, skermskoot of PDF.",
+    "proofPaid": "Hierdie bestelling is reeds betaal. Dankie!",
+    "proofFailed": "Ons kon dit nie stuur nie. Probeer asseblief weer.",
+    "invoice": "Laai faktuur af"
   },
   "templates": {
     "acknowledgement": "Bestelling {order_number} ontvang – Kaydee sal na skool bevestig.",
@@ -238,7 +250,9 @@
     "declined": "Jammer, KD Pops kan nie hierdie keer bestelling {order_number} aanvaar nie. Jy skuld niks. Dankie vir jou begrip.",
     "payment_received": "Betaling vir bestelling {order_number} ontvang. Dankie!",
     "ready": "Bestelling {order_number} is gereed! Haal dit af op {date}, {slot}, by {place}.",
-    "delayed": "Jammer, bestelling {order_number} is vertraag. Jou nuwe afhaaldag is {date}."
+    "delayed": "Jammer, bestelling {order_number} is vertraag. Jou nuwe afhaaldag is {date}.",
+    "proof_received": "Ons het jou bewys van betaling vir bestelling {order_number} ontvang. Kaydee sal dit binnekort nagaan.",
+    "proof_rejected": "Ons kon nie die bewys van betaling vir bestelling {order_number} laat klop nie. Kontroleer asseblief die bedrag en verwysing en stuur dit weer."
   },
   "myOrders": {
     "title": "Jou onlangse bestellings",

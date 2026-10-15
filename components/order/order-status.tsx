@@ -14,13 +14,14 @@ import { formatDay, sastDate } from "@/lib/dates";
 import { formatRand } from "@/lib/format";
 import { format, type Messages } from "@/lib/i18n";
 import { rememberOrder, type OrderSummary } from "@/lib/orders/client";
+import { compressImage } from "@/lib/compress-image";
 import { whatsAppLink } from "@/lib/site";
 
 type Load =
   | { state: "loading" }
   | { state: "not_found" }
   | { state: "unavailable" }
-  | { state: "ready"; order: OrderSummary };
+  | { state: "ready"; order: OrderSummary; token: string };
 
 const STEPS = ["pending", "confirmed", "baking", "ready", "collected"] as const;
 
@@ -43,7 +44,7 @@ export function OrderStatus() {
         if (response.ok) {
           const order: OrderSummary = await response.json();
           rememberOrder(order.order_number, token);
-          setLoad({ state: "ready", order });
+          setLoad({ state: "ready", order, token });
         } else {
           setLoad({ state: response.status === 404 ? "not_found" : "unavailable" });
         }
@@ -65,7 +66,14 @@ export function OrderStatus() {
         {load.state === "loading" && <p className="kd-card">{m.status.loading}</p>}
         {load.state === "not_found" && <p className="kd-card">{m.status.notFound}</p>}
         {load.state === "unavailable" && <p className="kd-card">{m.status.unavailable}</p>}
-        {load.state === "ready" && <OrderDetails m={m} order={load.order} />}
+        {load.state === "ready" && (
+          <OrderDetails
+            m={m}
+            order={load.order}
+            token={load.token}
+            onUpdate={(order) => setLoad({ state: "ready", order: { ...load.order, ...order }, token: load.token })}
+          />
+        )}
 
         <div className="actions-row">
           {whatsAppLink && (
@@ -82,7 +90,17 @@ export function OrderStatus() {
   );
 }
 
-function OrderDetails({ m, order }: { m: Messages; order: OrderSummary }) {
+function OrderDetails({
+  m,
+  order,
+  token,
+  onUpdate,
+}: {
+  m: Messages;
+  order: OrderSummary;
+  token: string;
+  onUpdate: (order: OrderSummary) => void;
+}) {
   const reached = STEPS.indexOf(order.order_status as (typeof STEPS)[number]);
   const showProgress = reached >= 0;
 
@@ -153,14 +171,27 @@ function OrderDetails({ m, order }: { m: Messages; order: OrderSummary }) {
           {order.payment_method === "eft" && order.payment_reference && <small>{m.status.useReference}</small>}
           {order.bank_details && (
             <small>
-              {m.status.bank}: {order.bank_details}
+              {m.status.bank}:<br />
+              <span style={{ whiteSpace: "pre-line" }}>{order.bank_details}</span>
             </small>
           )}
         </div>
         <p className="form-note">
           {m.status.phone}: {order.phone_masked}
         </p>
+        {order.payment_reference && (
+          // REQ-14: invoice PDF; the token goes in the request body, not the URL.
+          <form method="post" action="/api/orders/invoice">
+            <input type="hidden" name="order_number" value={order.order_number} />
+            <input type="hidden" name="token" value={token} />
+            <button className="pill pill-small pill-outline">{m.status.invoice}</button>
+          </form>
+        )}
       </div>
+
+      {order.payment_method === "eft" && order.payment_reference && order.payment_status !== "paid" && (
+        <ProofUpload m={m} order={order} token={token} onUpdate={onUpdate} />
+      )}
 
       {order.messages.length > 0 && (
         <div className="kd-card">
@@ -191,4 +222,84 @@ function readableParams(params: Record<string, string>, m: Messages): Record<str
   if (params.slot && params.slot in m.slots) out.slot = m.slots[params.slot as keyof Messages["slots"]];
   if (params.amount !== undefined) out.amount = formatRand(params.amount);
   return out;
+}
+
+// REQ-15: proof of payment for approved EFT orders.
+function ProofUpload({
+  m,
+  order,
+  token,
+  onUpdate,
+}: {
+  m: Messages;
+  order: OrderSummary;
+  token: string;
+  onUpdate: (order: OrderSummary) => void;
+}) {
+  const [state, setState] = useState<"idle" | "sending" | "done">(
+    order.payment_status === "pending_review" ? "done" : "idle",
+  );
+  const [error, setError] = useState<string | null>(null);
+
+  const send = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const input = event.currentTarget.elements.namedItem("file") as HTMLInputElement;
+    const original = input.files?.[0];
+    if (!original) return setError(m.status.proofBadType);
+    setError(null);
+    setState("sending");
+
+    const file = await compressImage(original);
+    if (file.size > 4 * 1024 * 1024) {
+      setState("idle");
+      return setError(m.status.proofTooLarge);
+    }
+    const body = new FormData();
+    body.set("order_number", order.order_number);
+    body.set("token", token);
+    body.set("file", file);
+    try {
+      const response = await fetch("/api/payments/proof", { method: "POST", body });
+      if (response.ok) {
+        onUpdate(await response.json());
+        input.value = "";
+        return setState("done");
+      }
+      const { error: code } = await response.json().catch(() => ({ error: "" }));
+      setState("idle");
+      setError(
+        code === "too_large" ? m.status.proofTooLarge
+        : code === "bad_type" ? m.status.proofBadType
+        : code === "already_paid" ? m.status.proofPaid
+        : m.status.proofFailed,
+      );
+    } catch {
+      setState("idle");
+      setError(m.status.proofFailed);
+    }
+  };
+
+  return (
+    <form className="kd-card stack" onSubmit={send}>
+      <h2 className="font-display" style={{ fontSize: 22, margin: 0 }}>{m.status.proofTitle}</h2>
+      {state === "done" ? (
+        <>
+          <p className="m-0" role="status">{m.status.proofDone}</p>
+          <p className="form-note m-0">{m.status.proofAgain}</p>
+        </>
+      ) : (
+        <p className="form-note m-0">{m.status.proofHint}</p>
+      )}
+      <div className="field">
+        <label className="field-label" htmlFor="proof-file">{m.status.proofFile}</label>
+        <input id="proof-file" name="file" className="input" type="file" accept="image/*,application/pdf" />
+      </div>
+      {error && <p className="field-error m-0" role="alert">{error}</p>}
+      <div>
+        <button className="pill pill-small" disabled={state === "sending"}>
+          {state === "sending" ? m.status.proofSending : m.status.proofSend}
+        </button>
+      </div>
+    </form>
+  );
 }

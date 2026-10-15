@@ -22,6 +22,7 @@ const friendly: Record<string, string> = {
   invalid_quote: "The quote must be zero or more.",
   order_not_found: "That order no longer exists.",
   not_bakeable: "That order is already ready, collected or cancelled.",
+  no_proof: "There is no proof waiting to be checked for that order.",
 };
 
 function explain(error: { message: string } | null, fallback = "Something went wrong. Please try again.") {
@@ -68,6 +69,13 @@ export async function markPaid(_: ActionState, form: FormData): Promise<ActionSt
   const supabase = await createClient();
   const { error } = await supabase.rpc("mark_paid", { p_order_id: String(form.get("order_id")) });
   return error ? { ok: false, message: explain(error)! } : done("Marked as paid.");
+}
+
+/** Proof doesn't match: back to unpaid, customer asked to check and resend. */
+export async function rejectProof(_: ActionState, form: FormData): Promise<ActionState> {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("reject_proof", { p_order_id: String(form.get("order_id")) });
+  return error ? { ok: false, message: explain(error)! } : done("The customer has been asked to check and upload again.");
 }
 
 export async function markCollected(_: ActionState, form: FormData): Promise<ActionState> {
