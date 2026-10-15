@@ -13,7 +13,8 @@ const ORDER_FIELDS = `
   special_notes, total_units, is_large_order, quote_amount, created_at, released_at,
   customers ( full_name, phone_number, is_minor, preferred_language ),
   order_items ( quantity, unit_price_snapshot, products ( flavour ) ),
-  payments ( amount, payment_status, paid_at )
+  payments ( amount, payment_status, paid_at ),
+  invoices ( share_token )
 `;
 
 /** The signed-in user and their staff role, or null if not staff. */
@@ -85,4 +86,11 @@ export async function getCollectionPlace() {
   const supabase = await createClient();
   const { data } = await supabase.from("app_settings").select("collection_place").maybeSingle();
   return (data?.collection_place as string | undefined) ?? "";
+}
+
+export async function getOrdersByIds(ids: string[]) {
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("orders").select(ORDER_FIELDS).in("order_id", ids);
+  if (error) throw new Error(error.message);
+  return (data ?? []) as unknown as DashboardOrder[];
 }

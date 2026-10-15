@@ -4,8 +4,9 @@
 // Phone-first: big buttons, one card per order, actions next to the order.
 
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useState, useSyncExternalStore } from "react";
 import {
+  type ActionState,
   advanceWeek,
   approveOrders,
   declineOrder,
@@ -24,8 +25,8 @@ import { formatRand } from "@/lib/format";
 import { dictionaries } from "@/lib/i18n";
 import { maskPhone } from "@/lib/phone";
 import { matchesSearch, orderTotal, type DashboardOrder, type PaidPayment, type StaffRole } from "@/lib/dashboard/types";
-import { ActionForm } from "./action-form";
-import { readyWhatsAppLink } from "@/lib/dashboard/whatsapp";
+import { ActionForm, WhatsAppLinks } from "./action-form";
+import { invoiceWhatsAppLink, readyWhatsAppLink } from "@/lib/dashboard/whatsapp";
 import { SearchBox } from "./search-box";
 
 const en = dictionaries.en;
@@ -44,6 +45,18 @@ const byName = (orders: DashboardOrder[], query: string) =>
 
 function NoMatches({ query }: { query: string }) {
   return <p className="form-note">No customers match &ldquo;{query.trim()}&rdquo;.</p>;
+}
+
+const noSubscribe = () => () => {};
+
+/** Confirmation + private invoice link on WhatsApp, to send or resend (D-053). */
+function WhatsAppInvoice({ order, place }: { order: DashboardOrder; place: string }) {
+  // The site address is only known in the browser (null while rendering on the server).
+  const origin = useSyncExternalStore(noSubscribe, () => window.location.origin, () => null);
+  const link = origin ? invoiceWhatsAppLink(order, place, origin) : null;
+  if (!link) return null;
+  const name = order.customers?.full_name.split(" ")[0] ?? "customer";
+  return <WhatsAppLinks links={[{ label: `WhatsApp ${name}: invoice`, href: link }]} />;
 }
 
 /** Opens WhatsApp on Kaydee's phone with the "ready" message typed (D-048). */
@@ -145,46 +158,65 @@ export function ApprovalQueue({ orders: all }: { orders: DashboardOrder[] }) {
         </ActionForm>
       )}
       {orders.map((order) => (
-        <article key={order.order_id} className="kd-card stack" style={{ padding: 20 }}>
-          {simple.length > 1 && !order.is_large_order && (
-            <label className="choice" style={{ alignSelf: "flex-start" }}>
-              <input type="checkbox" name="order_id" value={order.order_id} form="batch-approve-form" />
-              Tick for batch approval
-            </label>
-          )}
-          <OrderDetails order={order} role="owner" />
-          {order.order_status === "waitlisted" && (
-            <p className="form-note m-0">On the waitlist (week was full). Approving takes it anyway.</p>
-          )}
-          <div className="actions-row" style={{ marginTop: 4 }}>
-            <ActionForm action={approveOrders}>
-              {(pending) => (
-                <div style={{ display: "flex", gap: 8, alignItems: "end", flexWrap: "wrap" }}>
-                  <input type="hidden" name="order_id" value={order.order_id} />
-                  {order.is_large_order && (
-                    <label className="field" style={{ maxWidth: 160 }}>
-                      Quote (R)
-                      <input className="input" name="quote" inputMode="decimal" required placeholder="e.g. 400" />
-                    </label>
-                  )}
-                  <Submit pending={pending}>Approve</Submit>
-                </div>
-              )}
-            </ActionForm>
-            <ActionForm action={declineOrder} confirm={`Decline ${order.order_number}? The customer will get a polite message.`}>
-              {(pending) => (
-                <>
-                  <input type="hidden" name="order_id" value={order.order_id} />
-                  <Submit pending={pending} outline>
-                    Decline
-                  </Submit>
-                </>
-              )}
-            </ActionForm>
-          </div>
-        </article>
+        <ApprovalCard key={order.order_id} order={order} batchable={simple.length > 1 && !order.is_large_order} />
       ))}
     </div>
+  );
+}
+
+function ApprovalCard({ order, batchable }: { order: DashboardOrder; batchable: boolean }) {
+  const [result, setResult] = useState<ActionState>(null);
+  const onResult = useCallback((state: ActionState) => setResult(state), []);
+  const approved = result?.ok === true;
+
+  return (
+    <article className="kd-card stack" style={{ padding: 20, opacity: approved ? 0.95 : 1 }}>
+      {batchable && !approved && (
+        <label className="choice" style={{ alignSelf: "flex-start" }}>
+          <input type="checkbox" name="order_id" value={order.order_id} form="batch-approve-form" />
+          Tick for batch approval
+        </label>
+      )}
+      <OrderDetails order={order} role="owner" />
+      {order.order_status === "waitlisted" && !approved && (
+        <p className="form-note m-0">On the waitlist (week was full). Approving takes it anyway.</p>
+      )}
+      {approved ? (
+        <div className="stack" style={{ gap: 4 }}>
+          <span className="status-pill" style={{ alignSelf: "flex-start" }}>Approved ✓</span>
+          <p className="form-note m-0">{result.message}</p>
+          {result.links && <WhatsAppLinks links={result.links} />}
+        </div>
+      ) : (
+        <div className="actions-row" style={{ marginTop: 4 }}>
+          <ActionForm action={approveOrders} onResult={onResult}>
+            {(pending) => (
+              <div style={{ display: "flex", gap: 8, alignItems: "end", flexWrap: "wrap" }}>
+                <input type="hidden" name="order_id" value={order.order_id} />
+                <input type="hidden" name="mode" value="single" />
+                {order.is_large_order && (
+                  <label className="field" style={{ maxWidth: 160 }}>
+                    Quote (R)
+                    <input className="input" name="quote" inputMode="decimal" required placeholder="e.g. 400" />
+                  </label>
+                )}
+                <Submit pending={pending}>Approve</Submit>
+              </div>
+            )}
+          </ActionForm>
+          <ActionForm action={declineOrder} confirm={`Decline ${order.order_number}? The customer will get a polite message.`}>
+            {(pending) => (
+              <>
+                <input type="hidden" name="order_id" value={order.order_id} />
+                <Submit pending={pending} outline>
+                  Decline
+                </Submit>
+              </>
+            )}
+          </ActionForm>
+        </div>
+      )}
+    </article>
   );
 }
 
@@ -255,6 +287,7 @@ export function PaymentsPanel({
                   )}
                 </ActionForm>
               )}
+              {role === "owner" && <WhatsAppInvoice order={order} place={place} />}
               <a className="pill pill-small pill-outline" href={`/dashboard/invoice/${order.order_id}`} target="_blank" rel="noopener noreferrer">
                 Invoice
               </a>

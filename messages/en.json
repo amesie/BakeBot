@@ -252,7 +252,9 @@
     "ready": "Order {order_number} is ready! Collect it on {date}, {slot}, at {place}.",
     "delayed": "Sorry, order {order_number} is delayed. Your new collection day is {date}.",
     "proof_received": "We received your proof of payment for order {order_number}. Kaydee will check it soon.",
-    "proof_rejected": "We couldn't match the proof of payment for order {order_number}. Please check the amount and reference, then send it again."
+    "proof_rejected": "We couldn't match the proof of payment for order {order_number}. Please check the amount and reference, then send it again.",
+    "invoice_link": "Your invoice: {url}",
+    "signature": "BakeBot (KD Pops)"
   },
   "myOrders": {
     "title": "Your recent orders",

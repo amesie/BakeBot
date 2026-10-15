@@ -21,6 +21,7 @@ export type DashboardOrder = {
   customers: { full_name: string; phone_number: string; is_minor: boolean; preferred_language: "en" | "xh" | "af" } | null;
   order_items: { quantity: number; unit_price_snapshot: number; products: { flavour: string } | null }[];
   payments: { amount: number; payment_status: "unpaid" | "pending_review" | "paid"; paid_at: string | null } | null;
+  invoices: { share_token: string } | null;
 };
 
 export type PaidPayment = {

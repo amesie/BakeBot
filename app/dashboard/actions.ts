@@ -7,9 +7,17 @@
 import { refresh, updateTag } from "next/cache";
 import { MENU_CACHE_TAG } from "@/lib/menu";
 import { ORDER_OPTIONS_CACHE_TAG } from "@/lib/order-options";
+import { headers } from "next/headers";
+import { getCollectionPlace, getOrdersByIds } from "@/lib/dashboard/data";
+import { invoiceWhatsAppLink } from "@/lib/dashboard/whatsapp";
 import { createClient } from "@/lib/supabase/server";
 
-export type ActionState = { ok: boolean; message: string } | null;
+export type ActionState = {
+  ok: boolean;
+  message: string;
+  /** One-tap WhatsApp buttons to show with the result (D-048, D-053). */
+  links?: { label: string; href: string }[];
+} | null;
 
 const friendly: Record<string, string> = {
   quote_required: "This is a large order: enter a quote before approving.",
@@ -37,7 +45,12 @@ function done(message: string): ActionState {
 
 // ------------------------------------------------------------------ orders
 
-/** Approve one or more orders (batch approval from the queue, spec 7.2). */
+/**
+ * Approve one or more orders (batch approval from the queue, spec 7.2).
+ * Returns a WhatsApp button per approved order with the confirmation and a
+ * private invoice link (D-053). A single approval does not refresh the page,
+ * so its card can show "Approved" with that button.
+ */
 export async function approveOrders(_: ActionState, form: FormData): Promise<ActionState> {
   const ids = form.getAll("order_id").map(String).filter(Boolean);
   if (ids.length === 0) return { ok: false, message: "Tick at least one order." };
@@ -47,16 +60,28 @@ export async function approveOrders(_: ActionState, form: FormData): Promise<Act
 
   const supabase = await createClient();
   const failed: string[] = [];
+  const approved: string[] = [];
   for (const id of ids) {
     const { error } = await supabase.rpc("approve_order", { p_order_id: id, p_quote: quote });
     if (error) failed.push(explain(error)!);
+    else approved.push(id);
   }
-  if (failed.length === ids.length) return { ok: false, message: failed[0] };
-  return done(
-    failed.length
-      ? `Approved ${ids.length - failed.length}; ${failed.length} could not be approved (${failed[0]})`
-      : `Approved ${ids.length} order${ids.length === 1 ? "" : "s"}. Customers have their confirmation.`,
-  );
+  if (approved.length === 0) return { ok: false, message: failed[0] };
+
+  const h = await headers();
+  const origin = `${h.get("x-forwarded-proto") ?? "https"}://${h.get("x-forwarded-host") ?? h.get("host")}`;
+  const [orders, place] = await Promise.all([getOrdersByIds(approved), getCollectionPlace()]);
+  const links = orders.flatMap((order) => {
+    const href = invoiceWhatsAppLink(order, place, origin);
+    const name = order.customers?.full_name.split(" ")[0] ?? order.order_number;
+    return href ? [{ label: `WhatsApp ${name}: confirmation + invoice`, href }] : [];
+  });
+
+  const message = failed.length
+    ? `Approved ${approved.length}; ${failed.length} could not be approved (${failed[0]}).`
+    : `Approved ${approved.length} order${approved.length === 1 ? "" : "s"}. Tap to send each confirmation and invoice on WhatsApp.`;
+  if (form.get("mode") !== "single") refresh();
+  return { ok: true, message, links };
 }
 
 export async function declineOrder(_: ActionState, form: FormData): Promise<ActionState> {

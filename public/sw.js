@@ -5,10 +5,10 @@
 //   no signal after one visit.
 // - Pages: network first, falling back to the cached copy when offline.
 // - /_next/static: cache first (file names change whenever content changes).
-// - /api: never cached. Orders made offline wait in IndexedDB instead (REQ-25).
+// - /api, /auth, /dashboard and /invoice links: never cached. Orders made offline wait in IndexedDB instead (REQ-25).
 //
 // Bump VERSION to force every phone to drop old caches.
-const VERSION = "kdpops-v1";
+const VERSION = "kdpops-v2";
 const SHELL = "/";
 
 self.addEventListener("install", (event) => {
@@ -41,8 +41,13 @@ self.addEventListener("fetch", (event) => {
   const request = event.request;
   const url = new URL(request.url);
   if (request.method !== "GET" || url.origin !== self.location.origin) return;
-  if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/auth/") || url.pathname.startsWith("/dashboard")) {
-    return; // always live; staff pages and APIs are never cached here
+  if (
+    url.pathname.startsWith("/api/") ||
+    url.pathname.startsWith("/auth/") ||
+    url.pathname.startsWith("/dashboard") ||
+    url.pathname.startsWith("/invoice/")
+  ) {
+    return; // always live; never keep staff pages, APIs or private invoice links
   }
 
   if (url.pathname.startsWith("/_next/static/")) {

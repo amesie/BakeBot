@@ -73,3 +73,34 @@ describe("one-tap WhatsApp ready message", () => {
     expect(decodeURIComponent(readyWhatsAppLink(delayed, "R129")!)).toContain("26 Oktober");
   });
 });
+
+import { invoiceWhatsAppLink } from "@/lib/dashboard/whatsapp";
+
+describe("one-tap WhatsApp invoice message", () => {
+  const approved = {
+    order_number: "KDP-0042",
+    payment_method: "eft",
+    payment_reference: "KDP-0042-7F3K",
+    collection_date: "2026-10-19",
+    revised_collection_date: null,
+    collection_slot: "after_school",
+    quote_amount: null,
+    order_items: [{ quantity: 2, unit_price_snapshot: 15, products: { flavour: "Top Deck" } }],
+    payments: { amount: 30, payment_status: "unpaid", paid_at: null },
+    invoices: { share_token: "s".repeat(43) },
+    customers: { full_name: "Thandi M", phone_number: "+27821234567", is_minor: false, preferred_language: "en" },
+  } as unknown as DashboardOrder;
+
+  it("has the confirmation, the EFT reference and the private invoice link", () => {
+    const text = decodeURIComponent(invoiceWhatsAppLink(approved, "Mrs Felix's class, R129", "https://kdpops.example")!.split("text=")[1]);
+    expect(text).toContain("BakeBot (KD Pops): Order KDP-0042 is confirmed!");
+    expect(text).toContain("Please pay R30 by EFT using reference KDP-0042-7F3K");
+    expect(text).toContain("Your invoice: https://kdpops.example/invoice/KDP-0042-7F3K/" + "s".repeat(43));
+  });
+
+  it("cash orders ask for cash, and nothing is built before approval", () => {
+    const cash = { ...approved, payment_method: "cash" } as DashboardOrder;
+    expect(decodeURIComponent(invoiceWhatsAppLink(cash, "R129", "https://x")!)).toContain("bring R30 in cash");
+    expect(invoiceWhatsAppLink({ ...approved, invoices: null } as DashboardOrder, "R129", "https://x")).toBeNull();
+  });
+});

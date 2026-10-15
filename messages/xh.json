@@ -252,7 +252,9 @@
     "ready": "I-odolo {order_number} ilungile! Yilande ngo-{date}, {slot}, e-{place}.",
     "delayed": "Uxolo, i-odolo {order_number} ilibazisekile. Usuku lwakho olutsha lokulanda ngu-{date}.",
     "proof_received": "Sibufumene ubungqina bakho bentlawulo be-odolo {order_number}. UKaydee uza kubujonga kungekudala.",
-    "proof_rejected": "Asikwazanga ukubudibanisa ubungqina bentlawulo be-odolo {order_number}. Nceda ujonge isixa nesalathiso, uze ubuthumele kwakhona."
+    "proof_rejected": "Asikwazanga ukubudibanisa ubungqina bentlawulo be-odolo {order_number}. Nceda ujonge isixa nesalathiso, uze ubuthumele kwakhona.",
+    "invoice_link": "I-invoyisi yakho: {url}",
+    "signature": "BakeBot (KD Pops)"
   },
   "myOrders": {
     "title": "Ii-odolo zakho zakutsha nje",
