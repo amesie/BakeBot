@@ -38,13 +38,13 @@ One row per requirement. Status: `todo`, `in progress`, `done`, `verified` (test
 
 | NFR | Target | Milestone | Files | Tests | Status |
 |---|---|---|---|---|---|
-| Availability | 99.5% monthly, `/api/health` + UptimeRobot | M1, M9 | `app/api/health/route.ts`, `public.health_check()` | `tests/rls-anon.test.ts` (health_check responds) | in progress (UptimeRobot in M9) |
-| Latency | Order API p95 <= 2,000 ms; Gemini <= 5,000 ms | M3, M4 | `app/api/orders/route.ts` (Server-Timing header) | 50-submission script in M7 | in progress |
-| Page weight | <= 500 KB per order journey | M2 | self-hosted fonts, inline SVG art | 300 KB transferred for home page to review step (2026-10-15, local build); re-measure on Vercel with Lighthouse in M7 | in progress |
-| Concurrency | 20 conversations, 60 msg/min | M7 | | | todo |
-| Offline | Draft syncs once, no duplicate; app opens offline | M2 | `public/sw.js`, `components/service-worker.tsx`, `lib/orders/client.ts` | `e2e/offline.spec.ts` (opens offline), `e2e/order.spec.ts` (offline order, exactly one) | done |
-| Security | RLS, HSTS, private buckets, masking | M0, M1 | `next.config.ts` (HSTS), `proxy.ts`, `supabase/migrations/*_rls.sql`, `*_public_api.sql` | `tests/security-headers.test.ts`, `supabase/tests/02_rls.sql`, `tests/rls-anon.test.ts` | in progress (buckets, masking later) |
-| Accessibility | Lighthouse >= 90, 44 px targets | M2 | `app/globals.css` (D-021) | `e2e/home.spec.ts` (44 px check, mobile + desktop) | in progress (Lighthouse in M7) |
+| Availability | 99.5% monthly, `/api/health` + UptimeRobot | M1, M9 | `app/api/health/route.ts`, `public.health_check()` | UptimeRobot 30-day export (pending) | in progress |
+| Latency | Order API p95 <= 2,000 ms; Gemini <= 5,000 ms | M3, M4 | `app/api/orders/route.ts`, `vercel.json` (dub1), `lib/chat/engine.ts` | `docs/evidence/latency-orders-2026-10-15.md` (p95 277 ms), `docs/evidence/ai-transparency-2026-10-15.md` (max 2.1 s) | verified 2026-10-15 |
+| Page weight | <= 500 KB per order journey | M2 | self-hosted fonts, inline SVG art | `docs/evidence/lighthouse-mobile.report.html` (326 KB, interactive 3.1 s) | verified 2026-10-15 |
+| Concurrency | 20 conversations, 60 msg/min | M7 | `scripts/load-test.mjs` | `docs/evidence/load-test-2026-10-15.md` (0% errors, p95 1.7 s) | verified 2026-10-15 |
+| Offline | Draft syncs once, no duplicate; app opens offline | M2 | `public/sw.js`, `lib/orders/client.ts` | `e2e/order.spec.ts`, `e2e/offline.spec.ts` | verified 2026-10-15 |
+| Security | RLS, HSTS, private buckets, masking, TLS A | M0-M6 | `*_rls.sql`, storage policies, `next.config.ts` | `02_rls.sql`, `tests/rls-anon.test.ts`, `06_payment_proofs.sql`, `docs/evidence/ssl-labs-2026-10-15.md` (A+/A) | verified 2026-10-15 |
+| Accessibility | Lighthouse >= 90, 44 px targets, 5/5 users | M2 | `app/globals.css` (D-021, D-066) | Lighthouse 100, `e2e/home.spec.ts`; user test pending (`docs/USER_TEST_SCRIPT.md`) | in progress |
 | AI transparency | 100% disclosure; no invented answers | M4 | disclosure first message, approved answers only, unknown-amount guard, 100% logging, weekly review in Inbox | `tests/chat-engine.test.ts`; live: `tests/live/ai-transparency.test.ts` -> `docs/evidence/ai-transparency-2026-10-15.md` (10/10 not invented, 10/10 answered, max 2.1 s) | verified 2026-10-15 |
 
 ## Design system and language (Phase 2)

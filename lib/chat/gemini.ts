@@ -37,8 +37,32 @@ async function embed(ai: GoogleGenAI, text: string, taskType: string, signal?: A
   return values;
 }
 
+/**
+ * Load tests only (spec 10: "mock Gemini to avoid quota costs"): answers
+ * after 300-800 ms with a random embedding. Enabled by BAKEBOT_FAKE_MODEL=1,
+ * which must never be set on Vercel.
+ */
+function fakeModel(): ChatModel {
+  const wait = (signal: AbortSignal) =>
+    new Promise<void>((resolve, reject) => {
+      const t = setTimeout(resolve, 300 + Math.random() * 500);
+      signal.addEventListener("abort", () => (clearTimeout(t), reject(new Error("aborted"))));
+    });
+  return {
+    async embedQuestion(_text, signal) {
+      await wait(signal);
+      return Array.from({ length: EMBED_DIMENSIONS }, () => Math.random() - 0.5);
+    },
+    async answer({ context, signal }) {
+      await wait(signal);
+      return { answer: context[0] ?? "", resolved: context.length > 0 };
+    },
+  };
+}
+
 /** The chat model, or null when GEMINI_API_KEY is not set (chat then falls back). */
 export function geminiChatModel(): ChatModel | null {
+  if (process.env.BAKEBOT_FAKE_MODEL === "1" && process.env.VERCEL !== "1") return fakeModel();
   const ai = client();
   if (!ai) return null;
   return {
