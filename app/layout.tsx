@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Chango, Poppins } from "next/font/google";
 import { I18nProvider } from "@/components/i18n-provider";
 import { ServiceWorker } from "@/components/service-worker";
+import { AuthLinkForwarder } from "@/components/auth-link-forwarder";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body className="antialiased">
         <I18nProvider>{children}</I18nProvider>
         <ServiceWorker />
+        <AuthLinkForwarder />
       </body>
     </html>
   );

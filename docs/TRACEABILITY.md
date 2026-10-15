@@ -12,19 +12,19 @@ One row per requirement. Status: `todo`, `in progress`, `done`, `verified` (test
 | REQ-04 | Capture order details | M2, M3 | `components/order/order-section.tsx`, `app/api/orders/route.ts`, `supabase/migrations/20261015090000_order_capture.sql` | `supabase/tests/03_place_order.sql`, `e2e/order.spec.ts` | done |
 | REQ-05 | Reject incomplete submissions | M2, M3 | `lib/orders/schema.ts`, `app/api/orders/route.ts`, `place_order()` | `supabase/tests/03_place_order.sql`, `tests/orders.test.ts`, `e2e/order.spec.ts` | done |
 | REQ-06 | Waitlist above weekly cap | M3 | `supabase/migrations/20261015090000_order_capture.sql` (cap + advisory lock) | `supabase/tests/03_place_order.sql` | done |
-| REQ-07 | >30 units to owner for quote | M3, M5 | `supabase/migrations/20261015090000_order_capture.sql` (`is_large_order`, quote_pending) | `supabase/tests/03_place_order.sql` | done (owner quote in M5) |
+| REQ-07 | >30 units to owner for quote | M3, M5 | `supabase/migrations/20261015120000_owner_actions.sql` (`approve_order` needs a quote), `components/dashboard/panels.tsx` | `03_place_order.sql`, `supabase/tests/04_owner_actions.sql` | done |
 | REQ-08 | Unique order number | M1, M3 | order number trigger, returned by `place_order()` | `01_...sql`, `supabase/tests/03_place_order.sql` | done |
 | REQ-09 | Discard duplicate order ID | M1, M3 | client order id + token (`lib/orders/identity.ts`), `place_order()` duplicate path | `supabase/tests/03_place_order.sql` (3 sends, 1 order), `e2e/order.spec.ts` (offline) | done |
 | REQ-10 | Order acknowledgement | M6 | `place_order()` in-app notification, done card, status page | `supabase/tests/03_place_order.sql`, `e2e/order.spec.ts` | done (WhatsApp in M6) |
 | REQ-11 | 15:00 owner summary | M6 | | | todo |
-| REQ-12 | Confirmation on approval | M5 | | | todo |
-| REQ-13 | Decline message | M5 | | | todo |
-| REQ-14 | Payment reference + invoice | M5 | | | todo |
+| REQ-12 | Confirmation on approval | M5 | `supabase/migrations/20261015120000_owner_actions.sql` (`approve_order`, confirmation_cash/eft), status page | `supabase/tests/04_owner_actions.sql` | done (WhatsApp in M6) |
+| REQ-13 | Decline message | M5 | `supabase/migrations/20261015120000_owner_actions.sql` (`decline_order`) | `supabase/tests/04_owner_actions.sql` | done |
+| REQ-14 | Payment reference + invoice | M5 | `supabase/migrations/20261015120000_owner_actions.sql` (reference, payment, invoice row) | `supabase/tests/04_owner_actions.sql` | in progress (invoice PDF in Phase 4b, D-043) |
 | REQ-15 | Proof of payment to private bucket | M5 | | | todo |
 | REQ-16 | EFT payment reminder | M6 | | | todo |
-| REQ-17 | Mark paid | M5 | `supabase/migrations/*_order_rules.sql` (payment trigger sets paid_at, marked_paid_by) | `01_...sql`, `02_rls.sql` (helper marks paid) | schema done |
+| REQ-17 | Mark paid | M5 | `supabase/migrations/20261015120000_owner_actions.sql` (`mark_paid`), Payments tab | `supabase/tests/04_owner_actions.sql`, `02_rls.sql` | done |
 | REQ-18 | Thursday batch summary | M6 | | | todo |
-| REQ-19 | Revised date on delayed batch | M5 | `orders.revised_collection_date` |  | schema done |
+| REQ-19 | Revised date on delayed batch | M5 | `supabase/migrations/20261015120000_owner_actions.sql` (`delay_batch`), Batch tab | `supabase/tests/04_owner_actions.sql` | done |
 | REQ-20 | Release unpaid/uncollected | M6 | `orders.released_at`, `ready -> cancelled` rule, `school_day_overrides` | `01_...sql` | schema done |
 | REQ-21 | AI disclosure | M2, M4 | | | todo |
 | REQ-22 | Owner-approved FAQ answers | M4 | | | todo |

@@ -232,7 +232,13 @@
   "templates": {
     "acknowledgement": "Order {order_number} received – Kaydee will confirm after school.",
     "waitlisted": "Order {order_number} is on the waitlist because this week is full. Kaydee will let you know if a spot opens.",
-    "quote_pending": "Order {order_number} received. It's a big one, so Kaydee will send you a quote after school."
+    "quote_pending": "Order {order_number} received. It's a big one, so Kaydee will send you a quote after school.",
+    "confirmation_cash": "Order {order_number} is confirmed! Collect it on {date}, {slot}, at {place}. Please bring {amount} in cash.",
+    "confirmation_eft": "Order {order_number} is confirmed! Collect it on {date}, {slot}, at {place}. Please pay {amount} by EFT using reference {reference}.",
+    "declined": "Sorry, KD Pops can't take order {order_number} this time. Nothing is owed. Thank you for understanding.",
+    "payment_received": "Payment for order {order_number} received. Thank you!",
+    "ready": "Order {order_number} is ready! Collect it on {date}, {slot}, at {place}.",
+    "delayed": "Sorry, order {order_number} is delayed. Your new collection day is {date}."
   },
   "myOrders": {
     "title": "Your recent orders",

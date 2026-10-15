@@ -232,7 +232,13 @@
   "templates": {
     "acknowledgement": "I-odolo {order_number} ifunyenwe – uKaydee uza kuqinisekisa emva kwesikolo.",
     "waitlisted": "I-odolo {order_number} ikuluhlu lokulinda kuba le veki igcwele. UKaydee uza kukwazisa ukuba kukho indawo evulekileyo.",
-    "quote_pending": "I-odolo {order_number} ifunyenwe. Inkulu, ngoko uKaydee uza kukuthumelela ikowuteshini emva kwesikolo."
+    "quote_pending": "I-odolo {order_number} ifunyenwe. Inkulu, ngoko uKaydee uza kukuthumelela ikowuteshini emva kwesikolo.",
+    "confirmation_cash": "I-odolo {order_number} iqinisekisiwe! Yilande ngo-{date}, {slot}, e-{place}. Nceda uze ne-{amount} ngemali.",
+    "confirmation_eft": "I-odolo {order_number} iqinisekisiwe! Yilande ngo-{date}, {slot}, e-{place}. Nceda uhlawule i-{amount} nge-EFT usebenzisa isalathiso {reference}.",
+    "declined": "Uxolo, i-KD Pops ayinakuyithatha i-odolo {order_number} ngeli xesha. Akukho nto ityalwayo. Enkosi ngokuqonda.",
+    "payment_received": "Intlawulo ye-odolo {order_number} ifunyenwe. Enkosi!",
+    "ready": "I-odolo {order_number} ilungile! Yilande ngo-{date}, {slot}, e-{place}.",
+    "delayed": "Uxolo, i-odolo {order_number} ilibazisekile. Usuku lwakho olutsha lokulanda ngu-{date}."
   },
   "myOrders": {
     "title": "Ii-odolo zakho zakutsha nje",

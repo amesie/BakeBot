@@ -42,6 +42,14 @@ Every decision that changes or fills a gap in the IFS 317 Part 1 SRS is logged h
 | D-036 | 2026-10-15 | KD Pops has no Instagram account, so none is shown (updates D-025). | Owner confirmed. | — |
 | D-037 | 2026-10-15 | Hand-written service worker (`public/sw.js`) instead of Serwist: caches the home page (which includes the menu) and its static files at install; pages are network-first with offline fallback; `/api`, `/auth` and `/dashboard` are never cached. Registered in production only. | Small, no build-plugin compatibility risk with Next 16; meets spec 7.7. | Offline NFR, REQ-25 |
 | D-038 | 2026-10-15 | The floating mobile "Order Now" bar hides while the order form is on screen. | It covered form fields on small phones (found in screenshot review). | Accessibility NFR |
+| D-039 | 2026-10-15 | Staff accounts created by Supabase invite (Kaydee: owner, her mother: helper). Roles were added directly in the database, not in a migration, because the GitHub repo is public and email addresses must not be committed. | POPIA; spec 7.8 staff_roles. | Security NFR |
+| D-040 | 2026-10-15 | Helpers may also mark a ready order as collected, not only update payments. | Collection happens in Mrs Felix's classroom while Kaydee is in class; the helper hands the pops over. | REQ-17, spec 7.8 |
+| D-041 | 2026-10-15 | Email links finish at `/auth/callback`, which accepts both Supabase link styles. Password-reset emails use links that work in any browser (including the Gmail app). Links that land on the home page are forwarded there. Fixed an open redirect in `/auth/confirm` (the `next` parameter now only accepts paths on this site). | The first invites landed on the home page; PKCE links fail when opened in a different browser. | Security NFR |
+| D-042 | 2026-10-15 | The dashboard is in English only. | Staff tool used by Kaydee and her mother; customer-facing messages stay in three languages. | spec 7.9 |
+| D-043 | 2026-10-15 | Invoice rows and payment references are created on approval now; the invoice PDF (REQ-14) and proof-of-payment uploads (REQ-15) move to Phase 4b together, as both need private Storage buckets. | Keeps Phase 4 focused on the approve, pay, bake loop. | REQ-14, REQ-15 |
+| D-044 | 2026-10-15 | The owner sees full phone numbers with a WhatsApp link; the helper sees them masked (`******1234`). | Spec 5 masks phones everywhere except the owner dashboard. | Security NFR |
+| D-045 | 2026-10-15 | The owner may approve a waitlisted order (it passes through `pending` to `confirmed`). | Trust and capacity decisions stay with Kaydee (spec 2). | REQ-06 |
+| D-046 | 2026-10-15 | Collection place set to "Mrs Felix's class, R129" (editable in Settings). | Owner confirmed. | REQ-12 |
 
 ## Open gaps
 

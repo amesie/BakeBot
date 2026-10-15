@@ -232,7 +232,13 @@
   "templates": {
     "acknowledgement": "Bestelling {order_number} ontvang – Kaydee sal na skool bevestig.",
     "waitlisted": "Bestelling {order_number} is op die waglys omdat hierdie week vol is. Kaydee sal jou laat weet as daar plek oopkom.",
-    "quote_pending": "Bestelling {order_number} ontvang. Dis 'n groot een, so Kaydee sal na skool vir jou 'n kwotasie stuur."
+    "quote_pending": "Bestelling {order_number} ontvang. Dis 'n groot een, so Kaydee sal na skool vir jou 'n kwotasie stuur.",
+    "confirmation_cash": "Bestelling {order_number} is bevestig! Haal dit af op {date}, {slot}, by {place}. Bring asseblief {amount} kontant.",
+    "confirmation_eft": "Bestelling {order_number} is bevestig! Haal dit af op {date}, {slot}, by {place}. Betaal asseblief {amount} per EFT met verwysing {reference}.",
+    "declined": "Jammer, KD Pops kan nie hierdie keer bestelling {order_number} aanvaar nie. Jy skuld niks. Dankie vir jou begrip.",
+    "payment_received": "Betaling vir bestelling {order_number} ontvang. Dankie!",
+    "ready": "Bestelling {order_number} is gereed! Haal dit af op {date}, {slot}, by {place}.",
+    "delayed": "Jammer, bestelling {order_number} is vertraag. Jou nuwe afhaaldag is {date}."
   },
   "myOrders": {
     "title": "Jou onlangse bestellings",

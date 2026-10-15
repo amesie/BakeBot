@@ -173,7 +173,7 @@ function OrderDetails({ m, order }: { m: Messages; order: OrderSummary }) {
               return (
                 <li key={i}>
                   <time dateTime={message.created_at}>{formatDay(sastDate(message.created_at), m)}</time>
-                  {template ? format(template, message.params ?? {}) : message.template}
+                  {template ? format(template, readableParams(message.params ?? {}, m)) : message.template}
                 </li>
               );
             })}
@@ -182,4 +182,13 @@ function OrderDetails({ m, order }: { m: Messages; order: OrderSummary }) {
       )}
     </div>
   );
+}
+
+/** Turn stored message values (dates, slots, amounts) into words. */
+function readableParams(params: Record<string, string>, m: Messages): Record<string, string> {
+  const out = { ...params };
+  if (params.date) out.date = formatDay(params.date, m);
+  if (params.slot && params.slot in m.slots) out.slot = m.slots[params.slot as keyof Messages["slots"]];
+  if (params.amount !== undefined) out.amount = formatRand(params.amount);
+  return out;
 }
