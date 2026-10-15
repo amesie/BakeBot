@@ -98,7 +98,7 @@ test("missing details are listed and nothing is sent [REQ-05]", async ({ page })
 test("happy path: menu button, review, order number and status link [REQ-04, REQ-10]", async ({ page }) => {
   const api = await fakeOrdersApi(page);
   await page.goto("/");
-  await page.getByRole("link", { name: "Add Funfetti to your order" }).click();
+  await page.getByRole("link", { name: "Add to order: Funfetti" }).click();
   await giveConsent(page);
 
   await expect(page.locator(".flavour-row select").first()).toHaveValue(/.+/);

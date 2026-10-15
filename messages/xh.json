@@ -34,7 +34,7 @@
     "intro": "Iincasa ezine ezikhumbuzayo. Ukhetho olulula kakhulu: zama zonke.",
     "perPop": "nganye",
     "addToOrder": "Yongeza kwi-odolo",
-    "addFlavour": "Yongeza i-{flavour} kwi-odolo yakho",
+    "addFlavour": "Yongeza kwi-odolo: {flavour}",
     "belgianBadge": "Yenziwe ngetshokolethi yokwenene yaseBelgium!",
     "soldOut": "Iphelile kule veki",
     "empty": "Imenyu iyahlaziywa. Nceda ubuye kungekudala.",
