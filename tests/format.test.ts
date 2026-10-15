@@ -48,3 +48,28 @@ describe("dashboard search", () => {
     expect(matchesSearch("Thandi", "KDP-0042", "  ")).toBe(true);
   });
 });
+
+import { readyWhatsAppLink } from "@/lib/dashboard/whatsapp";
+import type { DashboardOrder } from "@/lib/dashboard/types";
+
+describe("one-tap WhatsApp ready message", () => {
+  const order = {
+    order_number: "KDP-0042",
+    collection_date: "2026-10-19",
+    revised_collection_date: null,
+    collection_slot: "second_break",
+    customers: { full_name: "Thandi M", phone_number: "+27821234567", is_minor: false, preferred_language: "af" },
+  } as unknown as DashboardOrder;
+
+  it("opens a chat with the customer, message typed in their language", () => {
+    const link = readyWhatsAppLink(order, "Mrs Felix's class, R129")!;
+    expect(link.startsWith("https://wa.me/27821234567?text=")).toBe(true);
+    const text = decodeURIComponent(link.split("text=")[1]);
+    expect(text).toBe("KD Pops: Bestelling KDP-0042 is gereed! Haal dit af op Maandag 19 Oktober, 2de pouse · 11:45–12:00, by Mrs Felix's class, R129.");
+  });
+
+  it("uses the new date when the batch was delayed", () => {
+    const delayed = { ...order, revised_collection_date: "2026-10-26" } as DashboardOrder;
+    expect(decodeURIComponent(readyWhatsAppLink(delayed, "R129")!)).toContain("26 Oktober");
+  });
+});

@@ -24,6 +24,7 @@ import { dictionaries } from "@/lib/i18n";
 import { maskPhone } from "@/lib/phone";
 import { matchesSearch, orderTotal, type DashboardOrder, type PaidPayment, type StaffRole } from "@/lib/dashboard/types";
 import { ActionForm } from "./action-form";
+import { readyWhatsAppLink } from "@/lib/dashboard/whatsapp";
 import { SearchBox } from "./search-box";
 
 const en = dictionaries.en;
@@ -42,6 +43,25 @@ const byName = (orders: DashboardOrder[], query: string) =>
 
 function NoMatches({ query }: { query: string }) {
   return <p className="form-note">No customers match &ldquo;{query.trim()}&rdquo;.</p>;
+}
+
+/** Opens WhatsApp on Kaydee's phone with the "ready" message typed (D-048). */
+function WhatsAppReady({ order, place }: { order: DashboardOrder; place: string }) {
+  const [opened, setOpened] = useState(false);
+  const link = readyWhatsAppLink(order, place);
+  if (!link) return null;
+  const firstName = order.customers?.full_name.split(" ")[0] ?? "customer";
+  return (
+    <a
+      className={`pill pill-small ${opened ? "pill-outline" : ""}`}
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => setOpened(true)}
+    >
+      {opened ? `WhatsApp opened for ${firstName} ✓` : `WhatsApp ${firstName}: ready`}
+    </a>
+  );
 }
 
 function Empty({ children }: { children: React.ReactNode }) {
@@ -174,11 +194,13 @@ export function PaymentsPanel({
   ready: allReady,
   paid: allPaid,
   role,
+  place,
 }: {
   unpaid: DashboardOrder[];
   ready: DashboardOrder[];
   paid: PaidPayment[];
   role: StaffRole;
+  place: string;
 }) {
   const [query, setQuery] = useState("");
   const owed = allUnpaid.reduce((sum, o) => sum + orderTotal(o), 0); // always the full amount owed
@@ -219,6 +241,7 @@ export function PaymentsPanel({
           <article key={order.order_id} className="kd-card stack" style={{ padding: 20 }}>
             <OrderDetails order={order} role={role} />
             <div className="actions-row" style={{ marginTop: 4 }}>
+              {role === "owner" && <WhatsAppReady order={order} place={place} />}
               {order.payments?.payment_status !== "paid" && (
                 <ActionForm action={markPaid}>
                   {(pending) => (
@@ -272,11 +295,13 @@ export function BatchPanel({
   weeks,
   week,
   role,
+  place,
 }: {
   orders: DashboardOrder[];
   weeks: string[];
   week: string | null;
   role: StaffRole;
+  place: string;
 }) {
   const [query, setQuery] = useState("");
   if (!week) return <Empty>No confirmed orders yet. Approved orders show up here by week.</Empty>;
@@ -342,13 +367,18 @@ export function BatchPanel({
                 <br />
                 {order.payments?.payment_status === "paid" ? "Paid" : "Not paid"}
               </span>
+              {role === "owner" && order.order_status === "ready" && (
+                <div className="w-full">
+                  <WhatsAppReady order={order} place={place} />
+                </div>
+              )}
               {role === "owner" && (order.order_status === "confirmed" || order.order_status === "baking") && (
                 <ActionForm
                   action={markReady}
                   className="w-full"
                   confirm={`Is ${order.order_number} for ${order.customers?.full_name ?? "this customer"} definitely ready?
 
-They will be told to collect it.`}
+Their status page will say it is ready, and you can then send them a WhatsApp.`}
                 >
                   {(pending) => (
                     <>
@@ -379,7 +409,7 @@ They will be told to collect it.`}
               action={advanceWeek}
               confirm={`Are all ${count("confirmed") + count("baking")} orders for this week definitely ready?
 
-Every one of those customers will be told to collect.`}
+Every one of those customers will be told to collect, and a WhatsApp button will appear for each.`}
             >
               {(pending) => (
                 <>

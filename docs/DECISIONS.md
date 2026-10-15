@@ -51,6 +51,7 @@ Every decision that changes or fills a gap in the IFS 317 Part 1 SRS is logged h
 | D-045 | 2026-10-15 | The owner may approve a waitlisted order (it passes through `pending` to `confirmed`). | Trust and capacity decisions stay with Kaydee (spec 2). | REQ-06 |
 | D-046 | 2026-10-15 | Collection place set to "Mrs Felix's class, R129" (editable in Settings). | Owner confirmed. | REQ-12 |
 | D-047 | 2026-10-15 | Orders can be marked ready one at a time (Batch → Orders this week) as well as all together. "All ready" now includes approved orders that were never moved to baking. Every ready action asks for confirmation first, because the customer is told to collect immediately. Ready cannot be undone. | Owner request; prevents a "ready" message going out by mistake. | spec 4 lifecycle, REQ-12 |
+| D-048 | 2026-10-15 | "Ready" alerts are sent as one-tap WhatsApp messages from Kaydee's phone: after she confirms an order is ready, a button opens WhatsApp with the message already typed in the customer's language, and she taps Send. Customers also see the message on their status page. Automatic SMS/WhatsApp (spec 7.5, REQ-10 to REQ-20 notifications) stays planned for M6. | Owner's choice: free and available now; Meta approval for the WhatsApp Cloud API is still pending. A "ready" message is not about money, so it may come from Kaydee's number (spec 2 principle applies to payment messages). | REQ-12, spec 7.5 |
 
 ## Open gaps
 

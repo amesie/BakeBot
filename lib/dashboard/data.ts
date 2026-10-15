@@ -11,7 +11,7 @@ const ORDER_FIELDS = `
   order_id, order_number, order_status, payment_method, payment_reference,
   collection_date, collection_week, collection_slot, revised_collection_date,
   special_notes, total_units, is_large_order, quote_amount, created_at, released_at,
-  customers ( full_name, phone_number, is_minor ),
+  customers ( full_name, phone_number, is_minor, preferred_language ),
   order_items ( quantity, unit_price_snapshot, products ( flavour ) ),
   payments ( amount, payment_status, paid_at )
 `;
@@ -79,4 +79,10 @@ export async function getSettings() {
       is_available: boolean;
     }[],
   };
+}
+
+export async function getCollectionPlace() {
+  const supabase = await createClient();
+  const { data } = await supabase.from("app_settings").select("collection_place").maybeSingle();
+  return (data?.collection_place as string | undefined) ?? "";
 }

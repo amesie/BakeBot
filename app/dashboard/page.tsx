@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { LogoutButton } from "@/components/logout-button";
 import { ApprovalQueue, BatchPanel, PaymentsPanel, SettingsPanel } from "@/components/dashboard/panels";
-import { getOrders, getRecentlyPaid, getSettings, getStaff, type StaffRole } from "@/lib/dashboard/data";
+import { getCollectionPlace, getOrders, getRecentlyPaid, getSettings, getStaff, type StaffRole } from "@/lib/dashboard/data";
 
 export const metadata: Metadata = {
   title: "Dashboard · KD Pops",
@@ -101,18 +101,22 @@ async function TabContent({ tab, role, week }: { tab: Tab; role: StaffRole; week
   }
 
   if (tab === "payments") {
-    const [active, paid] = await Promise.all([getOrders(["confirmed", "baking", "ready", "collected"]), getRecentlyPaid()]);
+    const [active, paid, place] = await Promise.all([
+      getOrders(["confirmed", "baking", "ready", "collected"]),
+      getRecentlyPaid(),
+      getCollectionPlace(),
+    ]);
     const unpaid = active.filter((o) => o.payments && o.payments.payment_status !== "paid");
     const ready = active.filter((o) => o.order_status === "ready");
-    return <PaymentsPanel unpaid={unpaid} ready={ready} paid={paid} role={role} />;
+    return <PaymentsPanel unpaid={unpaid} ready={ready} paid={paid} role={role} place={place} />;
   }
 
   if (tab === "batch") {
-    const orders = await getOrders(["confirmed", "baking", "ready", "collected"]);
+    const [orders, place] = await Promise.all([getOrders(["confirmed", "baking", "ready", "collected"]), getCollectionPlace()]);
     const weeks = [...new Set(orders.map((o) => o.collection_week))].sort();
     const upcoming = weeks.find((w) => orders.some((o) => o.collection_week === w && o.order_status !== "collected"));
     const selected = week && weeks.includes(week) ? week : (upcoming ?? weeks.at(-1) ?? null);
-    return <BatchPanel orders={orders} weeks={weeks} week={selected} role={role} />;
+    return <BatchPanel orders={orders} weeks={weeks} week={selected} role={role} place={place} />;
   }
 
   const { settings, caps, products } = await getSettings();

@@ -83,7 +83,7 @@ export async function markReady(_: ActionState, form: FormData): Promise<ActionS
   const supabase = await createClient();
   const { data, error } = await supabase.rpc("mark_ready", { p_order_id: String(form.get("order_id")) });
   if (error) return { ok: false, message: explain(error)! };
-  return done(`${data.order_number} is ready. The customer has been told.`);
+  return done(`${data.order_number} is ready. Tap its WhatsApp button to send the message.`);
 }
 
 export async function advanceWeek(_: ActionState, form: FormData): Promise<ActionState> {
@@ -91,7 +91,11 @@ export async function advanceWeek(_: ActionState, form: FormData): Promise<Actio
   const supabase = await createClient();
   const { data, error } = await supabase.rpc("advance_week", { p_week: String(form.get("week")), p_to: to });
   if (error) return { ok: false, message: explain(error)! };
-  return done(to === "ready" ? `${data} orders ready. Customers have been told.` : `${data} orders moved to baking.`);
+  return done(
+    to === "ready"
+      ? `${data} orders ready. Their status pages say so; tap each WhatsApp button below to message them.`
+      : `${data} orders moved to baking.`,
+  );
 }
 
 export async function delayBatch(_: ActionState, form: FormData): Promise<ActionState> {
