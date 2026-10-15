@@ -138,8 +138,12 @@ begin
   insert into _results values ('REQ-07 exactly 30 units is not large', not (r2->>'is_large_order')::boolean, r2->>'total_units');
 
   -- ------------------------------------------------------------------ REQ-06 weekly cap
-  -- Used so far this week: 5 + 5 + 31 + 30 = 71. Cap at 75: 4 fit, 5 do not.
-  update public.weekly_capacity set unit_cap = 75 where week_start = week;
+  -- Cap = whatever this week already holds (including real orders) + 4:
+  -- an order of 4 fits, one more pop does not.
+  update public.weekly_capacity
+     set unit_cap = (select coalesce(sum(total_units), 0) from public.orders
+                     where collection_week = week and order_status not in ('cancelled', 'waitlisted')) + 4
+   where week_start = week;
   r2 := public.place_order(base || jsonb_build_object('order_id', gen_random_uuid(), 'access_token', tok,
                                                       'items', jsonb_build_array(jsonb_build_object('product_id', funfetti, 'quantity', 4))));
   insert into _results values ('REQ-06 order that fits the cap is pending', r2->>'order_status' = 'pending', r2->>'order_status');
