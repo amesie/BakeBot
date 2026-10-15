@@ -10,6 +10,7 @@ export type OrderOptions = {
   next_cutoff: string;
   large_order_threshold: number;
   max_per_flavour: number;
+  collection_place: string;
 };
 
 export const ORDER_OPTIONS_CACHE_TAG = "order-options";
@@ -20,6 +21,7 @@ const fallback: OrderOptions = {
   next_cutoff: "",
   large_order_threshold: 30,
   max_per_flavour: 100,
+  collection_place: "",
 };
 
 export async function getOrderOptions(): Promise<OrderOptions> {

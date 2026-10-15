@@ -421,6 +421,15 @@
     font-weight: 600;
     text-decoration: none;
   }
+  .nav-chat {
+    min-height: 44px;
+    border: 0;
+    background: none;
+    color: var(--milk);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+  }
   .nav-links > a:not(.pill):hover {
     color: var(--milk);
   }
@@ -1007,6 +1016,109 @@
     font-size: 12px;
   }
 
+  /* ---------------------------------------------------------------- chat (BakeBot) */
+  .chat-panel {
+    position: fixed;
+    z-index: 80;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    width: min(400px, calc(100vw - 40px));
+    height: min(600px, calc(100vh - 40px));
+    flex-direction: column;
+    overflow: hidden;
+    border: 1.5px solid var(--brown);
+    border-radius: 22px;
+    background: var(--ivory);
+    box-shadow: 0 12px 40px rgba(59, 42, 32, 0.25);
+  }
+  .chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--brown);
+    color: var(--ivory);
+    padding: 10px 12px 10px 18px;
+  }
+  .chat-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 20px;
+  }
+  .chat-close {
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: transparent;
+    color: var(--ivory);
+    font-size: 28px;
+    cursor: pointer;
+  }
+  .chat-lines {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    padding: 16px;
+  }
+  .chat-line {
+    max-width: 85%;
+    margin: 0;
+    border-radius: 16px;
+    padding: 10px 14px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .chat-bot {
+    align-self: flex-start;
+    border: 1px solid var(--line);
+    background: var(--cream);
+  }
+  .chat-customer {
+    align-self: flex-end;
+    background: var(--brown);
+    color: var(--ivory);
+  }
+  .chat-contact {
+    border: 1.5px dashed var(--milk);
+    border-radius: 14px;
+    padding: 12px;
+  }
+  .chat-footer {
+    display: grid;
+    gap: 8px;
+    border-top: 1.5px solid var(--brown);
+    padding: 10px;
+  }
+  .chat-talk {
+    justify-self: start;
+  }
+  .chat-input {
+    display: flex;
+    gap: 8px;
+  }
+  .chat-toast {
+    position: fixed;
+    z-index: 85;
+    right: 14px;
+    bottom: 80px;
+    left: 14px;
+    display: flex;
+    max-width: 520px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-inline: auto;
+    border: 1.5px solid var(--brown);
+    border-radius: 16px;
+    background: var(--yellow);
+    padding: 12px 16px;
+    font-weight: 600;
+  }
+
   /* ---------------------------------------------------------------- footer */
   .site-footer {
     background: var(--milk);
@@ -1285,6 +1397,12 @@
       flex-direction: column;
       gap: 8px;
       padding-bottom: 70px;
+    }
+    .chat-panel {
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
     }
     .mobile-order-bar {
       position: fixed;

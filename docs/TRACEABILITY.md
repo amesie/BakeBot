@@ -26,10 +26,10 @@ One row per requirement. Status: `todo`, `in progress`, `done`, `verified` (test
 | REQ-18 | Thursday batch summary | M6 | `supabase/migrations/20261016120000_scheduled_jobs.sql` (`job_batch_summary`, Thu 18:00 UTC), Batch tab | `supabase/tests/08_scheduled_jobs.sql` | done |
 | REQ-19 | Revised date on delayed batch | M5 | `supabase/migrations/20261015120000_owner_actions.sql` (`delay_batch`), Batch tab | `supabase/tests/04_owner_actions.sql` | done |
 | REQ-20 | Release unpaid/uncollected | M6 | `supabase/migrations/20261016120000_scheduled_jobs.sql` (`job_release_unpaid`, weekdays 12:00 UTC, last school day only), Payments "Released" | `supabase/tests/08_scheduled_jobs.sql` | done (D-054) |
-| REQ-21 | AI disclosure | M2, M4 | | | todo |
-| REQ-22 | Owner-approved FAQ answers | M4 | | | todo |
-| REQ-23 | Human handover | M4, M5 | | | todo |
-| REQ-24 | Gemini 5 s fallback | M4 | | | todo |
+| REQ-21 | AI disclosure | M2, M4 | `components/chat/chat-widget.tsx` (first message), `app/api/chat` (logged) | `supabase/tests/09_chat.sql`, `e2e/chat.spec.ts` | done |
+| REQ-22 | Owner-approved FAQ answers | M4 | `lib/chat/engine.ts`, `lib/chat/gemini.ts`, `match_faq()` in `supabase/migrations/20261016150000_bakebot_chat.sql`, FAQ tab | `tests/chat-engine.test.ts`, `09_chat.sql`, `e2e/chat.spec.ts` | done (live test needs Gemini key, M7) |
+| REQ-23 | Human handover | M4, M5 | `chat_append`/`chat_set_contact` in `supabase/migrations/20261016150000_bakebot_chat.sql`, Inbox tab | `tests/chat-engine.test.ts`, `09_chat.sql`, `e2e/chat.spec.ts` | done |
+| REQ-24 | Gemini 5 s fallback | M4 | `lib/chat/engine.ts` (5,000 ms AbortController), chat widget fallback | `tests/chat-engine.test.ts`, `e2e/chat.spec.ts` | done |
 | REQ-25 | Offline draft resubmit x3 | M2 | `lib/orders/client.ts`, `lib/orders/retry.ts`, `components/order/order-section.tsx` | `tests/orders.test.ts` (3 tries, 2/4/8 s), `e2e/order.spec.ts` (offline, exactly one order) | done |
 | REQ-26 | Feedback request | M6 | `supabase/migrations/20261016120000_scheduled_jobs.sql` (`job_feedback_requests`, `submit_feedback`), status page form, Feedback tab | `supabase/tests/08_scheduled_jobs.sql`, `e2e/payments.spec.ts` | done (no photos, D-057) |
 | REQ-27 | Anonymise after 90 days | M1, M6 | `supabase/migrations/20261016120000_scheduled_jobs.sql` (`job_anonymise`, `anonymise_customer_now`), Settings deletion request | `supabase/tests/08_scheduled_jobs.sql` | done |
@@ -45,7 +45,7 @@ One row per requirement. Status: `todo`, `in progress`, `done`, `verified` (test
 | Offline | Draft syncs once, no duplicate; app opens offline | M2 | `public/sw.js`, `components/service-worker.tsx`, `lib/orders/client.ts` | `e2e/offline.spec.ts` (opens offline), `e2e/order.spec.ts` (offline order, exactly one) | done |
 | Security | RLS, HSTS, private buckets, masking | M0, M1 | `next.config.ts` (HSTS), `proxy.ts`, `supabase/migrations/*_rls.sql`, `*_public_api.sql` | `tests/security-headers.test.ts`, `supabase/tests/02_rls.sql`, `tests/rls-anon.test.ts` | in progress (buckets, masking later) |
 | Accessibility | Lighthouse >= 90, 44 px targets | M2 | `app/globals.css` (D-021) | `e2e/home.spec.ts` (44 px check, mobile + desktop) | in progress (Lighthouse in M7) |
-| AI transparency | 100% disclosure; no invented answers | M4 | | | todo |
+| AI transparency | 100% disclosure; no invented answers | M4 | disclosure first message, approved answers only, unknown-amount guard, 100% logging, weekly review in Inbox | `tests/chat-engine.test.ts`; 10 out-of-scope questions script in M7 (needs key) | in progress |
 
 ## Design system and language (Phase 2)
 

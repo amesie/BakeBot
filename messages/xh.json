@@ -273,5 +273,26 @@
   "myOrders": {
     "title": "Ii-odolo zakho zakutsha nje",
     "open": "Vula"
+  },
+  "chat": {
+    "open": "Buza uBakeBot",
+    "title": "BakeBot",
+    "disclosure": "Molo! NdinguBakeBot, umncedisi ozenzekelayo we-KD Pops (andingomntu). Ndiphendula imibuzo malunga nemenyu, amaxabiso, ukuodola nokulanda ndisebenzisa iimpendulo ezivunywe nguKaydee. Kwenye into, cofa u-\"Thetha noKaydee\".",
+    "placeholder": "Bhala umbuzo wakho",
+    "send": "Thumela",
+    "close": "Vala incoko",
+    "talk": "Thetha noKaydee",
+    "thinking": "UBakeBot uyabhala...",
+    "checkWithKaydee": "Andiqinisekanga ngaloo nto, ngoko ndiza kubuza uKaydee.",
+    "handover": "Ndiwudlulisele umbuzo wakho kuKaydee. Usegumbini lokufundela emini kwaye uqhele ukuphendula emva kwesikolo (ukusuka malunga no-15:00).",
+    "contactPrompt": "Shiya igama lakho nenombolo yeselfowuni ukuze uKaydee aphendule kwi-WhatsApp:",
+    "contactName": "Igama lakho",
+    "contactPhone": "Inombolo yeselfowuni",
+    "contactSave": "Thumela kuKaydee",
+    "contactThanks": "Enkosi! UKaydee uza kuphendula kwi-WhatsApp emva kwesikolo.",
+    "fallback": "UBakeBot akakwazi ukuphendula ngoku, ngoko nantsi ifomu yokuodola. Ungathumela noKaydee kwi-WhatsApp.",
+    "error": "Kukho into engahambanga kakuhle. Nceda uzame kwakhona.",
+    "limit": "Le ncoko iyaba nde. Nceda uthethe noKaydee okanye usebenzise ifomu yokuodola.",
+    "you": "Wena"
   }
 }

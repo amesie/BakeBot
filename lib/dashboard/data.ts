@@ -117,3 +117,52 @@ export async function getFeedback(limit = 50) {
     .limit(limit);
   return (data ?? []) as unknown as FeedbackRow[];
 }
+
+export type ChatMessage = { role: "bot" | "customer" | "system"; text: string; at: string };
+export type Conversation = {
+  conversation_id: string;
+  language: "en" | "xh" | "af";
+  messages: ChatMessage[];
+  unresolved_attempts: number;
+  escalated: boolean;
+  escalated_at: string | null;
+  resolved_at: string | null;
+  contact_name: string | null;
+  contact_phone: string | null;
+  fallback_count: number;
+  created_at: string;
+};
+
+const CONVERSATION_FIELDS =
+  "conversation_id, language, messages, unresolved_attempts, escalated, escalated_at, resolved_at, contact_name, contact_phone, fallback_count, created_at";
+
+/** REQ-23 handover inbox, plus a sample of the last week's chats for review. */
+export async function getInbox() {
+  const supabase = await createClient();
+  const weekAgo = new Date(Date.now() - 7 * 24 * 3600 * 1000).toISOString();
+  const [{ data: handovers }, { data: recent }] = await Promise.all([
+    supabase.from("conversations").select(CONVERSATION_FIELDS).eq("escalated", true).is("resolved_at", null).order("escalated_at"),
+    supabase.from("conversations").select(CONVERSATION_FIELDS).gte("created_at", weekAgo).order("created_at", { ascending: false }).limit(10),
+  ]);
+  return { handovers: (handovers ?? []) as Conversation[], recent: (recent ?? []) as Conversation[] };
+}
+
+export type Faq = {
+  faq_id: string;
+  question: string;
+  approved_answer: string;
+  category: "pricing" | "discounts" | "allergens" | "other";
+  language: "en" | "xh" | "af";
+  is_active: boolean;
+  has_embedding: boolean;
+};
+
+export async function getFaqs() {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("faq_knowledge")
+    .select("faq_id, question, approved_answer, category, language, is_active, embedding")
+    .order("category")
+    .order("question");
+  return (data ?? []).map(({ embedding, ...faq }) => ({ ...faq, has_embedding: embedding !== null })) as Faq[];
+}

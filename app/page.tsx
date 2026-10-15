@@ -1,6 +1,7 @@
 import { Hero, Ticker } from "@/components/site/hero";
 import { MenuSection } from "@/components/site/menu-grid";
 import { OrderSection } from "@/components/order/order-section";
+import { ChatWidget } from "@/components/chat/chat-widget";
 import { SiteNav } from "@/components/site/site-nav";
 import { MobileOrderBar, SiteFooter } from "@/components/site/site-footer";
 import { getMenu } from "@/lib/menu";
@@ -21,6 +22,7 @@ export default async function Home() {
       </main>
       <SiteFooter />
       <MobileOrderBar />
+      <ChatWidget />
     </div>
   );
 }

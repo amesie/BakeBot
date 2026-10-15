@@ -3,6 +3,7 @@
 import { useI18n } from "@/components/i18n-provider";
 import { CakePop } from "@/components/kd/cake-pop";
 import { requestAddFlavour } from "@/components/order/events";
+import { AskBakeBotButton } from "@/components/chat/chat-widget";
 import { visualFor } from "@/lib/catalogue-visuals";
 import { formatRand } from "@/lib/format";
 import { format } from "@/lib/i18n";
@@ -18,7 +19,10 @@ export function MenuSection({ items }: { items: MenuItem[] }) {
             <p className="eyebrow">{m.menu.eyebrow}</p>
             <h2 id="menu-title">{m.menu.title}</h2>
           </div>
-          <p>{m.menu.intro}</p>
+          <div className="stack" style={{ gap: 12, maxWidth: 400 }}>
+            <p className="m-0" style={{ color: "var(--milk)", fontSize: 15, lineHeight: 1.8 }}>{m.menu.intro}</p>
+            <AskBakeBotButton className="pill pill-small pill-outline self-start" />
+          </div>
         </div>
 
         {items.length === 0 ? (

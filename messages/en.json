@@ -273,5 +273,26 @@
   "myOrders": {
     "title": "Your recent orders",
     "open": "Open"
+  },
+  "chat": {
+    "open": "Ask BakeBot",
+    "title": "BakeBot",
+    "disclosure": "Hi! I'm BakeBot, KD Pops' automated assistant (not a person). I answer questions about the menu, prices, ordering and collection using answers Kaydee has approved. For anything else, tap \"Talk to Kaydee\".",
+    "placeholder": "Type your question",
+    "send": "Send",
+    "close": "Close chat",
+    "talk": "Talk to Kaydee",
+    "thinking": "BakeBot is typing...",
+    "checkWithKaydee": "I'm not sure about that one, so I'll check with Kaydee.",
+    "handover": "I've passed your question to Kaydee. She's in class during the day and usually replies after school (from about 15:00).",
+    "contactPrompt": "Leave your name and cell number so Kaydee can reply on WhatsApp:",
+    "contactName": "Your name",
+    "contactPhone": "Cell number",
+    "contactSave": "Send to Kaydee",
+    "contactThanks": "Thank you! Kaydee will reply on WhatsApp after school.",
+    "fallback": "BakeBot can't answer right now, so here's the order form. You can also WhatsApp Kaydee.",
+    "error": "Something went wrong. Please try again.",
+    "limit": "This chat is getting long. Please talk to Kaydee or use the order form.",
+    "you": "You"
   }
 }

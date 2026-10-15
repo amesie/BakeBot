@@ -12,6 +12,7 @@ import { getCollectionPlace, getOrdersByIds } from "@/lib/dashboard/data";
 import { invoiceWhatsAppLink } from "@/lib/dashboard/whatsapp";
 import { createClient } from "@/lib/supabase/server";
 import { normaliseZaPhone } from "@/lib/phone";
+import { embedFaq } from "@/lib/chat/gemini";
 
 export type ActionState = {
   ok: boolean;
@@ -216,4 +217,72 @@ export async function deleteCustomerData(_: ActionState, form: FormData): Promis
   const { error } = await supabase.rpc("anonymise_customer_now", { p_customer_id: customer.customer_id });
   if (error) return { ok: false, message: explain(error)! };
   return done(`${customer.full_name}'s details have been removed. Invoice totals are kept for the records.`);
+}
+
+// ------------------------------------------------------------------ BakeBot (REQ-22, REQ-23)
+
+export async function resolveConversation(_: ActionState, form: FormData): Promise<ActionState> {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("resolve_conversation", { p_conversation_id: String(form.get("conversation_id")) });
+  return error ? { ok: false, message: explain(error)! } : done("Marked as dealt with.");
+}
+
+/** Save an approved FAQ answer; it is re-embedded so BakeBot can find it. */
+export async function saveFaq(_: ActionState, form: FormData): Promise<ActionState> {
+  const id = String(form.get("faq_id") ?? "");
+  const question = String(form.get("question") ?? "").trim();
+  const answer = String(form.get("approved_answer") ?? "").trim();
+  const category = String(form.get("category") ?? "other");
+  const language = String(form.get("language") ?? "en");
+  const active = form.get("is_active") === "on";
+  if (!question || !answer) return { ok: false, message: "Write both the question and the approved answer." };
+  if (active && answer.startsWith("NEEDS KAYDEE")) return { ok: false, message: "Write the real answer before switching it on." };
+
+  let embedding: number[] | null = null;
+  let embedNote = "";
+  try {
+    embedding = await embedFaq(question, answer);
+    if (!embedding) embedNote = " BakeBot can use it once the Gemini key is set up.";
+  } catch {
+    embedNote = " Could not reach Gemini just now; it will be searchable after you save again.";
+  }
+
+  const row = {
+    question: question.slice(0, 500),
+    approved_answer: answer.slice(0, 1500),
+    category,
+    language,
+    is_active: active,
+    embedding: embedding ? JSON.stringify(embedding) : null,
+  };
+  const supabase = await createClient();
+  const { error } = id
+    ? await supabase.from("faq_knowledge").update(row).eq("faq_id", id)
+    : await supabase.from("faq_knowledge").insert(row);
+  if (error) return { ok: false, message: "Only Kaydee can change BakeBot's answers." };
+  return done(`Saved.${active ? "" : " It is switched off, so BakeBot will not use it."}${embedNote}`);
+}
+
+export async function deleteFaq(_: ActionState, form: FormData): Promise<ActionState> {
+  const supabase = await createClient();
+  const { error } = await supabase.from("faq_knowledge").delete().eq("faq_id", String(form.get("faq_id")));
+  return error ? { ok: false, message: "Only Kaydee can change BakeBot's answers." } : done("Deleted.");
+}
+
+/** Re-embed every answer (after adding the Gemini key or changing the embedding model). */
+export async function reembedAllFaqs(): Promise<ActionState> {
+  const supabase = await createClient();
+  const { data: faqs } = await supabase.from("faq_knowledge").select("faq_id, question, approved_answer");
+  let count = 0;
+  for (const faq of faqs ?? []) {
+    try {
+      const embedding = await embedFaq(faq.question, faq.approved_answer);
+      if (!embedding) return { ok: false, message: "Set GEMINI_API_KEY in Vercel first." };
+      await supabase.from("faq_knowledge").update({ embedding: JSON.stringify(embedding) }).eq("faq_id", faq.faq_id);
+      count++;
+    } catch {
+      return { ok: false, message: `Gemini stopped after ${count} answers. Try again in a minute.` };
+    }
+  }
+  return done(`${count} answers are ready for BakeBot.`);
 }

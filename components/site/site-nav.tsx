@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useI18n } from "@/components/i18n-provider";
 import { LanguageToggle } from "./language-toggle";
+import { openChat } from "@/components/chat/chat-widget";
 
 export function SiteNav() {
   const { messages: m } = useI18n();
@@ -21,6 +22,16 @@ export function SiteNav() {
           <Link href="/#menu" onClick={close}>{m.nav.menu}</Link>
           <Link href="/#order" onClick={close}>{m.nav.order}</Link>
           <Link href="/#contact" onClick={close}>{m.nav.contact}</Link>
+          <button
+            type="button"
+            className="nav-chat"
+            onClick={() => {
+              close();
+              openChat();
+            }}
+          >
+            {m.chat.open}
+          </button>
           <LanguageToggle />
           <Link className="pill pill-small" href="/#order" onClick={close}>{m.nav.orderNow}</Link>
         </div>

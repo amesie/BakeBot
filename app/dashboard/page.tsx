@@ -9,7 +9,9 @@ import { LogoutButton } from "@/components/logout-button";
 import { ApprovalQueue, BatchPanel, PaymentsPanel, SettingsPanel } from "@/components/dashboard/panels";
 import {
   getCollectionPlace,
+  getFaqs,
   getFeedback,
+  getInbox,
   getOrders,
   getOwnerUpdates,
   getRecentlyPaid,
@@ -18,18 +20,21 @@ import {
   type StaffRole,
 } from "@/lib/dashboard/data";
 import { DeletionRequest, FeedbackPanel, OwnerUpdates, ReleasedOrders } from "@/components/dashboard/updates";
+import { FaqPanel, InboxPanel } from "@/components/dashboard/bakebot";
 
 export const metadata: Metadata = {
   title: "Dashboard · KD Pops",
   robots: { index: false, follow: false },
 };
 
-type Tab = "orders" | "payments" | "batch" | "feedback" | "settings";
+type Tab = "orders" | "payments" | "batch" | "inbox" | "faq" | "feedback" | "settings";
 
 const TABS: { id: Tab; label: string; roles: StaffRole[] }[] = [
   { id: "orders", label: "Approve", roles: ["owner"] },
   { id: "payments", label: "Payments", roles: ["owner", "helper"] },
   { id: "batch", label: "Batch", roles: ["owner", "helper"] },
+  { id: "inbox", label: "Inbox", roles: ["owner"] },
+  { id: "faq", label: "BakeBot answers", roles: ["owner"] },
   { id: "feedback", label: "Feedback", roles: ["owner"] },
   { id: "settings", label: "Settings", roles: ["owner"] },
 ];
@@ -142,6 +147,15 @@ async function TabContent({ tab, role, week }: { tab: Tab; role: StaffRole; week
     const upcoming = weeks.find((w) => orders.some((o) => o.collection_week === w && o.order_status !== "collected"));
     const selected = week && weeks.includes(week) ? week : (upcoming ?? weeks.at(-1) ?? null);
     return <BatchPanel orders={orders} weeks={weeks} week={selected} role={role} place={place} />;
+  }
+
+  if (tab === "inbox") {
+    const { handovers, recent } = await getInbox();
+    return <InboxPanel handovers={handovers} recent={recent} />;
+  }
+
+  if (tab === "faq") {
+    return <FaqPanel faqs={await getFaqs()} />;
   }
 
   if (tab === "feedback") {

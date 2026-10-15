@@ -273,5 +273,26 @@
   "myOrders": {
     "title": "Jou onlangse bestellings",
     "open": "Maak oop"
+  },
+  "chat": {
+    "open": "Vra BakeBot",
+    "title": "BakeBot",
+    "disclosure": "Hallo! Ek is BakeBot, KD Pops se outomatiese assistent (nie 'n mens nie). Ek beantwoord vrae oor die spyskaart, pryse, bestel en afhaal met antwoorde wat Kaydee goedgekeur het. Vir enigiets anders, tik \"Praat met Kaydee\".",
+    "placeholder": "Tik jou vraag",
+    "send": "Stuur",
+    "close": "Maak klets toe",
+    "talk": "Praat met Kaydee",
+    "thinking": "BakeBot tik...",
+    "checkWithKaydee": "Ek is nie seker daaroor nie, so ek sal by Kaydee hoor.",
+    "handover": "Ek het jou vraag aan Kaydee gegee. Sy is bedags in die klas en antwoord gewoonlik na skool (vanaf omtrent 15:00).",
+    "contactPrompt": "Los jou naam en selnommer sodat Kaydee op WhatsApp kan antwoord:",
+    "contactName": "Jou naam",
+    "contactPhone": "Selnommer",
+    "contactSave": "Stuur na Kaydee",
+    "contactThanks": "Dankie! Kaydee sal na skool op WhatsApp antwoord.",
+    "fallback": "BakeBot kan nie nou antwoord nie, so hier is die bestelvorm. Jy kan ook vir Kaydee WhatsApp.",
+    "error": "Iets het skeefgeloop. Probeer asseblief weer.",
+    "limit": "Hierdie klets raak lank. Praat asseblief met Kaydee of gebruik die bestelvorm.",
+    "you": "Jy"
   }
 }
