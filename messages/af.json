@@ -239,7 +239,17 @@
     "proofBadType": "Kies asseblief 'n foto, skermskoot of PDF.",
     "proofPaid": "Hierdie bestelling is reeds betaal. Dankie!",
     "proofFailed": "Ons kon dit nie stuur nie. Probeer asseblief weer.",
-    "invoice": "Laai faktuur af"
+    "invoice": "Laai faktuur af",
+    "feedbackTitle": "Hoe was jou pops?",
+    "feedbackScale": "1 = nie goed nie, 5 = fantasties",
+    "feedbackOverall": "Algeheel",
+    "feedbackTaste": "Smaak",
+    "feedbackSize": "Grootte",
+    "feedbackPrice": "Prys",
+    "feedbackComment": "Nog iets? (opsioneel)",
+    "feedbackSend": "Stuur terugvoer",
+    "feedbackThanks": "Dankie! Kaydee lees elkeen.",
+    "feedbackFailed": "Ons kon nie jou terugvoer stuur nie. Probeer asseblief weer."
   },
   "templates": {
     "acknowledgement": "Bestelling {order_number} ontvang – Kaydee sal na skool bevestig.",
@@ -254,7 +264,11 @@
     "proof_received": "Ons het jou bewys van betaling vir bestelling {order_number} ontvang. Kaydee sal dit binnekort nagaan.",
     "proof_rejected": "Ons kon nie die bewys van betaling vir bestelling {order_number} laat klop nie. Kontroleer asseblief die bedrag en verwysing en stuur dit weer.",
     "invoice_link": "Jou faktuur: {url}",
-    "signature": "BakeBot (KD Pops)"
+    "signature": "BakeBot (KD Pops)",
+    "payment_reminder": "Vriendelike herinnering van BakeBot: bestelling {order_number} is nog nie betaal nie. Betaal asseblief {amount} per EFT met verwysing {reference} voor {date}.",
+    "released": "Bestelling {order_number} is nie betyds betaal nie, so die pops is vir verkoop vrygestel. As dit 'n fout is, praat asseblief met Kaydee.",
+    "collect_reminder": "Jou betaalde bestelling {order_number} wag nog vir jou. Praat asseblief met Kaydee om dit af te haal.",
+    "feedback_request": "Dankie dat jy bestelling {order_number} afgehaal het! Hoe was jou pops? Laat vinnig terugvoer hieronder."
   },
   "myOrders": {
     "title": "Jou onlangse bestellings",

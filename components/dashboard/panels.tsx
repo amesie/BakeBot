@@ -28,6 +28,7 @@ import { matchesSearch, orderTotal, type DashboardOrder, type PaidPayment, type 
 import { ActionForm, WhatsAppLinks } from "./action-form";
 import { invoiceWhatsAppLink, readyWhatsAppLink } from "@/lib/dashboard/whatsapp";
 import { SearchBox } from "./search-box";
+import { ReminderNote } from "./updates";
 
 const en = dictionaries.en;
 const day = (iso: string) => formatDay(iso, en);
@@ -252,6 +253,7 @@ export function PaymentsPanel({
         {unpaid.map((order) => (
           <article key={order.order_id} className="kd-card stack" style={{ padding: 20 }}>
             <OrderDetails order={order} role={role} />
+            {role === "owner" && <ReminderNote order={order} />}
             {order.payments?.payment_status === "pending_review" && (
               <p className="form-note m-0">
                 Proof of payment uploaded: check the amount ({formatRand(orderTotal(order))}) and reference

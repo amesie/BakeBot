@@ -68,3 +68,27 @@ test("upload API refuses files that are not images or PDFs", async ({ request })
   });
   expect(response.status()).toBe(415);
 });
+
+test("collected order: feedback form, sent once [REQ-26]", async ({ page }) => {
+  await page.route("**/api/orders/status", (route) =>
+    route.fulfill({ json: { ...order, order_status: "collected", payment_status: "paid", can_give_feedback: true } }),
+  );
+  let sent: Record<string, unknown> | null = null;
+  await page.route("**/api/orders/feedback", async (route) => {
+    sent = route.request().postDataJSON();
+    await route.fulfill({ json: { ok: true } });
+  });
+  await page.goto(`/order/KDP-0042#${TOKEN}`);
+  await expect(page.getByRole("heading", { name: "How were your pops?" })).toBeVisible();
+  await page.getByRole("group", { name: "Overall" }).getByLabel("5").check();
+  await page.getByRole("group", { name: "Taste" }).getByLabel("4").check();
+  await page.getByLabel("Anything else? (optional)").fill("So good!");
+  await page.getByRole("button", { name: "Send feedback" }).click();
+  await expect(page.getByText("Thank you! Kaydee reads every one.")).toBeVisible();
+  expect(sent).toMatchObject({ rating: 5, taste: 4, comment: "So good!", token: TOKEN });
+});
+
+test("proof deletion endpoint refuses calls without the cron secret", async ({ request }) => {
+  const response = await request.post("/api/cron/delete-proofs", { headers: { "x-cron-secret": "guess" } });
+  expect(response.status()).toBe(403);
+});

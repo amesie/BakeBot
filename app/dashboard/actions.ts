@@ -11,6 +11,7 @@ import { headers } from "next/headers";
 import { getCollectionPlace, getOrdersByIds } from "@/lib/dashboard/data";
 import { invoiceWhatsAppLink } from "@/lib/dashboard/whatsapp";
 import { createClient } from "@/lib/supabase/server";
+import { normaliseZaPhone } from "@/lib/phone";
 
 export type ActionState = {
   ok: boolean;
@@ -31,6 +32,7 @@ const friendly: Record<string, string> = {
   order_not_found: "That order no longer exists.",
   not_bakeable: "That order is already ready, collected or cancelled.",
   no_proof: "There is no proof waiting to be checked for that order.",
+  has_active_orders: "This customer still has an open order. Cancel or finish it first.",
 };
 
 function explain(error: { message: string } | null, fallback = "Something went wrong. Please try again.") {
@@ -197,4 +199,21 @@ export async function saveProduct(_: ActionState, form: FormData): Promise<Actio
   if (error || !data?.length) return { ok: false, message: "Only Kaydee can change the menu." };
   updateTag(MENU_CACHE_TAG);
   return done(`${data[0].flavour} saved. The menu is updated.`);
+}
+
+// ------------------------------------------------------------------ POPIA deletion request (spec 7.8)
+
+export async function deleteCustomerData(_: ActionState, form: FormData): Promise<ActionState> {
+  const phone = normaliseZaPhone(String(form.get("phone") ?? ""));
+  if (!phone) return { ok: false, message: "Enter the customer's cell number, e.g. 082 123 4567." };
+  const supabase = await createClient();
+  const { data: customer } = await supabase
+    .from("customers")
+    .select("customer_id, full_name")
+    .eq("phone_number", phone)
+    .maybeSingle();
+  if (!customer) return { ok: false, message: "No customer with that number (or their details were already removed)." };
+  const { error } = await supabase.rpc("anonymise_customer_now", { p_customer_id: customer.customer_id });
+  if (error) return { ok: false, message: explain(error)! };
+  return done(`${customer.full_name}'s details have been removed. Invoice totals are kept for the records.`);
 }

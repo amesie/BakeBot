@@ -48,3 +48,25 @@ export function invoiceWhatsAppLink(order: DashboardOrder, place: string, origin
   ].join("\n\n");
   return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 }
+
+/** BakeBot payment reminder (REQ-16) to send from Kaydee's phone. */
+export function reminderWhatsAppLink(order: DashboardOrder, origin: string): string | null {
+  const phone = order.customers?.phone_number?.replace(/\D/g, "");
+  if (!phone || !order.payment_reference) return null;
+  const language = isLanguage(order.customers?.preferred_language) ? order.customers!.preferred_language : "en";
+  const m = dictionaries[language];
+  const lines = [
+    format(m.templates.payment_reminder, {
+      order_number: order.order_number,
+      amount: formatRand(orderTotal(order)),
+      reference: order.payment_reference,
+      date: formatDay(order.revised_collection_date ?? order.collection_date, m),
+    }),
+  ];
+  if (order.invoices?.share_token) {
+    lines.push(format(m.templates.invoice_link, {
+      url: `${origin}/invoice/${encodeURIComponent(order.payment_reference)}/${order.invoices.share_token}`,
+    }));
+  }
+  return `https://wa.me/${phone}?text=${encodeURIComponent(lines.join("\n\n"))}`;
+}

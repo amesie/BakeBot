@@ -239,7 +239,17 @@
     "proofBadType": "Nceda ukhethe ifoto, iskrini okanye i-PDF.",
     "proofPaid": "Le odolo sele ihlawulwe. Enkosi!",
     "proofFailed": "Asikwazanga ukuyithumela. Nceda uzame kwakhona.",
-    "invoice": "Khuphela i-invoyisi"
+    "invoice": "Khuphela i-invoyisi",
+    "feedbackTitle": "Zibe njani ii-pops zakho?",
+    "feedbackScale": "1 = azilunganga, 5 = zimnandi kakhulu",
+    "feedbackOverall": "Iyonke",
+    "feedbackTaste": "Incasa",
+    "feedbackSize": "Ubungakanani",
+    "feedbackPrice": "Ixabiso",
+    "feedbackComment": "Ikhona enye into? (ukuzikhethela)",
+    "feedbackSend": "Thumela izimvo",
+    "feedbackThanks": "Enkosi! UKaydee ufunda zonke.",
+    "feedbackFailed": "Asikwazanga ukuthumela izimvo zakho. Nceda uzame kwakhona."
   },
   "templates": {
     "acknowledgement": "I-odolo {order_number} ifunyenwe – uKaydee uza kuqinisekisa emva kwesikolo.",
@@ -254,7 +264,11 @@
     "proof_received": "Sibufumene ubungqina bakho bentlawulo be-odolo {order_number}. UKaydee uza kubujonga kungekudala.",
     "proof_rejected": "Asikwazanga ukubudibanisa ubungqina bentlawulo be-odolo {order_number}. Nceda ujonge isixa nesalathiso, uze ubuthumele kwakhona.",
     "invoice_link": "I-invoyisi yakho: {url}",
-    "signature": "BakeBot (KD Pops)"
+    "signature": "BakeBot (KD Pops)",
+    "payment_reminder": "Isikhumbuzo esinobubele esivela ku-BakeBot: i-odolo {order_number} ayikahlawulwa. Nceda uhlawule i-{amount} nge-EFT usebenzisa isalathiso {reference} phambi ko-{date}.",
+    "released": "I-odolo {order_number} ayihlawulwanga ngexesha, ngoko ii-pops zikhutshelwe ukuthengiswa. Ukuba yimpazamo le, nceda uthethe noKaydee.",
+    "collect_reminder": "I-odolo yakho ehlawulweyo {order_number} isakulindile. Nceda uthethe noKaydee ukuze uyilande.",
+    "feedback_request": "Enkosi ngokulanda i-odolo {order_number}! Zibe njani ii-pops zakho? Shiya izimvo ezimfutshane apha ngezantsi."
   },
   "myOrders": {
     "title": "Ii-odolo zakho zakutsha nje",

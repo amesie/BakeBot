@@ -27,6 +27,7 @@ export type OrderSummary = {
   items: { flavour: string; quantity: number; unit_price: number; line_total: number }[];
   messages: { template: string; params: Record<string, string>; created_at: string }[];
   bank_details?: string | null;
+  can_give_feedback?: boolean;
 };
 
 export type SendResult =

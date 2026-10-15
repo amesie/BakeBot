@@ -193,6 +193,8 @@ function OrderDetails({
         <ProofUpload m={m} order={order} token={token} onUpdate={onUpdate} />
       )}
 
+      {order.can_give_feedback && <FeedbackForm m={m} order={order} token={token} />}
+
       {order.messages.length > 0 && (
         <div className="kd-card">
           <h2 className="font-display" style={{ fontSize: 22, margin: "0 0 14px", display: "flex", gap: 10, alignItems: "center" }}>
@@ -298,6 +300,80 @@ function ProofUpload({
       <div>
         <button className="pill pill-small" disabled={state === "sending"}>
           {state === "sending" ? m.status.proofSending : m.status.proofSend}
+        </button>
+      </div>
+    </form>
+  );
+}
+
+// REQ-26: taste, size and price, the day after collection.
+function FeedbackForm({ m, order, token }: { m: Messages; order: OrderSummary; token: string }) {
+  const [state, setState] = useState<"idle" | "sending" | "done" | "failed">("idle");
+  const scores = [
+    ["rating", m.status.feedbackOverall],
+    ["taste", m.status.feedbackTaste],
+    ["size", m.status.feedbackSize],
+    ["price", m.status.feedbackPrice],
+  ] as const;
+
+  const send = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const score = (name: string) => (form.get(name) ? Number(form.get(name)) : undefined);
+    setState("sending");
+    try {
+      const response = await fetch("/api/orders/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          order_number: order.order_number,
+          token,
+          rating: score("rating"),
+          taste: score("taste"),
+          size: score("size"),
+          price: score("price"),
+          comment: String(form.get("comment") ?? "") || undefined,
+        }),
+      });
+      setState(response.ok || response.status === 409 ? "done" : "failed");
+    } catch {
+      setState("failed");
+    }
+  };
+
+  if (state === "done") {
+    return (
+      <p className="kd-card m-0" role="status">
+        {m.status.feedbackThanks}
+      </p>
+    );
+  }
+
+  return (
+    <form className="kd-card stack" onSubmit={send}>
+      <h2 className="font-display" style={{ fontSize: 22, margin: 0 }}>{m.status.feedbackTitle}</h2>
+      <p className="form-note m-0">{m.status.feedbackScale}</p>
+      {scores.map(([name, label]) => (
+        <fieldset key={name} style={{ border: 0, margin: 0, padding: 0 }}>
+          <legend className="field-label" style={{ fontWeight: 700, marginBottom: 6 }}>{label}</legend>
+          <div className="choice-row">
+            {[1, 2, 3, 4, 5].map((n) => (
+              <label key={n} className="choice" style={{ minWidth: 52, justifyContent: "center" }}>
+                <input type="radio" name={name} value={n} required={name === "rating"} />
+                {n}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      ))}
+      <div className="field">
+        <label className="field-label" htmlFor="feedback-comment">{m.status.feedbackComment}</label>
+        <textarea id="feedback-comment" name="comment" className="input" rows={3} maxLength={500} />
+      </div>
+      {state === "failed" && <p className="field-error m-0" role="alert">{m.status.feedbackFailed}</p>}
+      <div>
+        <button className="pill pill-small" disabled={state === "sending"}>
+          {m.status.feedbackSend}
         </button>
       </div>
     </form>

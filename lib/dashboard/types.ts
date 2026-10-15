@@ -22,6 +22,19 @@ export type DashboardOrder = {
   order_items: { quantity: number; unit_price_snapshot: number; products: { flavour: string } | null }[];
   payments: { amount: number; payment_status: "unpaid" | "pending_review" | "paid"; paid_at: string | null } | null;
   invoices: { share_token: string } | null;
+  notifications: { template: string; created_at: string }[];
+};
+
+export type OwnerUpdate = { template: string; params: Record<string, unknown>; created_at: string };
+
+export type FeedbackRow = {
+  rating: number;
+  taste_rating: number | null;
+  size_rating: number | null;
+  price_rating: number | null;
+  comment: string | null;
+  created_at: string;
+  orders: { order_number: string; customers: { full_name: string } | null } | null;
 };
 
 export type PaidPayment = {

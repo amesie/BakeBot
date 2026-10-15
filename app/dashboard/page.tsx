@@ -7,19 +7,30 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { LogoutButton } from "@/components/logout-button";
 import { ApprovalQueue, BatchPanel, PaymentsPanel, SettingsPanel } from "@/components/dashboard/panels";
-import { getCollectionPlace, getOrders, getRecentlyPaid, getSettings, getStaff, type StaffRole } from "@/lib/dashboard/data";
+import {
+  getCollectionPlace,
+  getFeedback,
+  getOrders,
+  getOwnerUpdates,
+  getRecentlyPaid,
+  getSettings,
+  getStaff,
+  type StaffRole,
+} from "@/lib/dashboard/data";
+import { DeletionRequest, FeedbackPanel, OwnerUpdates, ReleasedOrders } from "@/components/dashboard/updates";
 
 export const metadata: Metadata = {
   title: "Dashboard · KD Pops",
   robots: { index: false, follow: false },
 };
 
-type Tab = "orders" | "payments" | "batch" | "settings";
+type Tab = "orders" | "payments" | "batch" | "feedback" | "settings";
 
 const TABS: { id: Tab; label: string; roles: StaffRole[] }[] = [
   { id: "orders", label: "Approve", roles: ["owner"] },
   { id: "payments", label: "Payments", roles: ["owner", "helper"] },
   { id: "batch", label: "Batch", roles: ["owner", "helper"] },
+  { id: "feedback", label: "Feedback", roles: ["owner"] },
   { id: "settings", label: "Settings", roles: ["owner"] },
 ];
 
@@ -97,7 +108,13 @@ async function Dashboard({ searchParams }: { searchParams: Promise<{ tab?: strin
 
 async function TabContent({ tab, role, week }: { tab: Tab; role: StaffRole; week: string | null }) {
   if (tab === "orders") {
-    return <ApprovalQueue orders={await getOrders(["pending", "waitlisted"])} />;
+    const [orders, updates] = await Promise.all([getOrders(["pending", "waitlisted"]), getOwnerUpdates()]);
+    return (
+      <div className="stack" style={{ gap: 24 }}>
+        <OwnerUpdates updates={updates} />
+        <ApprovalQueue orders={orders} />
+      </div>
+    );
   }
 
   if (tab === "payments") {
@@ -106,9 +123,17 @@ async function TabContent({ tab, role, week }: { tab: Tab; role: StaffRole; week
       getRecentlyPaid(),
       getCollectionPlace(),
     ]);
-    const unpaid = active.filter((o) => o.payments && o.payments.payment_status !== "paid");
-    const ready = active.filter((o) => o.order_status === "ready");
-    return <PaymentsPanel unpaid={unpaid} ready={ready} paid={paid} role={role} place={place} />;
+    // Released orders (REQ-20) leave the payment and collection lists.
+    const live = active.filter((o) => !o.released_at);
+    const unpaid = live.filter((o) => o.payments && o.payments.payment_status !== "paid");
+    const ready = live.filter((o) => o.order_status === "ready");
+    const released = active.filter((o) => o.released_at && o.order_status !== "collected");
+    return (
+      <div className="stack" style={{ gap: 28 }}>
+        <PaymentsPanel unpaid={unpaid} ready={ready} paid={paid} role={role} place={place} />
+        <ReleasedOrders orders={released} />
+      </div>
+    );
   }
 
   if (tab === "batch") {
@@ -119,6 +144,15 @@ async function TabContent({ tab, role, week }: { tab: Tab; role: StaffRole; week
     return <BatchPanel orders={orders} weeks={weeks} week={selected} role={role} place={place} />;
   }
 
+  if (tab === "feedback") {
+    return <FeedbackPanel feedback={await getFeedback()} />;
+  }
+
   const { settings, caps, products } = await getSettings();
-  return <SettingsPanel settings={settings} caps={caps} products={products} />;
+  return (
+    <div className="stack" style={{ gap: 28 }}>
+      <SettingsPanel settings={settings} caps={caps} products={products} />
+      <DeletionRequest />
+    </div>
+  );
 }

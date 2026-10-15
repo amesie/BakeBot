@@ -239,7 +239,17 @@
     "proofBadType": "Please choose a photo, screenshot or PDF.",
     "proofPaid": "This order is already paid. Thank you!",
     "proofFailed": "We couldn't send it. Please try again.",
-    "invoice": "Download invoice"
+    "invoice": "Download invoice",
+    "feedbackTitle": "How were your pops?",
+    "feedbackScale": "1 = not great, 5 = amazing",
+    "feedbackOverall": "Overall",
+    "feedbackTaste": "Taste",
+    "feedbackSize": "Size",
+    "feedbackPrice": "Price",
+    "feedbackComment": "Anything else? (optional)",
+    "feedbackSend": "Send feedback",
+    "feedbackThanks": "Thank you! Kaydee reads every one.",
+    "feedbackFailed": "We couldn't send your feedback. Please try again."
   },
   "templates": {
     "acknowledgement": "Order {order_number} received – Kaydee will confirm after school.",
@@ -254,7 +264,11 @@
     "proof_received": "We received your proof of payment for order {order_number}. Kaydee will check it soon.",
     "proof_rejected": "We couldn't match the proof of payment for order {order_number}. Please check the amount and reference, then send it again.",
     "invoice_link": "Your invoice: {url}",
-    "signature": "BakeBot (KD Pops)"
+    "signature": "BakeBot (KD Pops)",
+    "payment_reminder": "Friendly reminder from BakeBot: order {order_number} is not paid yet. Please pay {amount} by EFT using reference {reference} before {date}.",
+    "released": "Order {order_number} was not paid in time, so the pops have been released for sale. If this is a mistake, please talk to Kaydee.",
+    "collect_reminder": "Your paid order {order_number} is still waiting for you. Please talk to Kaydee to arrange collection.",
+    "feedback_request": "Thank you for collecting order {order_number}! How were your pops? Leave quick feedback below."
   },
   "myOrders": {
     "title": "Your recent orders",

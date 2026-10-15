@@ -2,9 +2,9 @@
 // decides what each role sees (owner: everything; helper: orders and
 // payments), so these queries never use a secret key.
 import { createClient } from "@/lib/supabase/server";
-import type { DashboardOrder, PaidPayment, StaffRole } from "./types";
+import type { DashboardOrder, FeedbackRow, OwnerUpdate, PaidPayment, StaffRole } from "./types";
 
-export type { DashboardOrder, PaidPayment, StaffRole } from "./types";
+export type { DashboardOrder, FeedbackRow, OwnerUpdate, PaidPayment, StaffRole } from "./types";
 export { orderTotal } from "./types";
 
 const ORDER_FIELDS = `
@@ -14,7 +14,8 @@ const ORDER_FIELDS = `
   customers ( full_name, phone_number, is_minor, preferred_language ),
   order_items ( quantity, unit_price_snapshot, products ( flavour ) ),
   payments ( amount, payment_status, paid_at ),
-  invoices ( share_token )
+  invoices ( share_token ),
+  notifications ( template, created_at )
 `;
 
 /** The signed-in user and their staff role, or null if not staff. */
@@ -93,4 +94,26 @@ export async function getOrdersByIds(ids: string[]) {
   const { data, error } = await supabase.from("orders").select(ORDER_FIELDS).in("order_id", ids);
   if (error) throw new Error(error.message);
   return (data ?? []) as unknown as DashboardOrder[];
+}
+
+/** BakeBot's messages to Kaydee: daily summary, bake list, release report. */
+export async function getOwnerUpdates(limit = 5) {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("notifications")
+    .select("template, params, created_at")
+    .eq("recipient", "owner")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  return (data ?? []) as OwnerUpdate[];
+}
+
+export async function getFeedback(limit = 50) {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("feedback")
+    .select("rating, taste_rating, size_rating, price_rating, comment, created_at, orders ( order_number, customers ( full_name ) )")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  return (data ?? []) as unknown as FeedbackRow[];
 }

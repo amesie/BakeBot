@@ -36,5 +36,14 @@ export async function POST(request: Request) {
   const bank =
     data.payment_method === "eft" && data.payment_reference ? (process.env.EFT_BANK_DETAILS ?? null) : null;
 
-  return NextResponse.json({ ...data, bank_details: bank }, { headers: noStore });
+  // REQ-26: offer the feedback form once the order is collected.
+  const feedback =
+    data.order_status === "collected"
+      ? await createAnonClient().rpc("can_give_feedback", {
+          p_order_number: parsed.data.order_number,
+          p_token: parsed.data.token,
+        })
+      : { data: false };
+
+  return NextResponse.json({ ...data, bank_details: bank, can_give_feedback: feedback.data === true }, { headers: noStore });
 }
