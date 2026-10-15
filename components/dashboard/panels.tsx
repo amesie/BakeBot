@@ -12,6 +12,7 @@ import {
   delayBatch,
   markCollected,
   markPaid,
+  markReady,
   removeWeekCap,
   saveProduct,
   saveSettings,
@@ -341,6 +342,22 @@ export function BatchPanel({
                 <br />
                 {order.payments?.payment_status === "paid" ? "Paid" : "Not paid"}
               </span>
+              {role === "owner" && (order.order_status === "confirmed" || order.order_status === "baking") && (
+                <ActionForm
+                  action={markReady}
+                  className="w-full"
+                  confirm={`Is ${order.order_number} for ${order.customers?.full_name ?? "this customer"} definitely ready?
+
+They will be told to collect it.`}
+                >
+                  {(pending) => (
+                    <>
+                      <input type="hidden" name="order_id" value={order.order_id} />
+                      <Submit pending={pending}>Mark ready</Submit>
+                    </>
+                  )}
+                </ActionForm>
+              )}
             </li>
           ))}
         </ul>
@@ -358,12 +375,17 @@ export function BatchPanel({
                 </>
               )}
             </ActionForm>
-            <ActionForm action={advanceWeek} confirm="Mark this week's baking orders ready? Customers will be told.">
+            <ActionForm
+              action={advanceWeek}
+              confirm={`Are all ${count("confirmed") + count("baking")} orders for this week definitely ready?
+
+Every one of those customers will be told to collect.`}
+            >
               {(pending) => (
                 <>
                   <input type="hidden" name="week" value={week} />
                   <input type="hidden" name="to" value="ready" />
-                  <Submit pending={pending}>All ready ({count("baking")})</Submit>
+                  <Submit pending={pending}>All ready ({count("confirmed") + count("baking")})</Submit>
                 </>
               )}
             </ActionForm>

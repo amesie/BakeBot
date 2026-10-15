@@ -21,6 +21,7 @@ const friendly: Record<string, string> = {
   invalid_date: "Choose a school day from today onwards.",
   invalid_quote: "The quote must be zero or more.",
   order_not_found: "That order no longer exists.",
+  not_bakeable: "That order is already ready, collected or cancelled.",
 };
 
 function explain(error: { message: string } | null, fallback = "Something went wrong. Please try again.") {
@@ -76,6 +77,14 @@ export async function markCollected(_: ActionState, form: FormData): Promise<Act
 }
 
 // ------------------------------------------------------------------ batch
+
+/** One order is ready: the customer is told to collect it. */
+export async function markReady(_: ActionState, form: FormData): Promise<ActionState> {
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("mark_ready", { p_order_id: String(form.get("order_id")) });
+  if (error) return { ok: false, message: explain(error)! };
+  return done(`${data.order_number} is ready. The customer has been told.`);
+}
 
 export async function advanceWeek(_: ActionState, form: FormData): Promise<ActionState> {
   const to = String(form.get("to"));
