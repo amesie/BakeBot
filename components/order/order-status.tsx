@@ -15,7 +15,7 @@ import { formatRand } from "@/lib/format";
 import { format, type Messages } from "@/lib/i18n";
 import { rememberOrder, type OrderSummary } from "@/lib/orders/client";
 import { compressImage } from "@/lib/compress-image";
-import { whatsAppLink } from "@/lib/site";
+import { proofEmail, whatsAppLink } from "@/lib/site";
 
 type Load =
   | { state: "loading" }
@@ -219,7 +219,7 @@ function OrderDetails({
 
 /** Turn stored message values (dates, slots, amounts) into words. */
 function readableParams(params: Record<string, string>, m: Messages): Record<string, string> {
-  const out = { ...params };
+  const out: Record<string, string> = { ...params, email: proofEmail };
   if (params.date) out.date = formatDay(params.date, m);
   if (params.slot && params.slot in m.slots) out.slot = m.slots[params.slot as keyof Messages["slots"]];
   if (params.amount !== undefined) out.amount = formatRand(params.amount);
@@ -291,6 +291,11 @@ function ProofUpload({
         </>
       ) : (
         <p className="form-note m-0">{m.status.proofHint}</p>
+      )}
+      {order.payment_reference && (
+        <p className="m-0" style={{ fontWeight: 600 }}>
+          {format(m.status.proofEmail, { email: proofEmail, reference: order.payment_reference })}
+        </p>
       )}
       <div className="field">
         <label className="field-label" htmlFor="proof-file">{m.status.proofFile}</label>

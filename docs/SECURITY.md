@@ -7,6 +7,7 @@
 | Name, cell number, language, consent record, under-18 flag | `customers` | Kaydee (full); helper (name, masked number) | Until 90 days after the last finished order, then anonymised (REQ-27) |
 | Orders, items, totals | `orders`, `order_items`, `payments`, `invoices` | Kaydee; helper (read) | Order notes removed on anonymisation; totals kept 5 years (financial records) |
 | Proof-of-payment files | Private bucket `payment-proofs` | Kaydee and helper, via 15-minute links | Deleted 30 days after payment |
+| Emailed proofs (sender address, message) | Gmail inbox thebakebot@gmail.com | Whoever holds the Gmail login | Matched emails moved to Bin (emptied after 30 days); unmatched ones kept under "BakeBot/Unmatched" until Kaydee deletes them. Sender addresses are not copied into the database |
 | BakeBot chats (and any number left for a reply) | `conversations` | Kaydee | Deleted after 30 days |
 | Messages to customers | `notifications` (template names and order numbers only) | Kaydee | Deleted on anonymisation |
 | Error log | `error_log` (no names or numbers) | Kaydee | 90 days |
@@ -28,7 +29,7 @@ Data is stored by Supabase in the EU (Ireland), D-007. No ID numbers, addresses 
 Act the same day. Write everything down as you go (the **incident register** below).
 
 1. **Contain.**
-   - Rotate secrets (see `docs/DEPLOYMENT.md`): Supabase publishable key, `CRON_SECRET` (Vault + Vercel), `GEMINI_API_KEY`.
+   - Rotate secrets (see `docs/DEPLOYMENT.md`): Supabase publishable key, `CRON_SECRET` (Vault + Vercel), `GEMINI_API_KEY`, `GMAIL_APP_PASSWORD` (revoke it in the Google account and create a new one).
    - Make all staff reset their passwords; remove any unknown account from Supabase Auth and `staff_roles`.
    - If an order or invoice link may have leaked, it only opens that one order or invoice; if many leaked, the team can clear `orders.access_token_hash` / `invoices.share_token` for the affected orders (customers then contact Kaydee).
 2. **Assess** using the logs: Supabase → Logs (API, Auth, Storage), Vercel → Logs, `error_log`, `job_runs`. Work out what data, which customers, and since when.

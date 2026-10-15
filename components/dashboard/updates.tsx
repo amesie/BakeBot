@@ -56,6 +56,24 @@ function describe(update: OwnerUpdate): React.ReactNode {
         </>
       );
     }
+    case "owner_unmatched_email": {
+      const reasons: Record<string, string> = {
+        no_reference: "no payment reference in the subject",
+        not_found: "the reference does not match any order",
+        not_approved: "that order is not approved yet",
+        already_paid: "that order is already paid",
+        no_attachment: "no attachment",
+        unsupported: "the attachment is not a photo or PDF",
+        too_large: "the attachment is over 4 MB",
+        error: "it could not be saved",
+      };
+      return (
+        <>
+          <b>Emailed proof needs you:</b> &ldquo;{p.subject || "(no subject)"}&rdquo;, {reasons[p.reason] ?? p.reason}. It is in
+          Gmail under <b>BakeBot/Unmatched</b>.
+        </>
+      );
+    }
     default:
       return update.template;
   }

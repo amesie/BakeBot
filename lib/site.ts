@@ -12,3 +12,6 @@ export const whatsAppLink = ownerWhatsApp ? `https://wa.me/${ownerWhatsApp}` : n
 export const whatsAppDisplay = ownerWhatsApp
   ? `0${ownerWhatsApp.slice(2, 4)} ${ownerWhatsApp.slice(4, 7)} ${ownerWhatsApp.slice(7)}`
   : null;
+
+/** Inbox for emailed proofs of payment (D-069). */
+export const proofEmail = process.env.NEXT_PUBLIC_PROOF_EMAIL || "thebakebot@gmail.com";

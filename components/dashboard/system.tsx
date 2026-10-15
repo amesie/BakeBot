@@ -24,6 +24,7 @@ const JOBS: Record<string, { label: string; everyHours: number }> = {
   anonymise: { label: "02:15 anonymise customers after 90 days", everyHours: 24 },
   delete_conversations: { label: "02:30 delete chats after 30 days", everyHours: 24 },
   delete_old_logs: { label: "02:45 clear old error and job logs", everyHours: 24 },
+  check_email: { label: "Emailed proofs read from Gmail (logged when emails arrive)", everyHours: 24 * 14 },
 };
 
 export function SystemPanel({

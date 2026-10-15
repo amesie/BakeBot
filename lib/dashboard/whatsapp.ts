@@ -4,6 +4,7 @@
 import { formatDay } from "@/lib/dates";
 import { dictionaries, format, isLanguage, type Messages } from "@/lib/i18n";
 import { formatRand } from "@/lib/format";
+import { proofEmail } from "@/lib/site";
 import { orderTotal, type DashboardOrder } from "./types";
 
 export function readyWhatsAppLink(order: DashboardOrder, place: string): string | null {
@@ -43,6 +44,7 @@ export function invoiceWhatsAppLink(order: DashboardOrder, place: string, origin
         place,
         amount: formatRand(orderTotal(order)),
         reference: order.payment_reference,
+        email: proofEmail,
       }),
     format(m.templates.invoice_link, { url }),
   ].join("\n\n");
@@ -61,6 +63,7 @@ export function reminderWhatsAppLink(order: DashboardOrder, origin: string): str
       amount: formatRand(orderTotal(order)),
       reference: order.payment_reference,
       date: formatDay(order.revised_collection_date ?? order.collection_date, m),
+      email: proofEmail,
     }),
   ];
   if (order.invoices?.share_token) {

@@ -249,14 +249,15 @@
     "feedbackComment": "Anything else? (optional)",
     "feedbackSend": "Send feedback",
     "feedbackThanks": "Thank you! Kaydee reads every one.",
-    "feedbackFailed": "We couldn't send your feedback. Please try again."
+    "feedbackFailed": "We couldn't send your feedback. Please try again.",
+    "proofEmail": "Or email it to {email} with {reference} as the subject."
   },
   "templates": {
     "acknowledgement": "Order {order_number} received – Kaydee will confirm after school.",
     "waitlisted": "Order {order_number} is on the waitlist because this week is full. Kaydee will let you know if a spot opens.",
     "quote_pending": "Order {order_number} received. It's a big one, so Kaydee will send you a quote after school.",
     "confirmation_cash": "Order {order_number} is confirmed! Collect it on {date}, {slot}, at {place}. Please bring {amount} in cash.",
-    "confirmation_eft": "Order {order_number} is confirmed! Collect it on {date}, {slot}, at {place}. Please pay {amount} by EFT using reference {reference}.",
+    "confirmation_eft": "Order {order_number} is confirmed! Collect it on {date}, {slot}, at {place}. Please pay {amount} by EFT using reference {reference}. Send your proof of payment to {email} with {reference} as the subject, or upload it on your order page.",
     "declined": "Sorry, KD Pops can't take order {order_number} this time. Nothing is owed. Thank you for understanding.",
     "payment_received": "Payment for order {order_number} received. Thank you!",
     "ready": "Order {order_number} is ready! Collect it on {date}, {slot}, at {place}.",
@@ -265,7 +266,7 @@
     "proof_rejected": "We couldn't match the proof of payment for order {order_number}. Please check the amount and reference, then send it again.",
     "invoice_link": "Your invoice: {url}",
     "signature": "BakeBot (KD Pops)",
-    "payment_reminder": "Friendly reminder from BakeBot: order {order_number} is not paid yet. Please pay {amount} by EFT using reference {reference} before {date}.",
+    "payment_reminder": "Friendly reminder from BakeBot: order {order_number} is not paid yet. Please pay {amount} by EFT using reference {reference} before {date}. Already paid? Email your proof to {email} with {reference} as the subject.",
     "released": "Order {order_number} was not paid in time, so the pops have been released for sale. If this is a mistake, please talk to Kaydee.",
     "collect_reminder": "Your paid order {order_number} is still waiting for you. Please talk to Kaydee to arrange collection.",
     "feedback_request": "Thank you for collecting order {order_number}! How were your pops? Leave quick feedback below."

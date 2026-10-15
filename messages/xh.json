@@ -249,14 +249,15 @@
     "feedbackComment": "Ikhona enye into? (ukuzikhethela)",
     "feedbackSend": "Thumela izimvo",
     "feedbackThanks": "Enkosi! UKaydee ufunda zonke.",
-    "feedbackFailed": "Asikwazanga ukuthumela izimvo zakho. Nceda uzame kwakhona."
+    "feedbackFailed": "Asikwazanga ukuthumela izimvo zakho. Nceda uzame kwakhona.",
+    "proofEmail": "Okanye uyithumele nge-imeyile ku-{email} ne-{reference} njengesihloko."
   },
   "templates": {
     "acknowledgement": "I-odolo {order_number} ifunyenwe – uKaydee uza kuqinisekisa emva kwesikolo.",
     "waitlisted": "I-odolo {order_number} ikuluhlu lokulinda kuba le veki igcwele. UKaydee uza kukwazisa ukuba kukho indawo evulekileyo.",
     "quote_pending": "I-odolo {order_number} ifunyenwe. Inkulu, ngoko uKaydee uza kukuthumelela ikowuteshini emva kwesikolo.",
     "confirmation_cash": "I-odolo {order_number} iqinisekisiwe! Yilande ngo-{date}, {slot}, e-{place}. Nceda uze ne-{amount} ngemali.",
-    "confirmation_eft": "I-odolo {order_number} iqinisekisiwe! Yilande ngo-{date}, {slot}, e-{place}. Nceda uhlawule i-{amount} nge-EFT usebenzisa isalathiso {reference}.",
+    "confirmation_eft": "I-odolo {order_number} iqinisekisiwe! Yilande ngo-{date}, {slot}, e-{place}. Nceda uhlawule i-{amount} nge-EFT usebenzisa isalathiso {reference}. Thumela ubungqina bentlawulo ku-{email} ne-{reference} njengesihloko, okanye ubulayishe kwiphepha le-odolo yakho.",
     "declined": "Uxolo, i-KD Pops ayinakuyithatha i-odolo {order_number} ngeli xesha. Akukho nto ityalwayo. Enkosi ngokuqonda.",
     "payment_received": "Intlawulo ye-odolo {order_number} ifunyenwe. Enkosi!",
     "ready": "I-odolo {order_number} ilungile! Yilande ngo-{date}, {slot}, e-{place}.",
@@ -265,7 +266,7 @@
     "proof_rejected": "Asikwazanga ukubudibanisa ubungqina bentlawulo be-odolo {order_number}. Nceda ujonge isixa nesalathiso, uze ubuthumele kwakhona.",
     "invoice_link": "I-invoyisi yakho: {url}",
     "signature": "BakeBot (KD Pops)",
-    "payment_reminder": "Isikhumbuzo esinobubele esivela ku-BakeBot: i-odolo {order_number} ayikahlawulwa. Nceda uhlawule i-{amount} nge-EFT usebenzisa isalathiso {reference} phambi ko-{date}.",
+    "payment_reminder": "Isikhumbuzo esinobubele esivela ku-BakeBot: i-odolo {order_number} ayikahlawulwa. Nceda uhlawule i-{amount} nge-EFT usebenzisa isalathiso {reference} phambi ko-{date}. Sele uhlawule? Thumela ubungqina bakho nge-imeyile ku-{email} ne-{reference} njengesihloko.",
     "released": "I-odolo {order_number} ayihlawulwanga ngexesha, ngoko ii-pops zikhutshelwe ukuthengiswa. Ukuba yimpazamo le, nceda uthethe noKaydee.",
     "collect_reminder": "I-odolo yakho ehlawulweyo {order_number} isakulindile. Nceda uthethe noKaydee ukuze uyilande.",
     "feedback_request": "Enkosi ngokulanda i-odolo {order_number}! Zibe njani ii-pops zakho? Shiya izimvo ezimfutshane apha ngezantsi."

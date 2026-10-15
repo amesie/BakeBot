@@ -5,6 +5,7 @@ import { PDFDocument, StandardFonts, rgb, type PDFFont } from "pdf-lib";
 import { formatDay, sastDate } from "@/lib/dates";
 import { formatRand } from "@/lib/format";
 import { dictionaries } from "@/lib/i18n";
+import { proofEmail } from "@/lib/site";
 
 export type InvoiceData = {
   invoice_number: string;
@@ -118,6 +119,9 @@ export async function buildInvoicePdf(data: InvoiceData): Promise<Uint8Array> {
   const lines: [string, string][] = [
     ["Payment", `${en.payment[data.payment_method]} (${status})`],
     ...(data.payment_method === "eft" ? ([["EFT reference", data.invoice_number]] as [string, string][]) : []),
+    ...(data.payment_method === "eft" && data.payment_status !== "paid"
+      ? ([["Proof of payment", `Email ${proofEmail}, subject: ${data.invoice_number}`]] as [string, string][])
+      : []),
     ["Collection", `${formatDay(data.collection_date, en)}, ${en.slots[data.collection_slot]}`],
     ...(data.collection_place ? ([["Where", data.collection_place]] as [string, string][]) : []),
   ];

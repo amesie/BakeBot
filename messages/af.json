@@ -249,14 +249,15 @@
     "feedbackComment": "Nog iets? (opsioneel)",
     "feedbackSend": "Stuur terugvoer",
     "feedbackThanks": "Dankie! Kaydee lees elkeen.",
-    "feedbackFailed": "Ons kon nie jou terugvoer stuur nie. Probeer asseblief weer."
+    "feedbackFailed": "Ons kon nie jou terugvoer stuur nie. Probeer asseblief weer.",
+    "proofEmail": "Of e-pos dit na {email} met {reference} as die onderwerp."
   },
   "templates": {
     "acknowledgement": "Bestelling {order_number} ontvang – Kaydee sal na skool bevestig.",
     "waitlisted": "Bestelling {order_number} is op die waglys omdat hierdie week vol is. Kaydee sal jou laat weet as daar plek oopkom.",
     "quote_pending": "Bestelling {order_number} ontvang. Dis 'n groot een, so Kaydee sal na skool vir jou 'n kwotasie stuur.",
     "confirmation_cash": "Bestelling {order_number} is bevestig! Haal dit af op {date}, {slot}, by {place}. Bring asseblief {amount} kontant.",
-    "confirmation_eft": "Bestelling {order_number} is bevestig! Haal dit af op {date}, {slot}, by {place}. Betaal asseblief {amount} per EFT met verwysing {reference}.",
+    "confirmation_eft": "Bestelling {order_number} is bevestig! Haal dit af op {date}, {slot}, by {place}. Betaal asseblief {amount} per EFT met verwysing {reference}. Stuur jou bewys van betaling na {email} met {reference} as die onderwerp, of laai dit op jou bestellingsblad op.",
     "declined": "Jammer, KD Pops kan nie hierdie keer bestelling {order_number} aanvaar nie. Jy skuld niks. Dankie vir jou begrip.",
     "payment_received": "Betaling vir bestelling {order_number} ontvang. Dankie!",
     "ready": "Bestelling {order_number} is gereed! Haal dit af op {date}, {slot}, by {place}.",
@@ -265,7 +266,7 @@
     "proof_rejected": "Ons kon nie die bewys van betaling vir bestelling {order_number} laat klop nie. Kontroleer asseblief die bedrag en verwysing en stuur dit weer.",
     "invoice_link": "Jou faktuur: {url}",
     "signature": "BakeBot (KD Pops)",
-    "payment_reminder": "Vriendelike herinnering van BakeBot: bestelling {order_number} is nog nie betaal nie. Betaal asseblief {amount} per EFT met verwysing {reference} voor {date}.",
+    "payment_reminder": "Vriendelike herinnering van BakeBot: bestelling {order_number} is nog nie betaal nie. Betaal asseblief {amount} per EFT met verwysing {reference} voor {date}. Reeds betaal? E-pos jou bewys na {email} met {reference} as die onderwerp.",
     "released": "Bestelling {order_number} is nie betyds betaal nie, so die pops is vir verkoop vrygestel. As dit 'n fout is, praat asseblief met Kaydee.",
     "collect_reminder": "Jou betaalde bestelling {order_number} wag nog vir jou. Praat asseblief met Kaydee om dit af te haal.",
     "feedback_request": "Dankie dat jy bestelling {order_number} afgehaal het! Hoe was jou pops? Laat vinnig terugvoer hieronder."

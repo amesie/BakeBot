@@ -18,7 +18,8 @@ Forgot your password? On the login page tap **Forgot password?**, then open the 
 ## Payments (Kaydee or Mom)
 
 - **Payments tab → Waiting for payment.** When money arrives (cash, or EFT in the bank), tap **Mark paid**.
-- If a customer sent a proof of payment, tap **View proof**. If the amount or reference is wrong, tap **Doesn't match** and BakeBot will ask them to check.
+- If a customer sent a proof of payment (uploaded, or emailed to thebakebot@gmail.com with their reference as the subject), tap **View proof**. If the amount or reference is wrong, tap **Doesn't match** and BakeBot will ask them to check.
+- Emails BakeBot could not match (no reference, wrong reference, no attachment) appear in **BakeBot updates** and are kept in Gmail under the label **BakeBot/Unmatched**. Check them there and mark those orders paid yourself.
 - If BakeBot sent a payment reminder, a **WhatsApp reminder** button appears. Use it only if you want to nudge them yourself.
 - At handover: **Ready to collect** → **Paid now** (cash) → **Collected**.
 
