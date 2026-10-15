@@ -1,10 +1,11 @@
 // Gemini adapter (server only). Model names come from env so they can follow
 // Google's model list without a code change (spec 3, D-059).
 import "server-only";
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, ThinkingLevel } from "@google/genai";
 import type { ChatModel } from "./engine";
 
-export const CHAT_MODEL = process.env.GEMINI_CHAT_MODEL || "gemini-3.5-flash-lite";
+// Measured 2026-10-15: 3.1-flash-lite ~1.0 s per answer vs 3.5-flash-lite 3.3-5.7 s (D-064).
+export const CHAT_MODEL = process.env.GEMINI_CHAT_MODEL || "gemini-3.1-flash-lite";
 export const EMBED_MODEL = process.env.GEMINI_EMBED_MODEL || "gemini-embedding-001";
 export const EMBED_DIMENSIONS = 768;
 
@@ -16,6 +17,7 @@ const SYSTEM = [
   "discounts, allergen or ingredient information, promises, or opinions that are not in them.",
   "If the approved answers do not answer the question, set resolved to false and leave answer empty.",
   "Never decide on discounts, credit, payment arrangements or exceptions: those are for Kaydee.",
+  "Copy flavour names, prices, amounts, times, dates and places EXACTLY as written; never translate or change them.",
   "Keep answers short (at most 3 sentences), friendly and factual. Reply in the requested language.",
 ].join(" ");
 
@@ -64,6 +66,8 @@ export function geminiChatModel(): ChatModel | null {
           systemInstruction: SYSTEM,
           temperature: 0,
           maxOutputTokens: 300,
+          // Short factual rephrasing needs no reasoning; thinking adds seconds (REQ-24).
+          thinkingConfig: { thinkingLevel: ThinkingLevel.MINIMAL },
           responseMimeType: "application/json",
           responseJsonSchema: {
             type: "object",

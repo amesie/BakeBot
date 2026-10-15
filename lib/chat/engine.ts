@@ -30,7 +30,10 @@ export type ChatOutcome =
   | { kind: "fallback"; reason: "timeout" | "error" | "no_model" }; // REQ-24
 
 export const TIMEOUT_MS = 5000; // REQ-24
-export const SIMILARITY_THRESHOLD = 0.75; // spec 7.4, tune with real questions
+// Spec 7.4 suggests starting at 0.75. Measured on 2026-10-15 (D-064): approved
+// questions scored 0.67-0.82 and off-topic ones 0.52-0.72, so the score is
+// only a coarse gate; the model's "resolved" check is the second layer.
+export const SIMILARITY_THRESHOLD = Number(process.env.CHAT_SIMILARITY_THRESHOLD ?? 0.6);
 export const MAX_QUESTION_LENGTH = 500;
 
 // "Can I talk to Kaydee / a person?" in English, Afrikaans and isiXhosa.
