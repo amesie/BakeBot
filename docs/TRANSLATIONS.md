@@ -1,13 +1,14 @@
-# Translations to review
+# Translations
 
-The spec (7.9) says machine-drafted isiXhosa and Afrikaans must not ship as final. These are machine-drafted first versions.
-A fluent speaker should check each line, edit `messages/xh.json` or `messages/af.json`, and when a file is fully checked change its `meta.status` from `NEEDS_REVIEW` to `FINAL` (then update the review check in `tests/i18n.test.ts`).
+**Status: final.** The isiXhosa and Afrikaans text was checked and approved by native speakers on 20 October 2026 (D-072); both files are marked `FINAL`.
+
+When new text is added, add it to `messages/en.json`, `messages/xh.json` and `messages/af.json` together and have a native speaker check the new lines before release (the unit test `tests/i18n.test.ts` fails if a language is missing a line).
 
 Words in curly brackets such as `{order_number}`, `{name}`, `{email}` or `{reference}` are filled in by the app; keep them exactly as they are.
 
 278 strings per language. The `email.*` strings are the customer emails (added 2026-10-20).
 
-| Key | English | isiXhosa (draft) | Afrikaans (draft) |
+| Key | English | isiXhosa | Afrikaans |
 |---|---|---|---|
 | `nav.menu` | Menu | Imenyu | Spyskaart |
 | `nav.order` | Order | Odola | Bestel |

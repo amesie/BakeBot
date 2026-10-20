@@ -27,8 +27,9 @@ describe("message dictionaries [spec 7.9]", () => {
     }
   });
 
-  it.each(["xh", "af"] as Language[])("%s is flagged for fluent-speaker review", (lang) => {
-    expect(dictionaries[lang].meta.status).toBe("NEEDS_REVIEW");
+  // Checked by native speakers on 2026-10-20 (D-072).
+  it.each(["en", "xh", "af"] as Language[])("%s is marked final", (lang) => {
+    expect(dictionaries[lang].meta.status).toBe("FINAL");
   });
 
   it("has no empty strings", () => {

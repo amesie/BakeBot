@@ -53,7 +53,7 @@ One row per requirement. Status: `todo`, `in progress`, `done`, `verified` (test
 |---|---|---|---|
 | Figma design ported (D-004, D-021) | `app/globals.css`, `components/kd/*`, `components/site/*` | `e2e/home.spec.ts` | done |
 | Live menu from products table (REQ-04, D-022) | `lib/menu.ts`, `components/site/menu-grid.tsx` | `e2e/home.spec.ts` (4 cards, prices) | done |
-| EN / XH / AF dictionaries + toggle (spec 7.9) | `messages/*.json`, `lib/i18n`, `components/i18n-provider.tsx` | `tests/i18n.test.ts`, `e2e/home.spec.ts` | done (XH/AF need review) |
+| EN / XH / AF dictionaries + toggle (spec 7.9) | `messages/*.json`, `lib/i18n`, `components/i18n-provider.tsx` | `tests/i18n.test.ts`, `e2e/home.spec.ts` | done; XH/AF checked by native speakers 2026-10-20 (D-072) |
 
 ## Engineering (M0 / D1)
 
