@@ -11,10 +11,10 @@ const ORDER_FIELDS = `
   order_id, order_number, order_status, payment_method, payment_reference,
   collection_date, collection_week, collection_slot, revised_collection_date,
   special_notes, total_units, is_large_order, quote_amount, created_at, released_at,
-  customers ( full_name, phone_number, is_minor, preferred_language ),
+  customers ( full_name, phone_number, email, is_minor, preferred_language ),
   order_items ( quantity, unit_price_snapshot, products ( flavour ) ),
   payments ( amount, payment_status, paid_at ),
-  invoices ( share_token ),
+  invoices ( share_token, issued_at, total_amount ),
   notifications ( template, created_at )
 `;
 

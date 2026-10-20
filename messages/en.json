@@ -56,7 +56,7 @@
     "intro": "A few quick checks first.",
     "bakebot": "Order updates come from BakeBot, KD Pops' automated assistant. Kaydee reads and confirms every order herself.",
     "popiaTitle": "Your details",
-    "popia": "To process your order we keep your name, cell number and language. Only Kaydee and her helper can see them. They are stored securely by Supabase in the EU, never used for marketing, and deleted 90 days after your last order.",
+    "popia": "To process your order we keep your name, cell number, language and (if you give it) your email address. Only Kaydee and her helper can see them. They are stored securely by Supabase in the EU, never used for marketing, and deleted 90 days after your last order.",
     "agree": "I agree to KD Pops using my details for my order",
     "under18": "Are you under 18?",
     "yes": "Yes",
@@ -89,7 +89,10 @@
     "review": "Review order",
     "largeNote": "More than {threshold} pops? Kaydee will send you a personal quote.",
     "cutoff": "Pre-orders for next week close on Thursday at 20:00.",
-    "errorSummary": "Please fix the following:"
+    "errorSummary": "Please fix the following:",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "emailHint": "Optional. We'll email your order details, invoice and updates."
   },
   "summary": {
     "eyebrow": "Your picks",
@@ -152,8 +155,10 @@
       "is_minor": "Age question",
       "order_id": "Order",
       "access_token": "Order",
-      "form": "Order"
-    }
+      "form": "Order",
+      "email": "Email"
+    },
+    "emailInvalid": "Please check your email address, e.g. you@example.com"
   },
   "slots": {
     "second_break": "2nd break · 11:45–12:00",
@@ -250,7 +255,15 @@
     "feedbackSend": "Send feedback",
     "feedbackThanks": "Thank you! Kaydee reads every one.",
     "feedbackFailed": "We couldn't send your feedback. Please try again.",
-    "proofEmail": "Or email it to {email} with {reference} as the subject."
+    "proofEmail": "Or email it to {email} with {reference} as the subject.",
+    "cancel": "Cancel order",
+    "cancelConfirm": "Cancel order {order_number}? This can't be undone.",
+    "cancelYes": "Yes, cancel it",
+    "cancelNo": "Keep my order",
+    "cancelDone": "Your order is cancelled. Nothing is owed.",
+    "cancelTooLate": "Baking has started, so this order can't be cancelled online. Please talk to Kaydee.",
+    "cancelPaid": "You've already sent payment, so please talk to Kaydee to cancel.",
+    "cancelFailed": "We couldn't cancel it just now. Please try again or talk to Kaydee."
   },
   "templates": {
     "acknowledgement": "Order {order_number} received – Kaydee will confirm after school.",
@@ -269,7 +282,8 @@
     "payment_reminder": "Friendly reminder from BakeBot: order {order_number} is not paid yet. Please pay {amount} by EFT using reference {reference} before {date}. Already paid? Email your proof to {email} with {reference} as the subject.",
     "released": "Order {order_number} was not paid in time, so the pops have been released for sale. If this is a mistake, please talk to Kaydee.",
     "collect_reminder": "Your paid order {order_number} is still waiting for you. Please talk to Kaydee to arrange collection.",
-    "feedback_request": "Thank you for collecting order {order_number}! How were your pops? Leave quick feedback below."
+    "feedback_request": "Thank you for collecting order {order_number}! How were your pops? Leave quick feedback below.",
+    "cancelled_by_customer": "You cancelled order {order_number}. Nothing is owed."
   },
   "myOrders": {
     "title": "Your recent orders",
@@ -295,5 +309,28 @@
     "error": "Something went wrong. Please try again.",
     "limit": "This chat is getting long. Please talk to Kaydee or use the order form.",
     "you": "You"
+  },
+  "email": {
+    "receivedSubject": "KD Pops order {order_number} received",
+    "receivedHeading": "Thanks {name}! Your order is in.",
+    "receivedIntro": "Kaydee will confirm after school. Here are your order details.",
+    "items": "Your pops",
+    "total": "Total",
+    "quote": "Kaydee will send you a quote for this large order.",
+    "collection": "Collection",
+    "payment": "Payment",
+    "track": "Track your order",
+    "cancel": "Cancel my order",
+    "cancelNote": "Changed your mind? You can cancel until baking starts.",
+    "keepLink": "Keep this email: the buttons above are your private link to this order.",
+    "invoiceSubject": "KD Pops order {order_number} confirmed – invoice {reference}",
+    "invoiceHeading": "Your order is confirmed!",
+    "invoiceAttached": "Your invoice is attached. You can also open it here:",
+    "openInvoice": "Open invoice",
+    "readySubject": "Your KD Pops order {order_number} is ready!",
+    "readyHeading": "Your pops are ready!",
+    "cancelledSubject": "KD Pops order {order_number} cancelled",
+    "cancelledHeading": "Your order is cancelled",
+    "footer": "Sent by BakeBot, KD Pops' automated assistant, because you placed an order with KD Pops. Questions? WhatsApp Kaydee on {phone}."
   }
 }

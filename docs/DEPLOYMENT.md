@@ -11,7 +11,7 @@
 
 ## Environment variables (Vercel → Settings → Environment Variables)
 
-See `.env.example`. Production needs: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `NEXT_PUBLIC_OWNER_WHATSAPP`, `EFT_BANK_DETAILS`, `CRON_SECRET` (same value as the Vault secret `cron_secret`), `GEMINI_API_KEY`, `GMAIL_APP_PASSWORD` (and optionally `GMAIL_USER`, `NEXT_PUBLIC_PROOF_EMAIL`). Optional: `GEMINI_CHAT_MODEL`, `GEMINI_EMBED_MODEL`, `CHAT_SIMILARITY_THRESHOLD`. Never set `BAKEBOT_FAKE_MODEL` on Vercel. After changing a variable, **redeploy**.
+See `.env.example`. Production needs: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `NEXT_PUBLIC_OWNER_WHATSAPP`, `EFT_BANK_DETAILS`, `CRON_SECRET` (same value as the Vault secret `cron_secret`), `GEMINI_API_KEY`, `GMAIL_USER` and `GMAIL_APP_PASSWORD` (customer emails, D-070; emailed proofs, D-069), optionally `NEXT_PUBLIC_PROOF_EMAIL` (the address customers send proofs to; should match `GMAIL_USER`). Optional: `GEMINI_CHAT_MODEL`, `GEMINI_EMBED_MODEL`, `CHAT_SIMILARITY_THRESHOLD`. Never set `BAKEBOT_FAKE_MODEL` on Vercel. After changing a variable, **redeploy**.
 
 ## Releasing a change
 

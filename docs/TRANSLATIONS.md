@@ -1,11 +1,11 @@
 # Translations to review
 
-The spec (7.9) says machine-drafted isiXhosa and Afrikaans must not ship as final. These are first drafts written by Claude Code.
+The spec (7.9) says machine-drafted isiXhosa and Afrikaans must not ship as final. These are machine-drafted first versions.
 A fluent speaker should check each line, edit `messages/xh.json` or `messages/af.json`, and when a file is fully checked change its `meta.status` from `NEEDS_REVIEW` to `FINAL` (then update the review check in `tests/i18n.test.ts`).
 
-`{price}`, `{flavour}`, `{name}`, `{order_number}`, `{date}`, `{slot}`, `{place}`, `{amount}`, `{reference}`, `{url}` and similar are filled in by the app; keep them exactly as they are.
+Words in curly brackets such as `{order_number}`, `{name}`, `{email}` or `{reference}` are filled in by the app; keep them exactly as they are.
 
-242 strings per language.
+278 strings per language. The `email.*` strings are the customer emails (added 2026-10-20).
 
 | Key | English | isiXhosa (draft) | Afrikaans (draft) |
 |---|---|---|---|
@@ -49,7 +49,7 @@ A fluent speaker should check each line, edit `messages/xh.json` or `messages/af
 | `consent.intro` | A few quick checks first. | Imibuzo embalwa ekhawulezayo kuqala. | Eers 'n paar vinnige vrae. |
 | `consent.bakebot` | Order updates come from BakeBot, KD Pops' automated assistant. Kaydee reads and confirms every order herself. | Uhlaziyo lwee-odolo luvela ku-BakeBot, umncedisi ozenzekelayo we-KD Pops. UKaydee ufunda aze aqinisekise yonke i-odolo ngokwakhe. | Bestellingsopdaterings kom van BakeBot, KD Pops se outomatiese assistent. Kaydee lees en bevestig self elke bestelling. |
 | `consent.popiaTitle` | Your details | Iinkcukacha zakho | Jou besonderhede |
-| `consent.popia` | To process your order we keep your name, cell number and language. Only Kaydee and her helper can see them. They are stored securely by Supabase in the EU, never used for marketing, and deleted 90 days after your last order. | Ukuze silungiselele i-odolo yakho sigcina igama lakho, inombolo yeselfowuni nolwimi. NguKaydee nomncedisi wakhe kuphela abanokuzibona. Zigcinwa ngokukhuselekileyo nguSupabase e-EU, azisetyenziselwa ntengiso, kwaye zicinywa kwiintsuku ezingama-90 emva kwe-odolo yakho yokugqibela. | Om jou bestelling te verwerk, hou ons jou naam, selnommer en taal. Net Kaydee en haar helper kan dit sien. Dit word veilig deur Supabase in die EU gestoor, nooit vir bemarking gebruik nie, en 90 dae na jou laaste bestelling uitgevee. |
+| `consent.popia` | To process your order we keep your name, cell number, language and (if you give it) your email address. Only Kaydee and her helper can see them. They are stored securely by Supabase in the EU, never used for marketing, and deleted 90 days after your last order. | Ukuze silungiselele i-odolo yakho sigcina igama lakho, inombolo yeselfowuni, ulwimi kunye (ukuba uyinikile) nedilesi yakho ye-imeyile. NguKaydee nomncedisi wakhe kuphela abanokuzibona. Zigcinwa ngokukhuselekileyo nguSupabase e-EU, azisetyenziselwa ntengiso, kwaye zicinywa kwiintsuku ezingama-90 emva kwe-odolo yakho yokugqibela. | Om jou bestelling te verwerk, hou ons jou naam, selnommer, taal en (as jy dit gee) jou e-posadres. Net Kaydee en haar helper kan dit sien. Dit word veilig deur Supabase in die EU gestoor, nooit vir bemarking gebruik nie, en 90 dae na jou laaste bestelling uitgevee. |
 | `consent.agree` | I agree to KD Pops using my details for my order | Ndiyavuma ukuba i-KD Pops isebenzise iinkcukacha zam kwi-odolo yam | Ek stem in dat KD Pops my besonderhede vir my bestelling gebruik |
 | `consent.under18` | Are you under 18? | Ingaba ungaphantsi kweminyaka eli-18? | Is jy jonger as 18? |
 | `consent.yes` | Yes | Ewe | Ja |
@@ -81,6 +81,9 @@ A fluent speaker should check each line, edit `messages/xh.json` or `messages/af
 | `form.largeNote` | More than {threshold} pops? Kaydee will send you a personal quote. | Ngaphezulu kwee-pops ezi-{threshold}? UKaydee uza kukuthumelela ikowuteshini yakho. | Meer as {threshold} pops? Kaydee sal vir jou 'n persoonlike kwotasie stuur. |
 | `form.cutoff` | Pre-orders for next week close on Thursday at 20:00. | Ii-odolo zeveki ezayo zivalwa ngoLwesine ngo-20:00. | Voorafbestellings vir volgende week sluit Donderdag om 20:00. |
 | `form.errorSummary` | Please fix the following: | Nceda ulungise oku kulandelayo: | Maak asseblief die volgende reg: |
+| `form.email` | Email | I-imeyile | E-pos |
+| `form.emailPlaceholder` | you@example.com | wena@umzekelo.com | jy@voorbeeld.com |
+| `form.emailHint` | Optional. We'll email your order details, invoice and updates. | Ukuzikhethela. Siza kukuthumelela iinkcukacha ze-odolo, i-invoyisi kunye nohlaziyo nge-imeyile. | Opsioneel. Ons e-pos jou bestellingbesonderhede, faktuur en opdaterings. |
 | `summary.eyebrow` | Your picks | Okukhethileyo | Jou keuses |
 | `summary.pops` | {count} pops | ii-pops ezi-{count} | {count} pops |
 | `summary.title` | Order Summary | Isishwankathelo se-Odolo | Bestellingsopsomming |
@@ -133,6 +136,8 @@ A fluent speaker should check each line, edit `messages/xh.json` or `messages/af
 | `errors.fields.order_id` | Order | I-odolo | Bestelling |
 | `errors.fields.access_token` | Order | I-odolo | Bestelling |
 | `errors.fields.form` | Order | I-odolo | Bestelling |
+| `errors.fields.email` | Email | I-imeyile | E-pos |
+| `errors.emailInvalid` | Please check your email address, e.g. you@example.com | Nceda ujonge idilesi yakho ye-imeyile, umz. wena@umzekelo.com | Kontroleer asseblief jou e-posadres, bv. jy@voorbeeld.com |
 | `slots.second_break` | 2nd break · 11:45–12:00 | Ikhefu lesi-2 · 11:45–12:00 | 2de pouse · 11:45–12:00 |
 | `slots.after_school` | After school · 14:30–15:00 | Emva kwesikolo · 14:30–15:00 | Na skool · 14:30–15:00 |
 | `payment.cash` | Cash on collection | Imali xa ulanda | Kontant by afhaal |
@@ -213,11 +218,20 @@ A fluent speaker should check each line, edit `messages/xh.json` or `messages/af
 | `status.feedbackSend` | Send feedback | Thumela izimvo | Stuur terugvoer |
 | `status.feedbackThanks` | Thank you! Kaydee reads every one. | Enkosi! UKaydee ufunda zonke. | Dankie! Kaydee lees elkeen. |
 | `status.feedbackFailed` | We couldn't send your feedback. Please try again. | Asikwazanga ukuthumela izimvo zakho. Nceda uzame kwakhona. | Ons kon nie jou terugvoer stuur nie. Probeer asseblief weer. |
+| `status.proofEmail` | Or email it to {email} with {reference} as the subject. | Okanye uyithumele nge-imeyile ku-{email} ne-{reference} njengesihloko. | Of e-pos dit na {email} met {reference} as die onderwerp. |
+| `status.cancel` | Cancel order | Rhoxisa i-odolo | Kanselleer bestelling |
+| `status.cancelConfirm` | Cancel order {order_number}? This can't be undone. | Rhoxisa i-odolo {order_number}? Oku akunakubuyiselwa umva. | Kanselleer bestelling {order_number}? Dit kan nie ontdoen word nie. |
+| `status.cancelYes` | Yes, cancel it | Ewe, yirhoxise | Ja, kanselleer dit |
+| `status.cancelNo` | Keep my order | Gcina i-odolo yam | Hou my bestelling |
+| `status.cancelDone` | Your order is cancelled. Nothing is owed. | I-odolo yakho irhoxisiwe. Akukho nto ityalwayo. | Jou bestelling is gekanselleer. Jy skuld niks. |
+| `status.cancelTooLate` | Baking has started, so this order can't be cancelled online. Please talk to Kaydee. | Ukubhaka sele kuqalile, ngoko le odolo ayinakurhoxiswa kwi-intanethi. Nceda uthethe noKaydee. | Die bak het reeds begin, so hierdie bestelling kan nie aanlyn gekanselleer word nie. Praat asseblief met Kaydee. |
+| `status.cancelPaid` | You've already sent payment, so please talk to Kaydee to cancel. | Sele uhlawule, ngoko nceda uthethe noKaydee ukuze urhoxise. | Jy het reeds betaal, so praat asseblief met Kaydee om te kanselleer. |
+| `status.cancelFailed` | We couldn't cancel it just now. Please try again or talk to Kaydee. | Asikwazanga ukuyirhoxisa ngoku. Nceda uzame kwakhona okanye uthethe noKaydee. | Ons kon dit nie nou kanselleer nie. Probeer asseblief weer of praat met Kaydee. |
 | `templates.acknowledgement` | Order {order_number} received – Kaydee will confirm after school. | I-odolo {order_number} ifunyenwe – uKaydee uza kuqinisekisa emva kwesikolo. | Bestelling {order_number} ontvang – Kaydee sal na skool bevestig. |
 | `templates.waitlisted` | Order {order_number} is on the waitlist because this week is full. Kaydee will let you know if a spot opens. | I-odolo {order_number} ikuluhlu lokulinda kuba le veki igcwele. UKaydee uza kukwazisa ukuba kukho indawo evulekileyo. | Bestelling {order_number} is op die waglys omdat hierdie week vol is. Kaydee sal jou laat weet as daar plek oopkom. |
 | `templates.quote_pending` | Order {order_number} received. It's a big one, so Kaydee will send you a quote after school. | I-odolo {order_number} ifunyenwe. Inkulu, ngoko uKaydee uza kukuthumelela ikowuteshini emva kwesikolo. | Bestelling {order_number} ontvang. Dis 'n groot een, so Kaydee sal na skool vir jou 'n kwotasie stuur. |
 | `templates.confirmation_cash` | Order {order_number} is confirmed! Collect it on {date}, {slot}, at {place}. Please bring {amount} in cash. | I-odolo {order_number} iqinisekisiwe! Yilande ngo-{date}, {slot}, e-{place}. Nceda uze ne-{amount} ngemali. | Bestelling {order_number} is bevestig! Haal dit af op {date}, {slot}, by {place}. Bring asseblief {amount} kontant. |
-| `templates.confirmation_eft` | Order {order_number} is confirmed! Collect it on {date}, {slot}, at {place}. Please pay {amount} by EFT using reference {reference}. | I-odolo {order_number} iqinisekisiwe! Yilande ngo-{date}, {slot}, e-{place}. Nceda uhlawule i-{amount} nge-EFT usebenzisa isalathiso {reference}. | Bestelling {order_number} is bevestig! Haal dit af op {date}, {slot}, by {place}. Betaal asseblief {amount} per EFT met verwysing {reference}. |
+| `templates.confirmation_eft` | Order {order_number} is confirmed! Collect it on {date}, {slot}, at {place}. Please pay {amount} by EFT using reference {reference}. Send your proof of payment to {email} with {reference} as the subject, or upload it on your order page. | I-odolo {order_number} iqinisekisiwe! Yilande ngo-{date}, {slot}, e-{place}. Nceda uhlawule i-{amount} nge-EFT usebenzisa isalathiso {reference}. Thumela ubungqina bentlawulo ku-{email} ne-{reference} njengesihloko, okanye ubulayishe kwiphepha le-odolo yakho. | Bestelling {order_number} is bevestig! Haal dit af op {date}, {slot}, by {place}. Betaal asseblief {amount} per EFT met verwysing {reference}. Stuur jou bewys van betaling na {email} met {reference} as die onderwerp, of laai dit op jou bestellingsblad op. |
 | `templates.declined` | Sorry, KD Pops can't take order {order_number} this time. Nothing is owed. Thank you for understanding. | Uxolo, i-KD Pops ayinakuyithatha i-odolo {order_number} ngeli xesha. Akukho nto ityalwayo. Enkosi ngokuqonda. | Jammer, KD Pops kan nie hierdie keer bestelling {order_number} aanvaar nie. Jy skuld niks. Dankie vir jou begrip. |
 | `templates.payment_received` | Payment for order {order_number} received. Thank you! | Intlawulo ye-odolo {order_number} ifunyenwe. Enkosi! | Betaling vir bestelling {order_number} ontvang. Dankie! |
 | `templates.ready` | Order {order_number} is ready! Collect it on {date}, {slot}, at {place}. | I-odolo {order_number} ilungile! Yilande ngo-{date}, {slot}, e-{place}. | Bestelling {order_number} is gereed! Haal dit af op {date}, {slot}, by {place}. |
@@ -226,10 +240,11 @@ A fluent speaker should check each line, edit `messages/xh.json` or `messages/af
 | `templates.proof_rejected` | We couldn't match the proof of payment for order {order_number}. Please check the amount and reference, then send it again. | Asikwazanga ukubudibanisa ubungqina bentlawulo be-odolo {order_number}. Nceda ujonge isixa nesalathiso, uze ubuthumele kwakhona. | Ons kon nie die bewys van betaling vir bestelling {order_number} laat klop nie. Kontroleer asseblief die bedrag en verwysing en stuur dit weer. |
 | `templates.invoice_link` | Your invoice: {url} | I-invoyisi yakho: {url} | Jou faktuur: {url} |
 | `templates.signature` | BakeBot (KD Pops) | BakeBot (KD Pops) | BakeBot (KD Pops) |
-| `templates.payment_reminder` | Friendly reminder from BakeBot: order {order_number} is not paid yet. Please pay {amount} by EFT using reference {reference} before {date}. | Isikhumbuzo esinobubele esivela ku-BakeBot: i-odolo {order_number} ayikahlawulwa. Nceda uhlawule i-{amount} nge-EFT usebenzisa isalathiso {reference} phambi ko-{date}. | Vriendelike herinnering van BakeBot: bestelling {order_number} is nog nie betaal nie. Betaal asseblief {amount} per EFT met verwysing {reference} voor {date}. |
+| `templates.payment_reminder` | Friendly reminder from BakeBot: order {order_number} is not paid yet. Please pay {amount} by EFT using reference {reference} before {date}. Already paid? Email your proof to {email} with {reference} as the subject. | Isikhumbuzo esinobubele esivela ku-BakeBot: i-odolo {order_number} ayikahlawulwa. Nceda uhlawule i-{amount} nge-EFT usebenzisa isalathiso {reference} phambi ko-{date}. Sele uhlawule? Thumela ubungqina bakho nge-imeyile ku-{email} ne-{reference} njengesihloko. | Vriendelike herinnering van BakeBot: bestelling {order_number} is nog nie betaal nie. Betaal asseblief {amount} per EFT met verwysing {reference} voor {date}. Reeds betaal? E-pos jou bewys na {email} met {reference} as die onderwerp. |
 | `templates.released` | Order {order_number} was not paid in time, so the pops have been released for sale. If this is a mistake, please talk to Kaydee. | I-odolo {order_number} ayihlawulwanga ngexesha, ngoko ii-pops zikhutshelwe ukuthengiswa. Ukuba yimpazamo le, nceda uthethe noKaydee. | Bestelling {order_number} is nie betyds betaal nie, so die pops is vir verkoop vrygestel. As dit 'n fout is, praat asseblief met Kaydee. |
 | `templates.collect_reminder` | Your paid order {order_number} is still waiting for you. Please talk to Kaydee to arrange collection. | I-odolo yakho ehlawulweyo {order_number} isakulindile. Nceda uthethe noKaydee ukuze uyilande. | Jou betaalde bestelling {order_number} wag nog vir jou. Praat asseblief met Kaydee om dit af te haal. |
 | `templates.feedback_request` | Thank you for collecting order {order_number}! How were your pops? Leave quick feedback below. | Enkosi ngokulanda i-odolo {order_number}! Zibe njani ii-pops zakho? Shiya izimvo ezimfutshane apha ngezantsi. | Dankie dat jy bestelling {order_number} afgehaal het! Hoe was jou pops? Laat vinnig terugvoer hieronder. |
+| `templates.cancelled_by_customer` | You cancelled order {order_number}. Nothing is owed. | Urhoxise i-odolo {order_number}. Akukho nto ityalwayo. | Jy het bestelling {order_number} gekanselleer. Jy skuld niks. |
 | `myOrders.title` | Your recent orders | Ii-odolo zakho zakutsha nje | Jou onlangse bestellings |
 | `myOrders.open` | Open | Vula | Maak oop |
 | `chat.open` | Ask BakeBot | Buza uBakeBot | Vra BakeBot |
@@ -251,5 +266,24 @@ A fluent speaker should check each line, edit `messages/xh.json` or `messages/af
 | `chat.error` | Something went wrong. Please try again. | Kukho into engahambanga kakuhle. Nceda uzame kwakhona. | Iets het skeefgeloop. Probeer asseblief weer. |
 | `chat.limit` | This chat is getting long. Please talk to Kaydee or use the order form. | Le ncoko iyaba nde. Nceda uthethe noKaydee okanye usebenzise ifomu yokuodola. | Hierdie klets raak lank. Praat asseblief met Kaydee of gebruik die bestelvorm. |
 | `chat.you` | You | Wena | Jy |
-
-BakeBot's FAQ answers are stored in the database (Dashboard → BakeBot answers); approved isiXhosa and Afrikaans versions can be added there.
+| `email.receivedSubject` | KD Pops order {order_number} received | I-odolo ye-KD Pops {order_number} ifunyenwe | KD Pops-bestelling {order_number} ontvang |
+| `email.receivedHeading` | Thanks {name}! Your order is in. | Enkosi {name}! I-odolo yakho ingenile. | Dankie {name}! Jou bestelling is in. |
+| `email.receivedIntro` | Kaydee will confirm after school. Here are your order details. | UKaydee uza kuqinisekisa emva kwesikolo. Nazi iinkcukacha ze-odolo yakho. | Kaydee sal na skool bevestig. Hier is jou bestellingbesonderhede. |
+| `email.items` | Your pops | Ii-pops zakho | Jou pops |
+| `email.total` | Total | Iyonke | Totaal |
+| `email.quote` | Kaydee will send you a quote for this large order. | UKaydee uza kukuthumelela ikowuteshini yale odolo inkulu. | Kaydee sal vir jou 'n kwotasie vir hierdie groot bestelling stuur. |
+| `email.collection` | Collection | Ukulanda | Afhaal |
+| `email.payment` | Payment | Intlawulo | Betaling |
+| `email.track` | Track your order | Landela i-odolo yakho | Volg jou bestelling |
+| `email.cancel` | Cancel my order | Rhoxisa i-odolo yam | Kanselleer my bestelling |
+| `email.cancelNote` | Changed your mind? You can cancel until baking starts. | Utshintshe ingqondo? Ungarhoxisa de kuqale ukubhaka. | Van plan verander? Jy kan kanselleer totdat die bak begin. |
+| `email.keepLink` | Keep this email: the buttons above are your private link to this order. | Gcina le imeyile: amaqhosha angentla likhonkco lakho labucala kule odolo. | Hou hierdie e-pos: die knoppies hierbo is jou privaat skakel na hierdie bestelling. |
+| `email.invoiceSubject` | KD Pops order {order_number} confirmed – invoice {reference} | I-odolo ye-KD Pops {order_number} iqinisekisiwe – i-invoyisi {reference} | KD Pops-bestelling {order_number} bevestig – faktuur {reference} |
+| `email.invoiceHeading` | Your order is confirmed! | I-odolo yakho iqinisekisiwe! | Jou bestelling is bevestig! |
+| `email.invoiceAttached` | Your invoice is attached. You can also open it here: | I-invoyisi yakho incamathelisiwe. Ungayivula naapha: | Jou faktuur is aangeheg. Jy kan dit ook hier oopmaak: |
+| `email.openInvoice` | Open invoice | Vula i-invoyisi | Maak faktuur oop |
+| `email.readySubject` | Your KD Pops order {order_number} is ready! | I-odolo yakho ye-KD Pops {order_number} ilungile! | Jou KD Pops-bestelling {order_number} is gereed! |
+| `email.readyHeading` | Your pops are ready! | Ii-pops zakho zilungile! | Jou pops is gereed! |
+| `email.cancelledSubject` | KD Pops order {order_number} cancelled | I-odolo ye-KD Pops {order_number} irhoxisiwe | KD Pops-bestelling {order_number} gekanselleer |
+| `email.cancelledHeading` | Your order is cancelled | I-odolo yakho irhoxisiwe | Jou bestelling is gekanselleer |
+| `email.footer` | Sent by BakeBot, KD Pops' automated assistant, because you placed an order with KD Pops. Questions? WhatsApp Kaydee on {phone}. | Ithunyelwe nguBakeBot, umncedisi ozenzekelayo we-KD Pops, kuba uodole kwi-KD Pops. Imibuzo? Thumela uKaydee kwi-WhatsApp ku-{phone}. | Gestuur deur BakeBot, KD Pops se outomatiese assistent, omdat jy by KD Pops bestel het. Vrae? WhatsApp Kaydee by {phone}. |

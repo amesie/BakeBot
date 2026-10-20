@@ -51,6 +51,7 @@ export function OrderSection({ menu, options }: { menu: MenuItem[]; options: Ord
   const [method, setMethod] = useState<Method>("cash");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [placed, setPlaced] = useState<{ order: OrderSummary; token: string } | null>(null);
@@ -134,6 +135,7 @@ export function OrderSection({ menu, options }: { menu: MenuItem[]; options: Ord
       ...identity.current,
       full_name: name,
       phone,
+      email: email.trim() || undefined,
       language,
       consent_given: consent as true,
       consent_version: CONSENT_VERSION,
@@ -195,6 +197,7 @@ export function OrderSection({ menu, options }: { menu: MenuItem[]; options: Ord
     const code = errors[field];
     if (!code) return undefined;
     if (field === "phone" && code === "invalid") return m.errors.phoneInvalid;
+    if (field === "email" && code === "invalid") return m.errors.emailInvalid;
     return m.errors[code];
   };
 
@@ -410,7 +413,33 @@ export function OrderSection({ menu, options }: { menu: MenuItem[]; options: Ord
                       onChange={(event) => setPhone(event.target.value)}
                     />
                   </Field>
+                  <Field
+                    label={
+                      <>
+                        {m.form.email} <em>{m.form.optional}</em>
+                      </>
+                    }
+                    error={errorText("email")}
+                    id="email"
+                  >
+                    <input
+                      id="email"
+                      className="input"
+                      type="email"
+                      inputMode="email"
+                      autoComplete="email"
+                      maxLength={254}
+                      value={email}
+                      placeholder={m.form.emailPlaceholder}
+                      aria-invalid={Boolean(errors.email)}
+                      aria-describedby="email-hint"
+                      onChange={(event) => setEmail(event.target.value)}
+                    />
+                  </Field>
                 </div>
+                <p id="email-hint" className="form-note" style={{ margin: "-8px 0 16px" }}>
+                  {m.form.emailHint}
+                </p>
 
                 <Field
                   label={
@@ -480,6 +509,7 @@ export function OrderSection({ menu, options }: { menu: MenuItem[]; options: Ord
                   <span>{m.review.contact}</span>
                   <strong>{name.trim()}</strong>
                   <small>{phone.trim()}</small>
+                  {email.trim() && <small>{email.trim()}</small>}
                 </div>
                 <div className="actions-row">
                   <button type="button" className="pill" onClick={placeOrder} disabled={step === "sending"}>
@@ -604,7 +634,12 @@ function ErrorSummary({
       <ul>
         {fields.map((field) => {
           const code = errors[field]!;
-          const message = field === "phone" && code === "invalid" ? m.errors.phoneInvalid : m.errors[code];
+          const message =
+            field === "phone" && code === "invalid"
+              ? m.errors.phoneInvalid
+              : field === "email" && code === "invalid"
+                ? m.errors.emailInvalid
+                : m.errors[code];
           return (
             <li key={field}>
               {m.errors.fields[field] ?? field}: {message}

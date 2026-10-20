@@ -29,7 +29,7 @@ begin
 
   base := jsonb_build_object(
     'full_name', 'Thandi Test',
-    'phone', '082 123 4567',
+    'phone', '082 000 0102',
     'language', 'xh',
     'consent_given', true,
     'consent_version', 'test-v1',
@@ -94,14 +94,14 @@ begin
   insert into _results values ('REQ-08 order number assigned', r->>'order_number' ~ '^KDP-[0-9]{4,}$', r->>'order_number');
   insert into _results values ('new order is pending', r->>'order_status' = 'pending', r->>'order_status');
   insert into _results values ('REQ-03 customer created with E.164 phone',
-    exists (select 1 from public.customers where phone_number = '+27821234567' and full_name = 'Thandi Test'), null);
+    exists (select 1 from public.customers where phone_number = '+27820000102' and full_name = 'Thandi Test'), null);
   insert into _results values ('REQ-01 consent version stored',
-    exists (select 1 from public.customers where phone_number = '+27821234567' and consent_version = 'test-v1' and consent_given), null);
-  insert into _results values ('language stored', exists (select 1 from public.customers where phone_number = '+27821234567' and preferred_language = 'xh'), null);
+    exists (select 1 from public.customers where phone_number = '+27820000102' and consent_version = 'test-v1' and consent_given), null);
+  insert into _results values ('language stored', exists (select 1 from public.customers where phone_number = '+27820000102' and preferred_language = 'xh'), null);
   insert into _results values ('prices taken from products, not the browser',
     (r->>'total_amount')::numeric = 2 * 15 + 3 * 10, r->>'total_amount');
   insert into _results values ('total units stored', (r->>'total_units')::int = 5, r->>'total_units');
-  insert into _results values ('summary masks phone', r->>'phone_masked' = '******4567', r->>'phone_masked');
+  insert into _results values ('summary masks phone', r->>'phone_masked' = '******0102', r->>'phone_masked');
   insert into _results values ('summary shows first name only', r->>'first_name' = 'Thandi', r->>'first_name');
   insert into _results values ('REQ-10 acknowledgement recorded',
     exists (select 1 from public.notifications where order_id = oid and template = 'acknowledgement' and channel = 'in_app'), null);
@@ -121,10 +121,10 @@ begin
 
   -- ------------------------------------------------------------------ REQ-02 lookup
   r2 := public.place_order(base || jsonb_build_object('order_id', gen_random_uuid(), 'access_token', tok,
-                                                      'phone', '+27 82 123 4567', 'full_name', 'Thandi T'));
+                                                      'phone', '+27 82 000 0102', 'full_name', 'Thandi T'));
   insert into _results values ('REQ-02 same phone in another format finds the same customer',
-    (select count(*) from public.customers where phone_number = '+27821234567') = 1
-    and (select count(*) from public.orders o join public.customers c using (customer_id) where c.phone_number = '+27821234567') = 2, null);
+    (select count(*) from public.customers where phone_number = '+27820000102') = 1
+    and (select count(*) from public.orders o join public.customers c using (customer_id) where c.phone_number = '+27820000102') = 2, null);
 
   -- ------------------------------------------------------------------ REQ-07 large orders
   r2 := public.place_order(base || jsonb_build_object('order_id', gen_random_uuid(), 'access_token', tok,

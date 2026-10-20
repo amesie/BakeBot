@@ -34,7 +34,7 @@ declare
   n text;
 begin
   insert into public.customers (full_name, phone_number, consent_given, consent_version, is_minor)
-  values ('Test Customer', '+27821234567', true, 'test-v1', false)
+  values ('Test Customer', '+27820000101', true, 'test-v1', false)
   returning customer_id into c;
 
   -- ---------------------------------------------------------------------

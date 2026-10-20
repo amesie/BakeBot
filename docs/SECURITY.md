@@ -4,13 +4,14 @@
 
 | Data | Where | Who can see it | Kept for |
 |---|---|---|---|
-| Name, cell number, language, consent record, under-18 flag | `customers` | Kaydee (full); helper (name, masked number) | Until 90 days after the last finished order, then anonymised (REQ-27) |
+| Name, cell number, language, optional email address, consent record, under-18 flag | `customers` | Kaydee (full); helper (name, masked number) | Until 90 days after the last finished order, then anonymised (REQ-27) |
 | Orders, items, totals | `orders`, `order_items`, `payments`, `invoices` | Kaydee; helper (read) | Order notes removed on anonymisation; totals kept 5 years (financial records) |
 | Proof-of-payment files | Private bucket `payment-proofs` | Kaydee and helper, via 15-minute links | Deleted 30 days after payment |
 | Emailed proofs (sender address, message) | Gmail inbox thebakebot@gmail.com | Whoever holds the Gmail login | Matched emails moved to Bin (emptied after 30 days); unmatched ones kept under "BakeBot/Unmatched" until Kaydee deletes them. Sender addresses are not copied into the database |
 | BakeBot chats (and any number left for a reply) | `conversations` | Kaydee | Deleted after 30 days |
 | Messages to customers | `notifications` (template names and order numbers only) | Kaydee | Deleted on anonymisation |
 | Error log | `error_log` (no names or numbers) | Kaydee | 90 days |
+| Emails sent to customers | Gmail account in `GMAIL_USER` (Sent folder); `email_log` holds only order, template and status | Whoever holds the Gmail login; Kaydee (log) | Log 90 days; clear the Gmail Sent folder regularly or set up auto-delete |
 
 Data is stored by Supabase in the EU (Ireland), D-007. No ID numbers, addresses or marketing profiles are collected; learner data is never used for marketing.
 

@@ -56,6 +56,12 @@ function describe(update: OwnerUpdate): React.ReactNode {
         </>
       );
     }
+    case "owner_customer_cancelled":
+      return (
+        <>
+          <b>{p.order_number} was cancelled by the customer</b> (from their email or order page). Nothing is owed.
+        </>
+      );
     case "owner_unmatched_email": {
       const reasons: Record<string, string> = {
         no_reference: "no payment reference in the subject",

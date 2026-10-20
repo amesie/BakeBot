@@ -15,6 +15,10 @@ Forgot your password? On the login page tap **Forgot password?**, then open the 
    - After approving, tap **WhatsApp [name]: confirmation + invoice** and press **Send** in WhatsApp. BakeBot wrote the message for you.
 2. **Inbox tab.** Questions BakeBot handed to you. Tap **Reply on WhatsApp**, then **Mark as dealt with**.
 
+## Emails BakeBot sends for you
+
+Customers who type an email address on the order form automatically get: the order details with a **track** and **cancel** button when they order, the **invoice** when you approve, and a **ready** email when you mark their order ready. You still use the WhatsApp buttons for customers without email. If a customer cancels (only possible before baking starts and before they pay), you see it in **BakeBot updates**.
+
 ## Payments (Kaydee or Mom)
 
 - **Payments tab → Waiting for payment.** When money arrives (cash, or EFT in the bank), tap **Mark paid**.

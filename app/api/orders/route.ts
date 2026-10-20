@@ -7,10 +7,11 @@
 // Responses: 201 new order, 200 duplicate retry (REQ-09), 422 field errors,
 // 409 order id reused with another token, 503 database unreachable (the
 // browser keeps the draft and retries, REQ-25).
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { validateOrder } from "@/lib/orders/schema";
 import { createAnonClient } from "@/lib/supabase/anon";
 import { logError } from "@/lib/log-error";
+import { sendOrderReceived } from "@/lib/email/customer-mail";
 
 const noStore = { "Cache-Control": "no-store" };
 const MAX_BODY_BYTES = 16_000;
@@ -47,6 +48,21 @@ export async function POST(request: Request) {
   if (!data.ok) {
     const status = data.errors?.order_id === "conflict" ? 409 : 422;
     return NextResponse.json({ ok: false, errors: data.errors }, { status, headers });
+  }
+
+  // D-070: order-received email (details, track and cancel links) after the
+  // response, so it never slows the order down. Not repeated for retries.
+  const email = checked.data.email?.trim();
+  if (email && !data.duplicate) {
+    const origin = new URL(request.url).origin;
+    after(() =>
+      sendOrderReceived(origin, checked.data.access_token, email, {
+        ...data,
+        language: checked.data.language,
+        total_amount: Number(data.total_amount),
+        quote_amount: data.quote_amount === null ? null : Number(data.quote_amount),
+      }),
+    );
   }
 
   return NextResponse.json(data, { status: data.duplicate ? 200 : 201, headers });

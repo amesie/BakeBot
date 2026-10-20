@@ -56,7 +56,7 @@
     "intro": "Imibuzo embalwa ekhawulezayo kuqala.",
     "bakebot": "Uhlaziyo lwee-odolo luvela ku-BakeBot, umncedisi ozenzekelayo we-KD Pops. UKaydee ufunda aze aqinisekise yonke i-odolo ngokwakhe.",
     "popiaTitle": "Iinkcukacha zakho",
-    "popia": "Ukuze silungiselele i-odolo yakho sigcina igama lakho, inombolo yeselfowuni nolwimi. NguKaydee nomncedisi wakhe kuphela abanokuzibona. Zigcinwa ngokukhuselekileyo nguSupabase e-EU, azisetyenziselwa ntengiso, kwaye zicinywa kwiintsuku ezingama-90 emva kwe-odolo yakho yokugqibela.",
+    "popia": "Ukuze silungiselele i-odolo yakho sigcina igama lakho, inombolo yeselfowuni, ulwimi kunye (ukuba uyinikile) nedilesi yakho ye-imeyile. NguKaydee nomncedisi wakhe kuphela abanokuzibona. Zigcinwa ngokukhuselekileyo nguSupabase e-EU, azisetyenziselwa ntengiso, kwaye zicinywa kwiintsuku ezingama-90 emva kwe-odolo yakho yokugqibela.",
     "agree": "Ndiyavuma ukuba i-KD Pops isebenzise iinkcukacha zam kwi-odolo yam",
     "under18": "Ingaba ungaphantsi kweminyaka eli-18?",
     "yes": "Ewe",
@@ -89,7 +89,10 @@
     "review": "Jonga i-odolo",
     "largeNote": "Ngaphezulu kwee-pops ezi-{threshold}? UKaydee uza kukuthumelela ikowuteshini yakho.",
     "cutoff": "Ii-odolo zeveki ezayo zivalwa ngoLwesine ngo-20:00.",
-    "errorSummary": "Nceda ulungise oku kulandelayo:"
+    "errorSummary": "Nceda ulungise oku kulandelayo:",
+    "email": "I-imeyile",
+    "emailPlaceholder": "wena@umzekelo.com",
+    "emailHint": "Ukuzikhethela. Siza kukuthumelela iinkcukacha ze-odolo, i-invoyisi kunye nohlaziyo nge-imeyile."
   },
   "summary": {
     "eyebrow": "Okukhethileyo",
@@ -152,8 +155,10 @@
       "is_minor": "Umbuzo weminyaka",
       "order_id": "I-odolo",
       "access_token": "I-odolo",
-      "form": "I-odolo"
-    }
+      "form": "I-odolo",
+      "email": "I-imeyile"
+    },
+    "emailInvalid": "Nceda ujonge idilesi yakho ye-imeyile, umz. wena@umzekelo.com"
   },
   "slots": {
     "second_break": "Ikhefu lesi-2 · 11:45–12:00",
@@ -250,7 +255,15 @@
     "feedbackSend": "Thumela izimvo",
     "feedbackThanks": "Enkosi! UKaydee ufunda zonke.",
     "feedbackFailed": "Asikwazanga ukuthumela izimvo zakho. Nceda uzame kwakhona.",
-    "proofEmail": "Okanye uyithumele nge-imeyile ku-{email} ne-{reference} njengesihloko."
+    "proofEmail": "Okanye uyithumele nge-imeyile ku-{email} ne-{reference} njengesihloko.",
+    "cancel": "Rhoxisa i-odolo",
+    "cancelConfirm": "Rhoxisa i-odolo {order_number}? Oku akunakubuyiselwa umva.",
+    "cancelYes": "Ewe, yirhoxise",
+    "cancelNo": "Gcina i-odolo yam",
+    "cancelDone": "I-odolo yakho irhoxisiwe. Akukho nto ityalwayo.",
+    "cancelTooLate": "Ukubhaka sele kuqalile, ngoko le odolo ayinakurhoxiswa kwi-intanethi. Nceda uthethe noKaydee.",
+    "cancelPaid": "Sele uhlawule, ngoko nceda uthethe noKaydee ukuze urhoxise.",
+    "cancelFailed": "Asikwazanga ukuyirhoxisa ngoku. Nceda uzame kwakhona okanye uthethe noKaydee."
   },
   "templates": {
     "acknowledgement": "I-odolo {order_number} ifunyenwe – uKaydee uza kuqinisekisa emva kwesikolo.",
@@ -269,7 +282,8 @@
     "payment_reminder": "Isikhumbuzo esinobubele esivela ku-BakeBot: i-odolo {order_number} ayikahlawulwa. Nceda uhlawule i-{amount} nge-EFT usebenzisa isalathiso {reference} phambi ko-{date}. Sele uhlawule? Thumela ubungqina bakho nge-imeyile ku-{email} ne-{reference} njengesihloko.",
     "released": "I-odolo {order_number} ayihlawulwanga ngexesha, ngoko ii-pops zikhutshelwe ukuthengiswa. Ukuba yimpazamo le, nceda uthethe noKaydee.",
     "collect_reminder": "I-odolo yakho ehlawulweyo {order_number} isakulindile. Nceda uthethe noKaydee ukuze uyilande.",
-    "feedback_request": "Enkosi ngokulanda i-odolo {order_number}! Zibe njani ii-pops zakho? Shiya izimvo ezimfutshane apha ngezantsi."
+    "feedback_request": "Enkosi ngokulanda i-odolo {order_number}! Zibe njani ii-pops zakho? Shiya izimvo ezimfutshane apha ngezantsi.",
+    "cancelled_by_customer": "Urhoxise i-odolo {order_number}. Akukho nto ityalwayo."
   },
   "myOrders": {
     "title": "Ii-odolo zakho zakutsha nje",
@@ -295,5 +309,28 @@
     "error": "Kukho into engahambanga kakuhle. Nceda uzame kwakhona.",
     "limit": "Le ncoko iyaba nde. Nceda uthethe noKaydee okanye usebenzise ifomu yokuodola.",
     "you": "Wena"
+  },
+  "email": {
+    "receivedSubject": "I-odolo ye-KD Pops {order_number} ifunyenwe",
+    "receivedHeading": "Enkosi {name}! I-odolo yakho ingenile.",
+    "receivedIntro": "UKaydee uza kuqinisekisa emva kwesikolo. Nazi iinkcukacha ze-odolo yakho.",
+    "items": "Ii-pops zakho",
+    "total": "Iyonke",
+    "quote": "UKaydee uza kukuthumelela ikowuteshini yale odolo inkulu.",
+    "collection": "Ukulanda",
+    "payment": "Intlawulo",
+    "track": "Landela i-odolo yakho",
+    "cancel": "Rhoxisa i-odolo yam",
+    "cancelNote": "Utshintshe ingqondo? Ungarhoxisa de kuqale ukubhaka.",
+    "keepLink": "Gcina le imeyile: amaqhosha angentla likhonkco lakho labucala kule odolo.",
+    "invoiceSubject": "I-odolo ye-KD Pops {order_number} iqinisekisiwe – i-invoyisi {reference}",
+    "invoiceHeading": "I-odolo yakho iqinisekisiwe!",
+    "invoiceAttached": "I-invoyisi yakho incamathelisiwe. Ungayivula naapha:",
+    "openInvoice": "Vula i-invoyisi",
+    "readySubject": "I-odolo yakho ye-KD Pops {order_number} ilungile!",
+    "readyHeading": "Ii-pops zakho zilungile!",
+    "cancelledSubject": "I-odolo ye-KD Pops {order_number} irhoxisiwe",
+    "cancelledHeading": "I-odolo yakho irhoxisiwe",
+    "footer": "Ithunyelwe nguBakeBot, umncedisi ozenzekelayo we-KD Pops, kuba uodole kwi-KD Pops. Imibuzo? Thumela uKaydee kwi-WhatsApp ku-{phone}."
   }
 }

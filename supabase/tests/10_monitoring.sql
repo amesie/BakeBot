@@ -52,7 +52,7 @@ begin
 
   insert into _results values ('old-log cleanup scheduled at 02:45 SAST',
     (select schedule from cron.job where jobname = 'delete-old-logs') = '45 0 * * *', null);
-  insert into _results values ('9 jobs scheduled in total', (select count(*) from cron.job) = 9, null);
+  insert into _results values ('10 jobs scheduled in total (incl. check-email, D-069)', (select count(*) from cron.job) = 10, null);
 end;
 $$;
 

@@ -15,6 +15,8 @@ Mark each line **Pass**, **Fail** or **Comment**.
 | A3 | Agree, answer "Yes" to under 18 without guardian consent | Cannot continue | Security NFR | |
 | A4 | Tick guardian consent, continue, press "Review order" with name and number empty | List of what is missing; nothing sent | REQ-05 | |
 | A5 | Order 2 Funfetti for 2nd break, cash, review, place | Order number KDP-…, "Kaydee will confirm after school", status link | REQ-04, 08, 10 | |
+| A5b | Place an order **with your email address** | Email "KD Pops order KDP-… received" with items, Track and Cancel buttons | D-070 | |
+| A5c | In that email tap **Cancel my order** → **Yes, cancel it** (use a second test order) | Status page says Cancelled; cancellation email arrives; Kaydee sees it in BakeBot updates | D-071 | |
 | A6 | Switch the language to Afrikaans, then isiXhosa | Whole page changes language | Spec 7.9 | |
 | A7 | Turn on flight mode, place another order, turn flight mode off | "Saved on your phone", then the order goes through once | REQ-25, REQ-09 | |
 | A8 | Ask BakeBot "How much are the pops?" and "Do they contain nuts?" | Correct prices; "I'll check with Kaydee" for nuts | REQ-21, 22 | |
@@ -27,6 +29,7 @@ Mark each line **Pass**, **Fail** or **Comment**.
 | B1 | Log in, open Approve | The test orders are waiting, with name, number and items | REQ-07, 12 | |
 | B2 | Search the customer's name | Only their orders show | (owner request) | |
 | B3 | Approve one order; tap the WhatsApp button | WhatsApp opens with the confirmation and invoice link; the invoice opens | REQ-12, REQ-14 | |
+| B3b | Check the customer's inbox after approving | Confirmation email with the invoice PDF attached | D-070, REQ-14 | |
 | B4 | Customer phone: open the status link | "Confirmed", collection day, place (Mrs Felix's class, R129), amount | REQ-12 | |
 | B5 | Place a 31-pop order (customer), try to approve without a quote | "Enter a quote before approving"; with a quote it is approved | REQ-07 | |
 | B6 | Customer: EFT order approved → send a screenshot as proof | Kaydee sees "Proof uploaded", opens it with "View proof" | REQ-15 | |

@@ -189,6 +189,10 @@ function OrderDetails({
         )}
       </div>
 
+      {["waitlisted", "pending", "confirmed"].includes(order.order_status) && order.payment_status === "unpaid" && (
+        <CancelOrder m={m} order={order} token={token} onUpdate={onUpdate} />
+      )}
+
       {order.payment_method === "eft" && order.payment_reference && order.payment_status !== "paid" && (
         <ProofUpload m={m} order={order} token={token} onUpdate={onUpdate} />
       )}
@@ -382,5 +386,83 @@ function FeedbackForm({ m, order, token }: { m: Messages; order: OrderSummary; t
         </button>
       </div>
     </form>
+  );
+}
+
+// D-071: cancel until baking starts. The email's "Cancel my order" button
+// opens this page with ?cancel=1, which shows the question straight away.
+function CancelOrder({
+  m,
+  order,
+  token,
+  onUpdate,
+}: {
+  m: Messages;
+  order: OrderSummary;
+  token: string;
+  onUpdate: (order: OrderSummary) => void;
+}) {
+  const [asking, setAsking] = useState(
+    () => typeof window !== "undefined" && new URLSearchParams(window.location.search).get("cancel") === "1",
+  );
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+
+  const cancel = async () => {
+    setBusy(true);
+    try {
+      const response = await fetch("/api/orders/cancel", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ order_number: order.order_number, token }),
+      });
+      const body = await response.json().catch(() => ({}));
+      if (response.ok) {
+        window.history.replaceState(null, "", window.location.pathname + window.location.hash);
+        onUpdate(body as OrderSummary);
+        return;
+      }
+      setMessage(
+        body.error === "too_late" ? m.status.cancelTooLate
+        : body.error === "paid_contact_kaydee" ? m.status.cancelPaid
+        : m.status.cancelFailed,
+      );
+      setAsking(false);
+    } catch {
+      setMessage(m.status.cancelFailed);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="kd-card stack" style={{ padding: 20 }}>
+      {asking ? (
+        <div className="stack" role="alertdialog" aria-labelledby="cancel-question">
+          <p id="cancel-question" className="m-0" style={{ fontWeight: 700 }}>
+            {format(m.status.cancelConfirm, { order_number: order.order_number })}
+          </p>
+          <div className="actions-row" style={{ marginTop: 0 }}>
+            <button type="button" className="pill pill-small" onClick={cancel} disabled={busy}>
+              {m.status.cancelYes}
+            </button>
+            <button type="button" className="pill pill-small pill-outline" onClick={() => setAsking(false)} disabled={busy}>
+              {m.status.cancelNo}
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <button type="button" className="pill pill-small pill-outline" onClick={() => setAsking(true)}>
+            {m.status.cancel}
+          </button>
+        </div>
+      )}
+      {message && (
+        <p className="field-error m-0" role="alert">
+          {message}
+        </p>
+      )}
+    </div>
   );
 }

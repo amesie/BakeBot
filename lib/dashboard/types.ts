@@ -18,10 +18,16 @@ export type DashboardOrder = {
   quote_amount: number | null;
   created_at: string;
   released_at: string | null;
-  customers: { full_name: string; phone_number: string; is_minor: boolean; preferred_language: "en" | "xh" | "af" } | null;
+  customers: {
+    full_name: string;
+    phone_number: string;
+    email: string | null;
+    is_minor: boolean;
+    preferred_language: "en" | "xh" | "af";
+  } | null;
   order_items: { quantity: number; unit_price_snapshot: number; products: { flavour: string } | null }[];
   payments: { amount: number; payment_status: "unpaid" | "pending_review" | "paid"; paid_at: string | null } | null;
-  invoices: { share_token: string } | null;
+  invoices: { share_token: string; issued_at: string; total_amount: number } | null;
   notifications: { template: string; created_at: string }[];
 };
 

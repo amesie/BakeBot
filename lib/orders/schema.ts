@@ -4,7 +4,8 @@
 import { z } from "zod";
 import { normaliseZaPhone } from "@/lib/phone";
 
-export const CONSENT_VERSION = "2026-10-v1";
+// v2 (2026-10-20): the notice also mentions the optional email address (D-070).
+export const CONSENT_VERSION = "2026-10-v2";
 export const MAX_PER_FLAVOUR = 100;
 export const MAX_NOTES = 280;
 
@@ -57,6 +58,8 @@ export const orderRequestSchema = z
     collection_slot: z.enum(["second_break", "after_school"], { error: "required" }),
     payment_method: z.enum(["cash", "eft"], { error: "required" }),
     special_notes: z.string().trim().max(MAX_NOTES, { error: "too_long" }).optional(),
+    // Optional (D-070): order emails go here when given.
+    email: z.union([z.literal(""), z.email({ error: "invalid" }).max(254, { error: "too_long" })]).optional(),
   })
   .refine((order) => !order.is_minor || order.guardian_consent, {
     path: ["guardian_consent"],

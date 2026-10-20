@@ -95,3 +95,13 @@ One row per requirement. Status: `todo`, `in progress`, `done`, `verified` (test
 | Proof-of-payment deletion | 02:00 daily | `0 0 * * *` | `private.job_request_proof_deletion` -> `/api/cron/delete-proofs` | `job_runs` (request + delete_proofs) |
 | PII anonymisation | 02:15 daily | `15 0 * * *` | `private.job_anonymise` | `job_runs` |
 | Conversation deletion | 02:30 daily | `30 0 * * *` | `private.job_delete_conversations` | `job_runs` |
+
+## Customer email and self-cancel (2026-10-20)
+
+| Item | Files | Tests | Status |
+|---|---|---|---|
+| Optional email on the order form (D-070) | `components/order/order-section.tsx`, `lib/orders/schema.ts`, `set_order_email()` | `e2e/email.spec.ts`, `supabase/tests/12_customer_email.sql` | built, migration not yet applied |
+| Order received / invoice / ready / cancelled emails (D-070) | `lib/email/compose.ts`, `lib/email/send.ts`, `lib/email/customer-mail.ts`, `lib/email/staff-mail.ts`, `app/api/orders/route.ts`, `app/dashboard/actions.ts` | `tests/email-compose.test.ts` | built; live send to be tested after deploy |
+| Customer cancel until baking (D-071) | `cancel_order()`, `app/api/orders/cancel`, status page | `12_customer_email.sql`, `e2e/email.spec.ts` | built, migration not yet applied |
+| Email log (spec 7.5 "every send logged") | `email_log` table, 90-day clean-up | `12_customer_email.sql` | built |
+

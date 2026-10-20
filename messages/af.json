@@ -56,7 +56,7 @@
     "intro": "Eers 'n paar vinnige vrae.",
     "bakebot": "Bestellingsopdaterings kom van BakeBot, KD Pops se outomatiese assistent. Kaydee lees en bevestig self elke bestelling.",
     "popiaTitle": "Jou besonderhede",
-    "popia": "Om jou bestelling te verwerk, hou ons jou naam, selnommer en taal. Net Kaydee en haar helper kan dit sien. Dit word veilig deur Supabase in die EU gestoor, nooit vir bemarking gebruik nie, en 90 dae na jou laaste bestelling uitgevee.",
+    "popia": "Om jou bestelling te verwerk, hou ons jou naam, selnommer, taal en (as jy dit gee) jou e-posadres. Net Kaydee en haar helper kan dit sien. Dit word veilig deur Supabase in die EU gestoor, nooit vir bemarking gebruik nie, en 90 dae na jou laaste bestelling uitgevee.",
     "agree": "Ek stem in dat KD Pops my besonderhede vir my bestelling gebruik",
     "under18": "Is jy jonger as 18?",
     "yes": "Ja",
@@ -89,7 +89,10 @@
     "review": "Hersien bestelling",
     "largeNote": "Meer as {threshold} pops? Kaydee sal vir jou 'n persoonlike kwotasie stuur.",
     "cutoff": "Voorafbestellings vir volgende week sluit Donderdag om 20:00.",
-    "errorSummary": "Maak asseblief die volgende reg:"
+    "errorSummary": "Maak asseblief die volgende reg:",
+    "email": "E-pos",
+    "emailPlaceholder": "jy@voorbeeld.com",
+    "emailHint": "Opsioneel. Ons e-pos jou bestellingbesonderhede, faktuur en opdaterings."
   },
   "summary": {
     "eyebrow": "Jou keuses",
@@ -152,8 +155,10 @@
       "is_minor": "Ouderdomsvraag",
       "order_id": "Bestelling",
       "access_token": "Bestelling",
-      "form": "Bestelling"
-    }
+      "form": "Bestelling",
+      "email": "E-pos"
+    },
+    "emailInvalid": "Kontroleer asseblief jou e-posadres, bv. jy@voorbeeld.com"
   },
   "slots": {
     "second_break": "2de pouse · 11:45–12:00",
@@ -250,7 +255,15 @@
     "feedbackSend": "Stuur terugvoer",
     "feedbackThanks": "Dankie! Kaydee lees elkeen.",
     "feedbackFailed": "Ons kon nie jou terugvoer stuur nie. Probeer asseblief weer.",
-    "proofEmail": "Of e-pos dit na {email} met {reference} as die onderwerp."
+    "proofEmail": "Of e-pos dit na {email} met {reference} as die onderwerp.",
+    "cancel": "Kanselleer bestelling",
+    "cancelConfirm": "Kanselleer bestelling {order_number}? Dit kan nie ontdoen word nie.",
+    "cancelYes": "Ja, kanselleer dit",
+    "cancelNo": "Hou my bestelling",
+    "cancelDone": "Jou bestelling is gekanselleer. Jy skuld niks.",
+    "cancelTooLate": "Die bak het reeds begin, so hierdie bestelling kan nie aanlyn gekanselleer word nie. Praat asseblief met Kaydee.",
+    "cancelPaid": "Jy het reeds betaal, so praat asseblief met Kaydee om te kanselleer.",
+    "cancelFailed": "Ons kon dit nie nou kanselleer nie. Probeer asseblief weer of praat met Kaydee."
   },
   "templates": {
     "acknowledgement": "Bestelling {order_number} ontvang – Kaydee sal na skool bevestig.",
@@ -269,7 +282,8 @@
     "payment_reminder": "Vriendelike herinnering van BakeBot: bestelling {order_number} is nog nie betaal nie. Betaal asseblief {amount} per EFT met verwysing {reference} voor {date}. Reeds betaal? E-pos jou bewys na {email} met {reference} as die onderwerp.",
     "released": "Bestelling {order_number} is nie betyds betaal nie, so die pops is vir verkoop vrygestel. As dit 'n fout is, praat asseblief met Kaydee.",
     "collect_reminder": "Jou betaalde bestelling {order_number} wag nog vir jou. Praat asseblief met Kaydee om dit af te haal.",
-    "feedback_request": "Dankie dat jy bestelling {order_number} afgehaal het! Hoe was jou pops? Laat vinnig terugvoer hieronder."
+    "feedback_request": "Dankie dat jy bestelling {order_number} afgehaal het! Hoe was jou pops? Laat vinnig terugvoer hieronder.",
+    "cancelled_by_customer": "Jy het bestelling {order_number} gekanselleer. Jy skuld niks."
   },
   "myOrders": {
     "title": "Jou onlangse bestellings",
@@ -295,5 +309,28 @@
     "error": "Iets het skeefgeloop. Probeer asseblief weer.",
     "limit": "Hierdie klets raak lank. Praat asseblief met Kaydee of gebruik die bestelvorm.",
     "you": "Jy"
+  },
+  "email": {
+    "receivedSubject": "KD Pops-bestelling {order_number} ontvang",
+    "receivedHeading": "Dankie {name}! Jou bestelling is in.",
+    "receivedIntro": "Kaydee sal na skool bevestig. Hier is jou bestellingbesonderhede.",
+    "items": "Jou pops",
+    "total": "Totaal",
+    "quote": "Kaydee sal vir jou 'n kwotasie vir hierdie groot bestelling stuur.",
+    "collection": "Afhaal",
+    "payment": "Betaling",
+    "track": "Volg jou bestelling",
+    "cancel": "Kanselleer my bestelling",
+    "cancelNote": "Van plan verander? Jy kan kanselleer totdat die bak begin.",
+    "keepLink": "Hou hierdie e-pos: die knoppies hierbo is jou privaat skakel na hierdie bestelling.",
+    "invoiceSubject": "KD Pops-bestelling {order_number} bevestig – faktuur {reference}",
+    "invoiceHeading": "Jou bestelling is bevestig!",
+    "invoiceAttached": "Jou faktuur is aangeheg. Jy kan dit ook hier oopmaak:",
+    "openInvoice": "Maak faktuur oop",
+    "readySubject": "Jou KD Pops-bestelling {order_number} is gereed!",
+    "readyHeading": "Jou pops is gereed!",
+    "cancelledSubject": "KD Pops-bestelling {order_number} gekanselleer",
+    "cancelledHeading": "Jou bestelling is gekanselleer",
+    "footer": "Gestuur deur BakeBot, KD Pops se outomatiese assistent, omdat jy by KD Pops bestel het. Vrae? WhatsApp Kaydee by {phone}."
   }
 }

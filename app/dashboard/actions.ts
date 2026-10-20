@@ -5,10 +5,12 @@
 // refreshes the dashboard. Public pages are refreshed when prices, stock or
 // ordering settings change.
 import { refresh, updateTag } from "next/cache";
+import { after } from "next/server";
+import { sendInvoiceEmails, sendReadyEmails, withEmail } from "@/lib/email/staff-mail";
 import { MENU_CACHE_TAG } from "@/lib/menu";
 import { ORDER_OPTIONS_CACHE_TAG } from "@/lib/order-options";
 import { headers } from "next/headers";
-import { getCollectionPlace, getOrdersByIds } from "@/lib/dashboard/data";
+import { getCollectionPlace, getOrders, getOrdersByIds } from "@/lib/dashboard/data";
 import { invoiceWhatsAppLink } from "@/lib/dashboard/whatsapp";
 import { createClient } from "@/lib/supabase/server";
 import { normaliseZaPhone } from "@/lib/phone";
@@ -80,9 +82,14 @@ export async function approveOrders(_: ActionState, form: FormData): Promise<Act
     return href ? [{ label: `WhatsApp ${name}: confirmation + invoice`, href }] : [];
   });
 
+  // D-070: customers who gave an email get the confirmation and invoice PDF.
+  const emailed = withEmail(orders);
+  after(() => sendInvoiceEmails(supabase, orders, place, origin));
+
+  const emailNote = emailed ? ` ${emailed} also get${emailed === 1 ? "s" : ""} it by email.` : "";
   const message = failed.length
-    ? `Approved ${approved.length}; ${failed.length} could not be approved (${failed[0]}).`
-    : `Approved ${approved.length} order${approved.length === 1 ? "" : "s"}. Tap to send each confirmation and invoice on WhatsApp.`;
+    ? `Approved ${approved.length}; ${failed.length} could not be approved (${failed[0]}).${emailNote}`
+    : `Approved ${approved.length} order${approved.length === 1 ? "" : "s"}. Tap to send each confirmation and invoice on WhatsApp.${emailNote}`;
   if (form.get("mode") !== "single") refresh();
   return { ok: true, message, links };
 }
@@ -117,16 +124,30 @@ export async function markCollected(_: ActionState, form: FormData): Promise<Act
 /** One order is ready: the customer is told to collect it. */
 export async function markReady(_: ActionState, form: FormData): Promise<ActionState> {
   const supabase = await createClient();
-  const { data, error } = await supabase.rpc("mark_ready", { p_order_id: String(form.get("order_id")) });
+  const orderId = String(form.get("order_id"));
+  const { data, error } = await supabase.rpc("mark_ready", { p_order_id: orderId });
   if (error) return { ok: false, message: explain(error)! };
-  return done(`${data.order_number} is ready. Tap its WhatsApp button to send the message.`);
+  const [orders, place] = await Promise.all([getOrdersByIds([orderId]), getCollectionPlace()]);
+  after(() => sendReadyEmails(supabase, orders, place));
+  const emailNote = withEmail(orders) ? " They also get an email." : "";
+  return done(`${data.order_number} is ready. Tap its WhatsApp button to send the message.${emailNote}`);
 }
 
 export async function advanceWeek(_: ActionState, form: FormData): Promise<ActionState> {
   const to = String(form.get("to"));
+  const week = String(form.get("week"));
   const supabase = await createClient();
-  const { data, error } = await supabase.rpc("advance_week", { p_week: String(form.get("week")), p_to: to });
+  // Orders about to become ready, for the ready emails (D-070).
+  const becomingReady =
+    to === "ready"
+      ? (await getOrders(["confirmed", "baking"])).filter((o) => o.collection_week === week && !o.released_at)
+      : [];
+  const { data, error } = await supabase.rpc("advance_week", { p_week: week, p_to: to });
   if (error) return { ok: false, message: explain(error)! };
+  if (becomingReady.length) {
+    const place = await getCollectionPlace();
+    after(() => sendReadyEmails(supabase, becomingReady, place));
+  }
   return done(
     to === "ready"
       ? `${data} orders ready. Their status pages say so; tap each WhatsApp button below to message them.`
